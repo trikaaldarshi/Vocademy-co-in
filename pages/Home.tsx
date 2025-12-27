@@ -1,0 +1,279 @@
+
+import React from 'react';
+import { WordAnalyzerDemo } from '../components/WordAnalyzerDemo';
+import { AutoSlider } from '../components/AutoSlider';
+import { ImageCarousel } from '../components/ImageCarousel';
+import { 
+  IconNews, 
+  IconBrain, 
+  IconSwords, 
+  IconChart, 
+  IconGift, 
+  IconMessage,
+  IconScroll,
+  IconCoach,
+  IconGame,
+  IconPlant,
+  IconBell,
+  IconCommunity
+} from '../components/AnimatedIcons';
+
+interface HomeProps {
+  handleApply: () => void;
+}
+
+export const Home: React.FC<HomeProps> = ({ handleApply }) => {
+  const scrollToDemo = () => {
+    document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToFeatures = () => {
+    document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <>
+      {/* Hero Section */}
+      <section className="pt-24 sm:pt-36 pb-12 sm:pb-20 px-4 bg-white dark:bg-slate-950 text-center relative overflow-hidden">
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Badge Area */}
+          <div className="flex flex-col items-center mb-6 sm:mb-10">
+            <div className="inline-flex items-center space-x-2 bg-indigo-50 dark:bg-indigo-900/20 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-indigo-100 dark:border-indigo-800 shadow-sm transition-all hover:bg-indigo-100 dark:hover:bg-indigo-900/40">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+              <span className="text-indigo-600 dark:text-indigo-400 text-[10px] sm:text-xs font-black uppercase tracking-[0.12em] sm:tracking-[0.15em]">Your No. 1 Vocabulary Partner</span>
+            </div>
+          </div>
+
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-[#1a1c3d] dark:text-white leading-[1.2] sm:leading-[1.15] mb-6 sm:mb-8 tracking-[-0.03em] px-2">
+            Crack Competitive Exams with <br className="hidden sm:block" />
+            <span className="relative inline-block mt-1">
+              <span className="relative z-10 text-indigo-600 dark:text-indigo-400">Smart Editorial Vocabulary</span>
+              <div className="absolute inset-x-0 bottom-1 sm:bottom-2 h-3 sm:h-7 bg-indigo-100 dark:bg-indigo-900/40 -z-0 rounded-sm"></div>
+            </span>
+            <br className="hidden sm:block" /> Revision
+          </h1>
+          
+          <p className="max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-gray-500 dark:text-gray-400 mb-8 sm:mb-12 leading-relaxed font-medium px-4">
+            Personalized learning for UPSC, SSC, and Banking aspirants. Master context-based words scanned directly from <span className="font-bold text-gray-700 dark:text-gray-200 italic">The Hindu</span> daily editorials.
+          </p>
+
+          <div className="flex flex-col items-center justify-center space-y-3 sm:space-y-4 max-w-[320px] sm:max-w-[340px] mx-auto px-4">
+            <button 
+              onClick={scrollToFeatures}
+              className="w-full py-4 sm:py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-lg sm:text-xl shadow-[0_10px_30px_-10px_rgba(79,70,229,0.5)] transition-all active:scale-[0.98]"
+            >
+              Learn More
+            </button>
+            
+            <button 
+              onClick={scrollToDemo}
+              className="w-full py-4 sm:py-5 bg-white dark:bg-slate-900 border-2 border-indigo-50 dark:border-slate-800 text-indigo-600 dark:text-indigo-400 rounded-2xl font-black text-lg sm:text-xl shadow-sm hover:border-indigo-200 transition-all active:scale-[0.98]"
+            >
+              Try AI Analyzer
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <AutoSlider />
+
+      {/* Features Section */}
+      <section id="features" className="py-16 sm:py-32 px-4 bg-white dark:bg-slate-950 transition-colors">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 sm:mb-24 px-4">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-[#1a1c3d] dark:text-white mb-4 sm:mb-6">Built for Serious Aspirants</h2>
+            <p className="text-base sm:text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto font-medium leading-relaxed">Master high-yield vocabulary that distinguishes top rankers in UPSC, SSC, and Banking exams.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <FeatureCard 
+              icon={<IconNews />} 
+              title="Editorial Context" 
+              desc="Words scanned directly from daily editorials. Learn how complex vocabulary is used in professional journalism."
+              iconBg="bg-indigo-50 dark:bg-indigo-900/20"
+            />
+            <FeatureCard 
+              icon={<IconBrain />} 
+              title="SRS Flashcards" 
+              desc="Our Spaced Repetition System logic ensures you never forget a word once it's in your long-term memory." 
+              iconBg="bg-emerald-50 dark:bg-emerald-900/20"
+            />
+            <FeatureCard 
+              icon={<IconSwords />} 
+              title="Multiplayer Duels" 
+              desc="Challenge fellow aspirants in real-time battles to test your vocabulary speed and precision under pressure." 
+              iconBg="bg-orange-50 dark:bg-orange-900/20"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section id="demo" className="py-12 sm:py-24 px-4 bg-gray-50/50 dark:bg-slate-900/40 transition-colors scroll-mt-20">
+        <WordAnalyzerDemo />
+      </section>
+
+      <section className="py-12 sm:py-24 px-4 bg-white dark:bg-slate-950 transition-colors">
+        <div className="text-center mb-10 md:mb-16 px-4">
+          <h2 className="text-2xl sm:text-4xl font-black text-[#1a1c3d] dark:text-white">Application Preview</h2>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 md:mt-4 text-sm md:text-base">Experience a clean, distraction-free environment optimized for deep learning.</p>
+        </div>
+        <ImageCarousel />
+      </section>
+
+      {/* Lakshya AI Section - Mobile Optimized Grid */}
+      <section className="py-16 sm:py-32 px-4 bg-slate-50 dark:bg-[#020617] transition-colors relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
+          <div className="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-500/10 dark:bg-indigo-600/10 blur-[80px] sm:blur-[120px] rounded-full"></div>
+          <div className="absolute bottom-0 left-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-purple-500/10 dark:bg-purple-600/10 blur-[80px] sm:blur-[120px] rounded-full"></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-12 sm:mb-24 px-4">
+            <div className="inline-flex items-center space-x-2 bg-white dark:bg-slate-900 px-4 py-2 rounded-full mb-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">Future Roadmap</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl md:text-7xl font-black mb-6 sm:mb-8 tracking-tight text-[#1a1c3d] dark:text-white px-2">
+              Introducing <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">Lakshya AI</span>
+            </h2>
+            <p className="text-base sm:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto font-medium leading-relaxed px-2">
+              Your future AI-powered study coach. A holistic ecosystem designed to transform your journey from an aspirant to a ranker.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20 px-4">
+            <LakshyaCard 
+              icon={<IconScroll />} 
+              title="Wisdom from Gita" 
+              desc="Receive daily practical wisdom from the Bhagavad Gita to inspire focus and discipline in your preparation."
+              accentColor="indigo"
+            />
+            <LakshyaCard 
+              icon={<IconCoach />} 
+              title="AI Task Coach" 
+              desc="Intelligent, dynamic study planning that adapts to your learning pace and upcoming exam deadlines." 
+              accentColor="purple"
+            />
+            <LakshyaCard 
+              icon={<IconGame />} 
+              title="Gamified Focus" 
+              desc="Maintain high productivity with XP rewards, levels, and streaks for your daily deep-work sessions." 
+              accentColor="orange"
+            />
+            <LakshyaCard 
+              icon={<IconPlant />} 
+              title="Knowledge Garden" 
+              desc="Nurture your virtual knowledge garden that grows as you master new subjects and hit milestones." 
+              accentColor="emerald"
+            />
+            <LakshyaCard 
+              icon={<IconBell />} 
+              title="Smart Reminders" 
+              desc="Context-aware notifications that respect your deep-work hours while keeping you on track." 
+              accentColor="blue"
+            />
+            <LakshyaCard 
+              icon={<IconCommunity />} 
+              title="Aspirant Circles" 
+              desc="Join exclusive circles to collaborate on high-stakes challenges with like-minded, serious peers." 
+              accentColor="rose"
+            />
+          </div>
+
+          <div className="text-center max-w-4xl mx-auto px-4">
+            <div className="inline-block p-1 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-indigo-500/20 rounded-[1.5rem] sm:rounded-[2rem]">
+              <div className="bg-white/80 dark:bg-slate-900/50 backdrop-blur-xl px-4 sm:px-8 py-4 sm:py-6 rounded-[1.3rem] sm:rounded-[1.8rem] border border-white/40 dark:border-slate-800">
+                <p className="text-sm sm:text-xl text-slate-600 dark:text-slate-400 font-bold leading-relaxed italic">
+                  "Lakshya AI will seamlessly integrate with Vocademy, syncing your vocabulary progress with your overall study plans for a truly unified learning experience."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 sm:py-32 px-4 bg-indigo-600 dark:bg-indigo-700 text-white text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-white/10 rounded-full blur-3xl -mr-24 sm:-mr-32 -mt-24 sm:-mt-32"></div>
+        
+        <div className="max-w-4xl mx-auto relative z-10 flex flex-col items-center px-4">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black mb-4 sm:mb-6 leading-tight">Ready to transform your preparation?</h2>
+          <p className="text-sm sm:text-xl text-indigo-100 mb-8 sm:mb-12 max-w-2xl font-medium">Download the app today and join the elite circle of successful aspirants.</p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-2xl">
+            {/* Play Store Button */}
+            <a 
+              href="https://play.google.com/store/apps/details?id=com.lakshya.vocademy"
+              target="_blank"
+              rel="noreferrer"
+              className="w-full sm:w-64 group flex items-center bg-white text-slate-900 px-6 sm:px-8 py-4 sm:py-5 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl transition-all"
+            >
+              <i className="fab fa-google-play text-2xl sm:text-3xl mr-3 sm:mr-4 text-indigo-600 transition-all duration-300 group-hover:scale-125 group-hover:rotate-12 group-active:scale-90"></i>
+              <div className="text-left">
+                <div className="text-[9px] sm:text-[10px] uppercase font-bold opacity-60 tracking-widest">Get it on</div>
+                <div className="text-lg sm:text-xl font-black leading-tight">Google Play</div>
+              </div>
+            </a>
+
+            {/* App Store Button */}
+            <button 
+              onClick={handleApply}
+              className="w-full sm:w-64 group flex items-center bg-white text-slate-900 px-6 sm:px-8 py-4 sm:py-5 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl transition-all"
+            >
+              <i className="fab fa-apple text-2xl sm:text-3xl mr-3 sm:mr-4 text-slate-900 transition-all duration-300 group-hover:scale-125 group-hover:-rotate-12 group-active:scale-90"></i>
+              <div className="text-left">
+                <div className="text-[9px] sm:text-[10px] uppercase font-bold opacity-60 tracking-widest">Download on the</div>
+                <div className="text-lg sm:text-xl font-black leading-tight">App Store</div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+const FeatureCard: React.FC<{icon: React.ReactNode, title: string, desc: string, iconBg: string}> = ({icon, title, desc, iconBg}) => (
+  <div className="bg-gray-50/50 dark:bg-slate-900/40 p-2 sm:p-3 rounded-[1.5rem] sm:rounded-[2rem] border border-gray-100 dark:border-slate-800 transition-all group">
+    <div className="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-[1.3rem] sm:rounded-[1.8rem] shadow-sm hover:shadow-xl transition-all flex flex-col items-start text-left border border-transparent hover:border-indigo-100 dark:hover:border-indigo-900/30 h-full">
+      <div className={`w-12 h-12 sm:w-14 sm:h-14 ${iconBg} rounded-xl sm:rounded-2xl flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 transition-transform duration-500`}>
+        <div className="w-6 h-6 sm:w-8 sm:h-8">
+          {icon}
+        </div>
+      </div>
+      <h3 className="text-lg sm:text-xl font-black text-[#1a1c3d] dark:text-white mb-3 sm:mb-4 tracking-tight">{title}</h3>
+      <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 font-medium leading-relaxed">{desc}</p>
+    </div>
+  </div>
+);
+
+interface LakshyaCardProps {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+  accentColor: string;
+}
+
+const LakshyaCard: React.FC<LakshyaCardProps> = ({ icon, title, desc, accentColor }) => {
+  const colors: Record<string, string> = {
+    indigo: 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-800',
+    purple: 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-800',
+    orange: 'bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 border-orange-100 dark:border-orange-800',
+    emerald: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-800',
+    blue: 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-800',
+    rose: 'bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 border-rose-100 dark:border-rose-800',
+  };
+
+  return (
+    <div className="bg-white dark:bg-slate-900/40 p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2.5rem] border border-slate-200 dark:border-white/10 hover:border-indigo-500/30 dark:hover:border-white/30 transition-all group flex flex-col items-center text-center shadow-sm hover:shadow-xl dark:hover:shadow-indigo-500/10 active:scale-[0.98]">
+      <div className={`w-12 h-12 sm:w-16 sm:h-16 ${colors[accentColor]} rounded-xl sm:rounded-2xl flex items-center justify-center mb-6 sm:mb-8 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+        <div className="w-6 h-6 sm:w-8 sm:h-8">
+          {icon}
+        </div>
+      </div>
+      <h3 className="text-lg sm:text-2xl font-black text-[#1a1c3d] dark:text-white mb-3 sm:mb-4 transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">{title}</h3>
+      <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{desc}</p>
+    </div>
+  );
+};
