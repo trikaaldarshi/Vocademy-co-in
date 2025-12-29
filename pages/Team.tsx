@@ -6,7 +6,8 @@ interface TeamProps {
 }
 
 // Defining TeamMember above the Team component to ensure proper type inference for children and other props
-const TeamMember = ({ name, role, image, accent, children }: { name: string, role: string, image: string, accent: string, children: React.ReactNode }) => (
+// Fixed TypeScript error by making children optional in the props definition to satisfy call-site validation
+const TeamMember = ({ name, role, image, accent, children }: { name: string, role: string, image: string, accent: string, children?: React.ReactNode }) => (
   <div className="bg-white dark:bg-slate-900/50 p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-gray-100 dark:border-slate-800 shadow-2xl transition-all group">
     <div className="text-center">
       <div className="relative mb-10 mx-auto w-48 h-48 sm:w-56 sm:h-56">

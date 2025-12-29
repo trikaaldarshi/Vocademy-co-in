@@ -12,6 +12,28 @@ type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'abo
 
 const LOGO_URL = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251224_183055_297.webp";
 
+// Map slugs to view states
+const PATH_MAP: Record<string, ViewState> = {
+  '/': 'home',
+  '/methodology': 'methodology',
+  '/privacy-policy': 'privacy',
+  '/terms-of-service': 'terms',
+  '/contact': 'contact',
+  '/about': 'about',
+  '/team': 'team',
+};
+
+// Map view states to slugs for navigation
+const SLUG_MAP: Record<ViewState, string> = {
+  home: '/',
+  methodology: '/methodology',
+  privacy: '/privacy-policy',
+  terms: '/terms-of-service',
+  contact: '/contact',
+  about: '/about',
+  team: '/team',
+};
+
 const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
@@ -46,8 +68,23 @@ const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Initial routing and history listener
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const handleLocationChange = () => {
+      const path = window.location.pathname;
+      const targetView = PATH_MAP[path] || 'home';
+      setView(targetView);
+      window.scrollTo(0, 0);
+    };
+
+    // Set initial view based on URL
+    handleLocationChange();
+
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
+  useEffect(() => {
     setIsMenuOpen(false);
   }, [view]);
 
@@ -60,7 +97,15 @@ const App: React.FC = () => {
   }, [darkMode]);
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
-  const navigateTo = (newView: ViewState) => setView(newView);
+  
+  const navigateTo = (newView: ViewState) => {
+    const slug = SLUG_MAP[newView];
+    if (window.location.pathname !== slug) {
+      window.history.pushState(null, '', slug);
+      setView(newView);
+      window.scrollTo(0, 0);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-900/40 transition-colors duration-300">
@@ -86,10 +131,10 @@ const App: React.FC = () => {
             </button>
             
             <div className="hidden lg:flex items-center space-x-6 mx-4">
-              <button onClick={() => navigateTo('about')} className="text-sm font-bold text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About</button>
-              <button onClick={() => navigateTo('team')} className="text-sm font-bold text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Team</button>
-              <button onClick={() => navigateTo('methodology')} className="text-sm font-bold text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Methodology</button>
-              <button onClick={() => navigateTo('contact')} className="text-sm font-bold text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact</button>
+              <button onClick={() => navigateTo('about')} className={`text-sm font-bold transition-colors ${view === 'about' ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</button>
+              <button onClick={() => navigateTo('team')} className={`text-sm font-bold transition-colors ${view === 'team' ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Team</button>
+              <button onClick={() => navigateTo('methodology')} className={`text-sm font-bold transition-colors ${view === 'methodology' ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Methodology</button>
+              <button onClick={() => navigateTo('contact')} className={`text-sm font-bold transition-colors ${view === 'contact' ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Contact</button>
             </div>
 
             <div className="flex items-center space-x-1 sm:space-x-2">
@@ -189,17 +234,17 @@ const App: React.FC = () => {
             <div>
               <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-sm mb-6">Explore</h4>
               <ul className="space-y-4">
-                <li><button onClick={() => navigateTo('about')} className="text-gray-500 dark:text-gray-400 hover:text-indigo-600 transition-colors font-bold">About Us</button></li>
-                <li><button onClick={() => navigateTo('team')} className="text-gray-500 dark:text-gray-400 hover:text-indigo-600 transition-colors font-bold">Meet the Team</button></li>
-                <li><button onClick={() => navigateTo('methodology')} className="text-gray-500 dark:text-gray-400 hover:text-indigo-600 transition-colors font-bold">Methodology</button></li>
+                <li><button onClick={() => navigateTo('about')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'about' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>About Us</button></li>
+                <li><button onClick={() => navigateTo('team')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'team' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>Meet the Builder</button></li>
+                <li><button onClick={() => navigateTo('methodology')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'methodology' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>Methodology</button></li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-sm mb-6">Legal</h4>
               <ul className="space-y-4">
-                <li><button onClick={() => navigateTo('privacy')} className="text-gray-500 dark:text-gray-400 hover:text-indigo-600 transition-colors font-bold">Privacy Policy</button></li>
-                <li><button onClick={() => navigateTo('terms')} className="text-gray-500 dark:text-gray-400 hover:text-indigo-600 transition-colors font-bold">Terms of Service</button></li>
+                <li><button onClick={() => navigateTo('privacy')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'privacy' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>Privacy Policy</button></li>
+                <li><button onClick={() => navigateTo('terms')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'terms' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>Terms of Service</button></li>
               </ul>
             </div>
           </div>
