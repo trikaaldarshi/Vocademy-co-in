@@ -5,48 +5,88 @@ interface TeamProps {
   navigateTo: (view: any) => void;
 }
 
+// Defining TeamMember above the Team component to ensure proper type inference for children and other props
+const TeamMember = ({ name, role, image, accent, children }: { name: string, role: string, image: string, accent: string, children: React.ReactNode }) => (
+  <div className="bg-white dark:bg-slate-900/50 p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-gray-100 dark:border-slate-800 shadow-2xl transition-all group">
+    <div className="text-center">
+      <div className="relative mb-10 mx-auto w-48 h-48 sm:w-56 sm:h-56">
+        {/* Animated Gradient Ring */}
+        <div className={`absolute -inset-4 bg-gradient-to-tr ${accent === 'indigo' ? 'from-indigo-500 to-blue-400' : 'from-purple-500 to-pink-400'} rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500`}></div>
+        <div className={`absolute -inset-1 bg-gradient-to-tr ${accent === 'indigo' ? 'from-indigo-600 to-blue-500' : 'from-purple-600 to-pink-500'} rounded-full animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+        
+        <div className="relative w-full h-full bg-white dark:bg-slate-950 rounded-full overflow-hidden border-4 border-white dark:border-slate-900 shadow-2xl transition-transform group-hover:scale-[1.05] duration-500">
+          <img src={image} alt={name} className="w-full h-full object-cover" />
+        </div>
+      </div>
+      
+      <h3 className="text-3xl md:text-5xl font-black text-indigo-950 dark:text-white mb-3 tracking-tight transition-colors group-hover:text-indigo-600">
+        {name}
+      </h3>
+      <div className="text-indigo-600 dark:text-indigo-400 font-black text-sm md:text-base mb-10 tracking-wide uppercase">
+        {role}
+      </div>
+      
+      <div className="text-left px-2 sm:px-4">
+        {children}
+      </div>
+    </div>
+  </div>
+);
+
 export const Team: React.FC<TeamProps> = ({ navigateTo }) => {
   return (
-    <div className="pt-32 pb-24 px-4 max-w-6xl mx-auto animate-fade-in">
-      <div className="text-center mb-24">
+    <div className="pt-28 pb-24 px-4 max-w-6xl mx-auto animate-fade-in transition-colors">
+      <div className="text-center mb-16 md:mb-24">
         <h1 className="text-5xl md:text-7xl font-black text-indigo-950 dark:text-white mb-6 tracking-tight">
-          Meet the <span className="text-indigo-600">Minds</span>
+          Meet the <span className="text-indigo-600">Builder</span>
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto font-medium">
-          The duo behind Vocademy, dedicated to revolutionizing how Indian aspirants master editorial English.
+        <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto font-medium px-4">
+          The visionary architect behind Vocademy, dedicated to empowering the next generation of civil servants and defense personnel.
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-12 lg:gap-24 max-w-4xl mx-auto">
-        <TeamMember 
-          name="Anmol Gupta"
-          role="Founder & Lead Architect"
-          image="https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251225_000405_575.jpg"
-          bio="Full-stack engineer with a passion for ed-tech. Architect of the Vocademy AI analysis engine and core platform infrastructure."
-        />
-        <TeamMember 
-          name="ѕнυкℓα जी 👀"
-          role="Creative Director"
-          image="https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251225_000346_829.jpg"
-          bio="Visionary designer and creative strategist. Crafting the aesthetic identity and intuitive user experience that makes Vocademy unique."
-        />
+      <div className="flex justify-center mb-24">
+        <div className="max-w-3xl w-full">
+          <TeamMember 
+            name="Anmol Gupta"
+            role="Developer of Vocademy & Creator of Lakshya AI (in development)"
+            image="https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251225_000405_575.jpg"
+            accent="indigo"
+          >
+            <div className="space-y-6 text-gray-600 dark:text-gray-400 text-base md:text-lg font-medium leading-relaxed">
+              <p>
+                Anmol Gupta, the visionary behind Vocademy and Lakshya AI, is more than just a developer; he's a builder who has walked the student journey himself. Having prepared for <span className="text-indigo-600 dark:text-indigo-400 font-bold">SSC</span> exams and successfully qualified the <span className="text-indigo-600 dark:text-indigo-400 font-bold">Airforce exam</span>, Anmol intimately understands the vocabulary and revision challenges that thousands of aspirants face daily.
+              </p>
+              <p>
+                He is also the proud owner of "Krishna Sada Sahayate" — a value-driven community, and an active admin of "Bharat Pariksha" — a thriving <span className="text-indigo-600 dark:text-indigo-400 font-bold">28k+ student Telegram community</span>.
+              </p>
+              <p>
+                Anmol's vision is to leverage technology, psychology, and community to build systems that significantly reduce digital distraction, fostering a calm, structured, and exam-oriented studying environment. He converts his own pain points into powerful products designed to empower students.
+              </p>
+            </div>
+          </TeamMember>
+        </div>
       </div>
 
-      <div className="mt-32 p-12 bg-gray-50 dark:bg-slate-900 rounded-[3rem] border border-gray-100 dark:border-slate-800 text-center">
-        <h2 className="text-3xl font-black text-indigo-950 dark:text-white mb-4">Want to join us?</h2>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl mx-auto">We are always looking for passionate people to join our content curation and development teams.</p>
-        <a 
-          href="mailto:careers@vocademy.app"
-          className="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-black hover:bg-indigo-700 transition-all inline-block shadow-lg active:scale-95"
-        >
-          View Open Roles
-        </a>
+      <div className="max-w-4xl mx-auto">
+        <div className="p-10 md:p-16 bg-gray-50/50 dark:bg-slate-900/40 rounded-[3rem] text-center border border-gray-100 dark:border-slate-800">
+          <h2 className="text-2xl md:text-4xl font-black text-indigo-950 dark:text-white mb-4">Want to join us?</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-10 max-w-xl mx-auto font-medium">
+            We are always looking for passionate people to join our content curation and development teams.
+          </p>
+          <a 
+            href="mailto:careers@vocademy.app"
+            className="bg-indigo-600 text-white px-10 py-4 rounded-xl font-black text-lg hover:bg-indigo-700 transition-all inline-block shadow-xl active:scale-95"
+          >
+            View Open Roles
+          </a>
+        </div>
       </div>
 
-      <div className="mt-16 text-center">
+      <div className="mt-20 text-center">
         <button 
           onClick={() => navigateTo('home')}
-          className="text-indigo-600 dark:text-indigo-400 font-black text-lg hover:underline underline-offset-8 transition-all flex items-center justify-center space-x-2 mx-auto"
+          className="text-indigo-600 dark:text-indigo-400 font-bold text-lg hover:underline underline-offset-8 transition-all flex items-center justify-center space-x-2 mx-auto"
         >
           <i className="fas fa-arrow-left text-sm"></i>
           <span>Return to Home</span>
@@ -55,17 +95,3 @@ export const Team: React.FC<TeamProps> = ({ navigateTo }) => {
     </div>
   );
 };
-
-const TeamMember = ({ name, role, image, bio }: { name: string, role: string, image: string, bio: string }) => (
-  <div className="group text-center">
-    <div className="relative mb-8 mx-auto w-56 h-56">
-      <div className="absolute -inset-2 bg-gradient-to-tr from-indigo-600 to-emerald-500 rounded-full blur opacity-20 group-hover:opacity-100 transition duration-500"></div>
-      <div className="relative w-full h-full bg-white dark:bg-slate-800 rounded-full overflow-hidden border-4 border-white dark:border-slate-900 shadow-2xl">
-        <img src={image} alt={name} className="w-full h-full object-cover transition-transform group-hover:scale-110 duration-500" />
-      </div>
-    </div>
-    <h3 className="text-3xl font-black text-indigo-950 dark:text-white mb-2">{name}</h3>
-    <span className="text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-widest text-xs mb-4 block">{role}</span>
-    <p className="text-gray-600 dark:text-gray-400 font-medium leading-relaxed px-4">{bio}</p>
-  </div>
-);
