@@ -72,7 +72,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const handleLocationChange = () => {
-      const path = window.location.pathname;
+      const path = window.location.pathname.toLowerCase();
+      // Case-insensitive lookup
       const targetView = PATH_MAP[path] || 'home';
       setView(targetView);
       window.scrollTo(0, 0);
@@ -99,7 +100,7 @@ const App: React.FC = () => {
   
   const navigateTo = (newView: ViewState) => {
     const slug = SLUG_MAP[newView];
-    if (window.location.pathname !== slug) {
+    if (window.location.pathname.toLowerCase() !== slug.toLowerCase()) {
       window.history.pushState(null, '', slug);
       setView(newView);
       window.scrollTo(0, 0);
@@ -112,65 +113,67 @@ const App: React.FC = () => {
       
       <IOSComingSoonModal isOpen={isIOSModalOpen} onClose={() => setIsIOSModalOpen(false)} />
 
-      {/* Navigation - Only show if not in welcome view to maintain focused verification flow */}
+      {/* Navigation */}
       {view !== 'welcome' && (
         <div className="fixed top-4 w-full px-4 z-[60]">
-          <nav className="max-w-6xl mx-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]">
-            <div className="px-4 sm:px-8 h-16 flex items-center justify-between">
+          <nav className="max-w-6xl mx-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] overflow-hidden">
+            <div className="px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
               <button 
                 onClick={() => navigateTo('home')}
-                className="flex items-center space-x-3 group active:scale-95 transition-transform flex-shrink-0"
+                className="flex items-center space-x-2 group active:scale-95 transition-transform flex-shrink-0"
               >
-                <div className="relative">
-                  <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[2px] animate-spin-slow opacity-70 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="relative w-9 h-9 sm:w-10 sm:h-10 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-800">
+                <div className="relative flex-shrink-0">
+                  <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[1px] animate-spin-slow opacity-70 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="relative w-8 h-8 sm:w-10 sm:h-10 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-800">
                     <img src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
                   </div>
                 </div>
-                <span className="hidden xs:block text-lg sm:text-xl font-extrabold text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
+                <span className="text-base sm:text-lg md:text-xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
               </button>
               
-              <div className="hidden lg:flex items-center space-x-6 mx-4">
-                <button onClick={() => navigateTo('about')} className={`text-sm font-bold transition-colors ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</button>
-                <button onClick={() => navigateTo('team')} className={`text-sm font-bold transition-colors ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Team</button>
-                <button onClick={() => navigateTo('methodology')} className={`text-sm font-bold transition-colors ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Methodology</button>
-                <button onClick={() => navigateTo('contact')} className={`text-sm font-bold transition-colors ${view === 'contact' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Contact</button>
+              <div className="hidden lg:flex items-center space-x-6 mx-4 flex-shrink-0">
+                <button onClick={() => navigateTo('about')} className={`text-xs font-bold transition-colors ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</button>
+                <button onClick={() => navigateTo('team')} className={`text-xs font-bold transition-colors ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Team</button>
+                <button onClick={() => navigateTo('methodology')} className={`text-xs font-bold transition-colors ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Methodology</button>
+                <button onClick={() => navigateTo('contact')} className={`text-xs font-bold transition-colors ${view === 'contact' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Contact</button>
               </div>
 
-              <div className="flex items-center space-x-1 sm:space-x-3 flex-1 justify-end">
-                <div className={`relative hidden sm:flex items-center transition-all duration-500 h-10 ${searchFocused ? 'flex-1 max-w-[300px]' : 'w-10 sm:w-48'} group`}>
-                  <div className={`absolute inset-0 bg-gray-100 dark:bg-slate-800/50 rounded-full border border-gray-200 dark:border-slate-700 transition-all duration-300 ${searchFocused ? 'ring-2 ring-indigo-500/20 border-indigo-500/50 shadow-lg' : 'group-hover:bg-gray-200 dark:group-hover:bg-slate-800'}`}></div>
-                  <div className="absolute left-3 w-5 h-5 flex items-center justify-center pointer-events-none">
+              <div className="flex items-center space-x-1 sm:space-x-2 flex-1 justify-end min-w-0">
+                {/* ANIMATED SEARCH BAR */}
+                <div className={`relative hidden sm:flex items-center transition-all duration-500 h-9 ${searchFocused ? 'flex-1 max-w-[200px]' : 'w-32 md:w-40'} group`}>
+                  <div className={`absolute inset-0 bg-gray-100 dark:bg-slate-800/50 rounded-full border border-gray-200 dark:border-slate-700 transition-all duration-300 ${searchFocused ? 'ring-2 ring-indigo-500/20 border-indigo-500/50 shadow-md' : 'group-hover:bg-gray-200 dark:group-hover:bg-slate-800'}`}></div>
+                  <div className="absolute left-2.5 w-4 h-4 flex items-center justify-center pointer-events-none">
                     <IconSearch />
                   </div>
                   <input 
                     type="text" 
-                    placeholder="Quick search..." 
+                    placeholder="Search..." 
                     onFocus={() => setSearchFocused(true)}
                     onBlur={() => setSearchFocused(false)}
-                    className="bg-transparent border-none outline-none w-full h-full pl-10 pr-4 text-sm font-semibold text-indigo-950 dark:text-gray-200 placeholder-gray-400 dark:placeholder-slate-600 relative z-10"
+                    className="bg-transparent border-none outline-none w-full h-full pl-9 pr-3 text-xs font-semibold text-indigo-950 dark:text-gray-200 placeholder-gray-400 dark:placeholder-slate-600 relative z-10"
                   />
                 </div>
 
-                <button className="sm:hidden p-2 w-9 h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-500 transition-all">
-                  <div className="w-5 h-5">
+                {/* SEARCH ICON FOR MOBILE */}
+                <button className="sm:hidden p-1.5 w-8 h-8 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-500 transition-all">
+                  <div className="w-4 h-4">
                     <IconSearch />
                   </div>
                 </button>
 
                 <button 
                   onClick={toggleDarkMode}
-                  className="p-2 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all"
+                  className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all"
                 >
-                  {darkMode ? <i className="fas fa-sun text-lg text-yellow-500"></i> : <i className="fas fa-moon text-lg"></i>}
+                  {darkMode ? <i className="fas fa-sun text-base text-yellow-500"></i> : <i className="fas fa-moon text-base"></i>}
                 </button>
                 
                 <button 
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-indigo-600 dark:bg-indigo-500 text-white rounded-xl flex items-center justify-center shadow-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-90"
+                  className="w-8 h-8 sm:w-9 sm:h-9 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg flex items-center justify-center shadow-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-90 flex-shrink-0"
                   aria-label="Menu"
                 >
-                  <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars-staggered'} text-lg`}></i>
+                  <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars-staggered'} text-sm`}></i>
                 </button>
               </div>
             </div>
@@ -180,38 +183,38 @@ const App: React.FC = () => {
 
       {/* Mobile Menu */}
       <div className={`fixed inset-0 z-[55] transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-indigo-950/20 dark:bg-black/70 backdrop-blur-2xl" onClick={() => setIsMenuOpen(false)}></div>
-        <div className={`absolute top-24 right-2 left-2 sm:right-6 sm:left-6 max-w-2xl mx-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/40 dark:border-slate-800 p-6 sm:p-8 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 scale-100' : 'translate-y-10 scale-95'}`}>
-          <div className="flex items-center justify-between mb-8 px-2">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl overflow-hidden border border-indigo-100 dark:border-slate-800 shadow-sm">
+        <div className="absolute inset-0 bg-indigo-950/20 dark:bg-black/60 backdrop-blur-xl" onClick={() => setIsMenuOpen(false)}></div>
+        <div className={`absolute top-20 right-4 left-4 max-w-md mx-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.2)] border border-white/40 dark:border-slate-800 p-5 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 scale-100' : 'translate-y-6 scale-95'}`}>
+          <div className="flex items-center justify-between mb-6 px-1">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 rounded-lg overflow-hidden border border-indigo-100 dark:border-slate-800 shadow-sm">
                 <img src={LOGO_URL} alt="Logo" className="w-full h-full object-cover" />
               </div>
-              <span className="text-2xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
+              <span className="text-xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
             </div>
-            <button onClick={() => setIsMenuOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-slate-800 text-gray-500 transition-all hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-90">
-              <i className="fas fa-times"></i>
+            <button onClick={() => setIsMenuOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-slate-800 text-gray-500 transition-all hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-90">
+              <i className="fas fa-times text-xs"></i>
             </button>
           </div>
 
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-1">
             <MenuLink onClick={() => navigateTo('home')} icon="fa-house" label="Home" color="indigo" />
             <MenuLink onClick={() => navigateTo('about')} icon="fa-circle-info" label="About Us" color="blue" />
             <MenuLink onClick={() => navigateTo('team')} icon="fa-users" label="Our Team" color="purple" />
-            <MenuLink onClick={() => navigateTo('methodology')} icon="fa-book-open" label="The Methodology" color="emerald" />
+            <MenuLink onClick={() => navigateTo('methodology')} icon="fa-book-open" label="Methodology" color="emerald" />
             <MenuLink onClick={() => navigateTo('contact')} icon="fa-paper-plane" label="Contact Support" color="orange" />
-            <MenuLink onClick={() => navigateTo('privacy')} icon="fa-shield-halved" label="Privacy & Security" color="rose" />
+            <MenuLink onClick={() => navigateTo('privacy')} icon="fa-shield-halved" label="Privacy & Terms" color="rose" />
           </div>
           
-          <div className="mt-10 pt-8 border-t border-gray-100 dark:border-slate-800/50">
+          <div className="mt-6 pt-5 border-t border-gray-100 dark:border-slate-800/50">
             <a 
               href="https://play.google.com/store/apps/details?id=com.lakshya.vocademy"
               target="_blank"
               rel="noreferrer"
-              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 dark:from-indigo-500 dark:to-indigo-400 text-white py-5 rounded-[2rem] font-black text-center flex items-center justify-center space-x-3 shadow-2xl shadow-indigo-600/25 active:scale-95 transition-all group"
+              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 dark:from-indigo-500 dark:to-indigo-400 text-white py-4 rounded-2xl font-black text-center flex items-center justify-center space-x-2 shadow-xl shadow-indigo-600/20 active:scale-95 transition-all group"
             >
-              <i className="fab fa-google-play text-2xl group-hover:animate-bounce-soft"></i>
-              <span className="text-lg">Get Android App</span>
+              <i className="fab fa-google-play text-xl group-hover:animate-bounce-soft"></i>
+              <span className="text-base">Get Android App</span>
             </a>
           </div>
         </div>
@@ -232,58 +235,58 @@ const App: React.FC = () => {
         {view === 'welcome' && <Welcome navigateTo={navigateTo} />}
       </main>
 
-      {/* Footer - Only show if not in welcome view */}
+      {/* Footer */}
       {view !== 'welcome' && (
-        <footer className="bg-white dark:bg-slate-950 pt-24 pb-12 px-4 border-t border-gray-100 dark:border-slate-900 transition-colors">
+        <footer className="bg-white dark:bg-slate-950 pt-20 pb-10 px-4 border-t border-gray-100 dark:border-slate-900 transition-colors">
           <div className="max-w-7xl mx-auto text-center md:text-left">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
               <div className="col-span-1 md:col-span-2">
-                <div className="flex items-center justify-center md:justify-start space-x-3 mb-6">
-                  <div className="relative">
+                <div className="flex items-center justify-center md:justify-start space-x-3 mb-4">
+                  <div className="relative flex-shrink-0">
                     <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[1px] animate-spin-slow opacity-60"></div>
-                    <div className="relative w-10 h-10 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-900">
+                    <div className="relative w-9 h-9 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-900">
                       <img src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
                     </div>
                   </div>
-                  <span className="text-2xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
+                  <span className="text-xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
                 </div>
-                <p className="text-gray-500 dark:text-gray-400 text-lg max-w-sm mx-auto md:mx-0 leading-relaxed mb-8 font-medium">
-                  The most advanced AI-powered vocabulary platform designed specifically for the Indian competitive exam ecosystem.
+                <p className="text-gray-500 dark:text-gray-400 text-base max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 font-medium">
+                  Advanced AI-powered vocabulary platform designed for the Indian competitive exam ecosystem.
                 </p>
-                <div className="flex justify-center md:justify-start space-x-4">
-                  <a href="https://telegram.dog/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
-                    <i className="fab fa-telegram-plane text-xl"></i>
+                <div className="flex justify-center md:justify-start space-x-3">
+                  <a href="https://telegram.dog/VocademyApp" target="_blank" rel="noreferrer" className="w-10 h-10 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm border border-transparent dark:border-slate-800">
+                    <i className="fab fa-telegram-plane"></i>
                   </a>
-                  <a href="https://X.com/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
-                    <i className="fab fa-twitter text-xl"></i>
+                  <a href="https://X.com/VocademyApp" target="_blank" rel="noreferrer" className="w-10 h-10 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm border border-transparent dark:border-slate-800">
+                    <i className="fab fa-twitter"></i>
                   </a>
-                  <a href="https://instagram.com/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
-                    <i className="fab fa-instagram text-xl"></i>
+                  <a href="https://instagram.com/VocademyApp" target="_blank" rel="noreferrer" className="w-10 h-10 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm border border-transparent dark:border-slate-800">
+                    <i className="fab fa-instagram"></i>
                   </a>
                 </div>
               </div>
 
               <div>
-                <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-sm mb-6">Explore</h4>
-                <ul className="space-y-4">
-                  <li><button onClick={() => navigateTo('about')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>About Us</button></li>
-                  <li><button onClick={() => navigateTo('team')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Meet the Builder</button></li>
-                  <li><button onClick={() => navigateTo('methodology')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Methodology</button></li>
+                <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Explore</h4>
+                <ul className="space-y-3">
+                  <li><button onClick={() => navigateTo('about')} className={`text-sm hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>About Us</button></li>
+                  <li><button onClick={() => navigateTo('team')} className={`text-sm hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>The Builder</button></li>
+                  <li><button onClick={() => navigateTo('methodology')} className={`text-sm hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Methodology</button></li>
                 </ul>
               </div>
 
               <div>
-                <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-sm mb-6">Legal</h4>
-                <ul className="space-y-4">
-                  <li><button onClick={() => navigateTo('privacy')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'privacy' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Privacy Policy</button></li>
-                  <li><button onClick={() => navigateTo('terms')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'terms' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Terms of Service</button></li>
+                <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Legal</h4>
+                <ul className="space-y-3">
+                  <li><button onClick={() => navigateTo('privacy')} className={`text-sm hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'privacy' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Privacy Policy</button></li>
+                  <li><button onClick={() => navigateTo('terms')} className={`text-sm hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'terms' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Terms of Service</button></li>
                 </ul>
               </div>
             </div>
 
-            <div className="pt-12 border-t border-gray-100 dark:border-slate-900 flex flex-col md:flex-row justify-between items-center font-bold text-sm">
-              <div className="mb-4 md:mb-0 text-blue-900 dark:text-blue-400">© {new Date().getFullYear()} Vocademy App. Crafted with ❤️ for Aspirants.</div>
-              <div className="flex space-x-6 text-gray-400 dark:text-gray-600">
+            <div className="pt-8 border-t border-gray-100 dark:border-slate-900 flex flex-col md:flex-row justify-between items-center font-bold text-xs">
+              <div className="mb-4 md:mb-0 text-blue-900 dark:text-blue-400">© {new Date().getFullYear()} Vocademy App. Built with ❤️ for Aspirants.</div>
+              <div className="flex space-x-4 text-gray-400 dark:text-gray-600 uppercase tracking-tighter">
                 <span>SSC • UPSC • Banking</span>
               </div>
             </div>
@@ -293,26 +296,18 @@ const App: React.FC = () => {
 
       <style>{`
         @keyframes modal-pop {
-          0% { transform: scale(0.9) translateY(20px); opacity: 0; }
+          0% { transform: scale(0.9) translateY(15px); opacity: 0; }
           100% { transform: scale(1) translateY(0); opacity: 1; }
         }
         .animate-modal-pop {
-          animation: modal-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          animation: modal-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         @keyframes spin-slow {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
         .animate-spin-slow {
-          animation: spin-slow 6s linear infinite;
-        }
-        .xs\\:block {
-          display: none;
-        }
-        @media (min-width: 400px) {
-          .xs\\:block {
-            display: block;
-          }
+          animation: spin-slow 8s linear infinite;
         }
       `}</style>
     </div>
@@ -332,14 +327,14 @@ const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, col
   return (
     <button 
       onClick={onClick}
-      className="flex items-center w-full p-4 rounded-2xl hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 transition-all active:scale-[0.98] group"
+      className="flex items-center w-full p-3 rounded-2xl hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 transition-all active:scale-[0.98] group"
     >
-      <div className={`w-12 h-12 rounded-2xl ${colorMap[color]} flex items-center justify-center mr-5 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-transparent dark:border-indigo-900/30`}>
-        <i className={`fas ${icon} text-xl group-hover:animate-bounce-soft`}></i>
+      <div className={`w-10 h-10 rounded-xl ${colorMap[color]} flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-transparent dark:border-indigo-900/20`}>
+        <i className={`fas ${icon} text-lg group-hover:animate-bounce-soft`}></i>
       </div>
-      <span className="text-lg font-bold text-indigo-950 dark:text-gray-100 tracking-tight">{label}</span>
-      <div className="ml-auto w-8 h-8 rounded-full bg-gray-50 dark:bg-slate-800 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
-        <i className="fas fa-chevron-right text-[10px] text-indigo-400"></i>
+      <span className="text-base font-bold text-indigo-950 dark:text-gray-100 tracking-tight">{label}</span>
+      <div className="ml-auto w-6 h-6 rounded-full bg-gray-50 dark:bg-slate-800 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+        <i className="fas fa-chevron-right text-[8px] text-indigo-400"></i>
       </div>
     </button>
   );
