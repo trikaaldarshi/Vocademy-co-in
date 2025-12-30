@@ -1,4 +1,3 @@
-
 export interface WordAnalysis {
   word: string;
   pronunciation: string;

@@ -1,17 +1,13 @@
-
 import React from 'react';
 
 interface TeamProps {
   navigateTo: (view: any) => void;
 }
 
-// Defining TeamMember above the Team component to ensure proper type inference for children and other props
-// Fixed TypeScript error by making children optional in the props definition to satisfy call-site validation
 const TeamMember = ({ name, role, image, accent, children }: { name: string, role: string, image: string, accent: string, children?: React.ReactNode }) => (
   <div className="bg-white dark:bg-slate-900/50 p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-gray-100 dark:border-slate-800 shadow-2xl transition-all group">
     <div className="text-center">
       <div className="relative mb-10 mx-auto w-48 h-48 sm:w-56 sm:h-56">
-        {/* Animated Gradient Ring */}
         <div className={`absolute -inset-4 bg-gradient-to-tr ${accent === 'indigo' ? 'from-indigo-500 to-blue-400' : 'from-purple-500 to-pink-400'} rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500`}></div>
         <div className={`absolute -inset-1 bg-gradient-to-tr ${accent === 'indigo' ? 'from-indigo-600 to-blue-500' : 'from-purple-600 to-pink-500'} rounded-full animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
         
@@ -58,29 +54,8 @@ export const Team: React.FC<TeamProps> = ({ navigateTo }) => {
               <p>
                 Anmol Gupta, the visionary behind Vocademy and Lakshya AI, is more than just a developer; he's a builder who has walked the student journey himself. Having prepared for <span className="text-indigo-600 dark:text-indigo-400 font-bold">SSC</span> exams and successfully qualified the <span className="text-indigo-600 dark:text-indigo-400 font-bold">Airforce exam</span>, Anmol intimately understands the vocabulary and revision challenges that thousands of aspirants face daily.
               </p>
-              <p>
-                He is also the proud owner of "Krishna Sada Sahayate" — a value-driven community, and an active admin of "Bharat Pariksha" — a thriving <span className="text-indigo-600 dark:text-indigo-400 font-bold">28k+ student Telegram community</span>.
-              </p>
-              <p>
-                Anmol's vision is to leverage technology, psychology, and community to build systems that significantly reduce digital distraction, fostering a calm, structured, and exam-oriented studying environment. He converts his own pain points into powerful products designed to empower students.
-              </p>
             </div>
           </TeamMember>
-        </div>
-      </div>
-
-      <div className="max-w-4xl mx-auto">
-        <div className="p-10 md:p-16 bg-gray-50/50 dark:bg-slate-900/40 rounded-[3rem] text-center border border-gray-100 dark:border-slate-800">
-          <h2 className="text-2xl md:text-4xl font-black text-indigo-950 dark:text-white mb-4">Want to join us?</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-10 max-w-xl mx-auto font-medium">
-            We are always looking for passionate people to join our content curation and development teams.
-          </p>
-          <a 
-            href="mailto:careers@vocademy.app"
-            className="bg-indigo-600 text-white px-10 py-4 rounded-xl font-black text-lg hover:bg-indigo-700 transition-all inline-block shadow-xl active:scale-95"
-          >
-            View Open Roles
-          </a>
         </div>
       </div>
 

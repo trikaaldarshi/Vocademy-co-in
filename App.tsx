@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Home } from './pages/Home';
 import { Methodology } from './pages/Methodology';
@@ -12,7 +11,6 @@ type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'abo
 
 const LOGO_URL = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251224_183055_297.webp";
 
-// Map slugs to view states
 const PATH_MAP: Record<string, ViewState> = {
   '/': 'home',
   '/methodology': 'methodology',
@@ -23,7 +21,6 @@ const PATH_MAP: Record<string, ViewState> = {
   '/team': 'team',
 };
 
-// Map view states to slugs for navigation
 const SLUG_MAP: Record<ViewState, string> = {
   home: '/',
   methodology: '/methodology',
@@ -68,7 +65,6 @@ const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Initial routing and history listener
   useEffect(() => {
     const handleLocationChange = () => {
       const path = window.location.pathname;
@@ -77,9 +73,7 @@ const App: React.FC = () => {
       window.scrollTo(0, 0);
     };
 
-    // Set initial view based on URL
     handleLocationChange();
-
     window.addEventListener('popstate', handleLocationChange);
     return () => window.removeEventListener('popstate', handleLocationChange);
   }, []);
@@ -105,6 +99,7 @@ const App: React.FC = () => {
       setView(newView);
       window.scrollTo(0, 0);
     }
+    setIsMenuOpen(false);
   };
 
   return (
@@ -112,7 +107,6 @@ const App: React.FC = () => {
       
       <IOSComingSoonModal isOpen={isIOSModalOpen} onClose={() => setIsIOSModalOpen(false)} />
 
-      {/* Navigation */}
       <div className="fixed top-4 w-full px-4 z-[60]">
         <nav className="max-w-6xl mx-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]">
           <div className="px-4 sm:px-8 h-16 flex items-center justify-between">
@@ -121,7 +115,6 @@ const App: React.FC = () => {
               className="flex items-center space-x-3 group active:scale-95 transition-transform"
             >
               <div className="relative">
-                {/* Animated Ring */}
                 <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[2px] animate-spin-slow opacity-70 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative w-9 h-9 sm:w-10 sm:h-10 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-800">
                   <img src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
@@ -157,33 +150,46 @@ const App: React.FC = () => {
         </nav>
       </div>
 
-      {/* Fullscreen Mobile Menu Drawer */}
+      {/* MOBILE MENU - WIDER BACKGROUND SHAPE AS REQUESTED */}
       <div className={`fixed inset-0 z-[55] transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-indigo-950/20 dark:bg-black/40 backdrop-blur-2xl" onClick={() => setIsMenuOpen(false)}></div>
-        <div className={`absolute top-24 right-4 left-4 max-w-md mx-auto bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-white/20 dark:border-slate-800 p-8 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 scale-100' : 'translate-y-10 scale-95'}`}>
-          <div className="grid grid-cols-2 gap-4">
-            <MenuLink onClick={() => navigateTo('home')} icon="fa-home" label="Home" />
-            <MenuLink onClick={() => navigateTo('about')} icon="fa-info-circle" label="About" />
-            <MenuLink onClick={() => navigateTo('team')} icon="fa-users" label="Team" />
-            <MenuLink onClick={() => navigateTo('methodology')} icon="fa-book" label="Methodology" />
-            <MenuLink onClick={() => navigateTo('contact')} icon="fa-envelope" label="Contact" />
-            <MenuLink onClick={() => navigateTo('privacy')} icon="fa-shield-halved" label="Privacy" />
+        <div className="absolute inset-0 bg-indigo-950/20 dark:bg-black/60 backdrop-blur-2xl" onClick={() => setIsMenuOpen(false)}></div>
+        {/* Adjusted: mx-2 and max-w-2xl for wider appearance on mobile devices */}
+        <div className={`absolute top-24 right-2 left-2 sm:right-6 sm:left-6 max-w-2xl mx-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/40 dark:border-slate-800 p-6 sm:p-8 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 scale-100' : 'translate-y-10 scale-95'}`}>
+          <div className="flex items-center justify-between mb-8 px-2">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-xl overflow-hidden border border-indigo-100 shadow-sm">
+                <img src={LOGO_URL} alt="Logo" className="w-full h-full object-cover" />
+              </div>
+              <span className="text-2xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
+            </div>
+            <button onClick={() => setIsMenuOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-slate-800 text-gray-500 transition-all hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-90">
+              <i className="fas fa-times"></i>
+            </button>
           </div>
-          <div className="mt-8 pt-8 border-t border-gray-100 dark:border-slate-800">
+
+          <div className="flex flex-col space-y-2">
+            <MenuLink onClick={() => navigateTo('home')} icon="fa-house" label="Home" color="indigo" />
+            <MenuLink onClick={() => navigateTo('about')} icon="fa-circle-info" label="About Us" color="blue" />
+            <MenuLink onClick={() => navigateTo('team')} icon="fa-users" label="Our Team" color="purple" />
+            <MenuLink onClick={() => navigateTo('methodology')} icon="fa-book-open" label="The Methodology" color="emerald" />
+            <MenuLink onClick={() => navigateTo('contact')} icon="fa-paper-plane" label="Contact Support" color="orange" />
+            <MenuLink onClick={() => navigateTo('privacy')} icon="fa-shield-halved" label="Privacy & Security" color="rose" />
+          </div>
+          
+          <div className="mt-10 pt-8 border-t border-gray-100 dark:border-slate-800/50">
             <a 
               href="https://play.google.com/store/apps/details?id=com.lakshya.vocademy"
               target="_blank"
               rel="noreferrer"
-              className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-center block shadow-lg active:scale-95"
+              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 text-white py-5 rounded-[2rem] font-black text-center flex items-center justify-center space-x-3 shadow-2xl shadow-indigo-600/25 active:scale-95 transition-all group"
             >
-              <i className="fab fa-google-play mr-2"></i>
-              Get Android App
+              <i className="fab fa-google-play text-2xl group-hover:animate-bounce-soft"></i>
+              <span className="text-lg">Get Android App</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Main Content Router */}
       <main className="pt-8">
         {view === 'home' && (
           <Home 
@@ -198,7 +204,6 @@ const App: React.FC = () => {
         {view === 'team' && <Team navigateTo={navigateTo} />}
       </main>
 
-      {/* Footer */}
       <footer className="bg-white dark:bg-slate-950 pt-24 pb-12 px-4 border-t border-gray-100 dark:border-slate-900 transition-colors">
         <div className="max-w-7xl mx-auto text-center md:text-left">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
@@ -224,9 +229,6 @@ const App: React.FC = () => {
                 </a>
                 <a href="https://instagram.com/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
                   <i className="fab fa-instagram text-xl"></i>
-                </a>
-                <a href="https://www.reddit.com/r/Vocademyapp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
-                  <i className="fab fa-reddit-alien text-xl"></i>
                 </a>
               </div>
             </div>
@@ -278,14 +280,30 @@ const App: React.FC = () => {
   );
 };
 
-const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string }> = ({ onClick, icon, label }) => (
-  <button 
-    onClick={onClick}
-    className="flex flex-col items-center justify-center p-4 rounded-2xl bg-gray-50 dark:bg-slate-950 border border-gray-100 dark:border-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:border-indigo-100 dark:hover:border-indigo-800 transition-all active:scale-95"
-  >
-    <i className={`fas ${icon} text-xl text-indigo-600 dark:text-indigo-400 mb-2`}></i>
-    <span className="text-xs font-black text-indigo-950 dark:text-white tracking-tight">{label}</span>
-  </button>
-);
+const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, color: string }> = ({ onClick, icon, label, color }) => {
+  const colorMap: Record<string, string> = {
+    indigo: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400',
+    blue: 'bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
+    purple: 'bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400',
+    emerald: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
+    orange: 'bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400',
+    rose: 'bg-rose-50 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400',
+  };
+
+  return (
+    <button 
+      onClick={onClick}
+      className="flex items-center w-full p-4 rounded-2xl hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 transition-all active:scale-[0.98] group"
+    >
+      <div className={`w-12 h-12 rounded-2xl ${colorMap[color]} flex items-center justify-center mr-5 group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
+        <i className={`fas ${icon} text-xl group-hover:animate-bounce-soft`}></i>
+      </div>
+      <span className="text-lg font-bold text-indigo-950 dark:text-gray-100 tracking-tight">{label}</span>
+      <div className="ml-auto w-8 h-8 rounded-full bg-gray-50 dark:bg-slate-800 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+        <i className="fas fa-chevron-right text-[10px] text-indigo-400"></i>
+      </div>
+    </button>
+  );
+};
 
 export default App;

@@ -1,11 +1,7 @@
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { WordAnalysis } from "../types";
 
-/**
- * Analyzes a word specifically for competitive exam context using Gemini 3.
- */
 export const analyzeWord = async (word: string): Promise<WordAnalysis> => {
-  // Always use a new instance to ensure the latest API key is used
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
@@ -34,10 +30,6 @@ export const analyzeWord = async (word: string): Promise<WordAnalysis> => {
   return JSON.parse(text);
 };
 
-/**
- * Generates audio for word pronunciation using Gemini TTS.
- * Returns the base64 encoded raw PCM data.
- */
 export const generatePronunciation = async (word: string): Promise<string | undefined> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const response = await ai.models.generateContent({
@@ -56,9 +48,6 @@ export const generatePronunciation = async (word: string): Promise<string | unde
   return response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
 };
 
-/**
- * Audio decoding utility functions for raw PCM data.
- */
 export function decodeBase64(base64: string) {
   const binaryString = atob(base64);
   const bytes = new Uint8Array(binaryString.length);

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { analyzeWord, generatePronunciation, decodeBase64, decodeAudioData } from '../services/gemini';
 import { WordAnalysis } from '../types';

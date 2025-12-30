@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface AboutProps {
@@ -85,6 +84,6 @@ export const About: React.FC<AboutProps> = ({ navigateTo }) => {
 const Card = ({ title, desc }: { title: string, desc: string }) => (
   <div className="bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl md:rounded-3xl border border-gray-100 dark:border-slate-800 shadow-xl text-left">
     <h4 className="text-lg md:text-xl font-black text-indigo-900 dark:text-indigo-400 mb-2 md:mb-3">{title}</h4>
-    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{desc}</p>
+    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium leading-relaxed font-medium">{desc}</p>
   </div>
 );

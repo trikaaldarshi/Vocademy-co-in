@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { WordAnalyzerDemo } from '../components/WordAnalyzerDemo';
 import { AutoSlider } from '../components/AutoSlider';
@@ -7,9 +6,6 @@ import {
   IconNews, 
   IconBrain, 
   IconSwords, 
-  IconChart, 
-  IconGift, 
-  IconMessage,
   IconScroll,
   IconCoach,
   IconGame,
@@ -33,10 +29,8 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
 
   return (
     <>
-      {/* Hero Section */}
       <section className="pt-24 sm:pt-36 pb-12 sm:pb-20 px-4 bg-white dark:bg-slate-950 text-center relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
-          {/* Badge Area */}
           <div className="flex flex-col items-center mb-6 sm:mb-10">
             <div className="inline-flex items-center space-x-2 bg-indigo-50 dark:bg-indigo-900/20 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-indigo-100 dark:border-indigo-800 shadow-sm transition-all hover:bg-indigo-100 dark:hover:bg-indigo-900/40">
               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-indigo-600 animate-pulse"></span>
@@ -77,7 +71,6 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
 
       <AutoSlider />
 
-      {/* Features Section */}
       <section id="features" className="py-16 sm:py-32 px-4 bg-white dark:bg-slate-950 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-24 px-4">
@@ -120,9 +113,7 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
         <ImageCarousel />
       </section>
 
-      {/* Lakshya AI Section - Mobile Optimized Grid */}
       <section className="py-16 sm:py-32 px-4 bg-slate-50 dark:bg-[#020617] transition-colors relative overflow-hidden">
-        {/* Decorative background elements */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
           <div className="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-500/10 dark:bg-indigo-600/10 blur-[80px] sm:blur-[120px] rounded-full"></div>
           <div className="absolute bottom-0 left-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-purple-500/10 dark:bg-purple-600/10 blur-[80px] sm:blur-[120px] rounded-full"></div>
@@ -180,29 +171,16 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
               accentColor="rose"
             />
           </div>
-
-          <div className="text-center max-w-4xl mx-auto px-4">
-            <div className="inline-block p-1 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-indigo-500/20 rounded-[1.5rem] sm:rounded-[2rem]">
-              <div className="bg-white/80 dark:bg-slate-900/50 backdrop-blur-xl px-4 sm:px-8 py-4 sm:py-6 rounded-[1.3rem] sm:rounded-[1.8rem] border border-white/40 dark:border-slate-800">
-                <p className="text-sm sm:text-xl text-slate-600 dark:text-slate-400 font-bold leading-relaxed italic">
-                  "Lakshya AI will seamlessly integrate with Vocademy, syncing your vocabulary progress with your overall study plans for a truly unified learning experience."
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-16 sm:py-32 px-4 bg-indigo-600 dark:bg-indigo-700 text-white text-center relative overflow-hidden">
         <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-white/10 rounded-full blur-3xl -mr-24 sm:-mr-32 -mt-24 sm:-mt-32"></div>
-        
         <div className="max-w-4xl mx-auto relative z-10 flex flex-col items-center px-4">
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-black mb-4 sm:mb-6 leading-tight">Ready to transform your preparation?</h2>
           <p className="text-sm sm:text-xl text-indigo-100 mb-8 sm:mb-12 max-w-2xl font-medium">Download the app today and join the elite circle of successful aspirants.</p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-2xl">
-            {/* Play Store Button */}
             <a 
               href="https://play.google.com/store/apps/details?id=com.lakshya.vocademy"
               target="_blank"
@@ -216,7 +194,6 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
               </div>
             </a>
 
-            {/* App Store Button */}
             <button 
               onClick={handleApply}
               className="w-full sm:w-64 group flex items-center bg-white text-slate-900 px-6 sm:px-8 py-4 sm:py-5 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl transition-all"
@@ -248,14 +225,7 @@ const FeatureCard: React.FC<{icon: React.ReactNode, title: string, desc: string,
   </div>
 );
 
-interface LakshyaCardProps {
-  icon: React.ReactNode;
-  title: string;
-  desc: string;
-  accentColor: string;
-}
-
-const LakshyaCard: React.FC<LakshyaCardProps> = ({ icon, title, desc, accentColor }) => {
+const LakshyaCard: React.FC<{icon: React.ReactNode; title: string; desc: string; accentColor: string;}> = ({ icon, title, desc, accentColor }) => {
   const colors: Record<string, string> = {
     indigo: 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-800',
     purple: 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-800',

@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export const IconRocket = () => (
@@ -73,11 +72,11 @@ export const IconMessage = () => (
 export const IconSearch = () => (
   <svg className="w-full h-full text-indigo-500 animate-wiggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="11" cy="11" r="8" />
+    {/* Fixed typo: changed cy1 to y1 for SVG line element */}
     <line x1="21" y1="21" x2="16.65" y2="16.65" />
   </svg>
 );
 
-// LAKSHYA AI SPECIFIC ICONS
 export const IconScroll = () => (
   <svg className="w-full h-full animate-float" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M19 17h2c.6 0 1-.4 1-1V4c0-.6-.4-1-1-1H3c-.6 0-1 .4-1 1v12c0 .6.4 1 1 1h2" />

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 
 const APP_SCREENS = [
@@ -85,14 +84,12 @@ export const ImageCarousel: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6">
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-        {/* Phone Mockup Section */}
         <div 
           className="relative mx-auto w-full max-w-[280px] sm:max-w-[340px] h-[560px] sm:h-[680px] bg-slate-900 rounded-[2.5rem] sm:rounded-[3.5rem] border-[8px] sm:border-[12px] border-slate-800 shadow-2xl overflow-hidden ring-1 ring-white/10 group/phone transition-transform duration-700 select-none"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {/* Notch */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 sm:w-40 h-6 sm:h-7 bg-slate-800 rounded-b-2xl sm:rounded-b-3xl z-40 shadow-sm border-x border-b border-white/5"></div>
           
           <div className="h-full w-full relative bg-gray-50 dark:bg-slate-950 overflow-hidden">
@@ -120,7 +117,6 @@ export const ImageCarousel: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
                     
-                    {/* Floating Info Card */}
                     <div className={`absolute bottom-6 sm:bottom-8 left-4 sm:left-6 right-4 sm:right-6 transition-all duration-1000 delay-200 ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                       <div className="bg-white/10 backdrop-blur-xl p-4 sm:p-6 rounded-[1.5rem] sm:rounded-[2rem] border border-white/20 shadow-2xl">
                          <span className={`inline-block px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-black text-white mb-2 sm:mb-3 uppercase tracking-widest ${screen.accent}`}>
@@ -136,7 +132,6 @@ export const ImageCarousel: React.FC = () => {
             })}
           </div>
 
-          {/* Mobile Swipe Indicator */}
           <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1.5 z-50 lg:hidden">
             {APP_SCREENS.map((_, idx) => (
               <div 
@@ -147,7 +142,6 @@ export const ImageCarousel: React.FC = () => {
           </div>
         </div>
 
-        {/* Feature List Section */}
         <div className="space-y-4 sm:space-y-6 mt-8 lg:mt-0">
           {APP_SCREENS.map((screen, idx) => {
             const isActive = idx === currentIndex;
@@ -161,11 +155,10 @@ export const ImageCarousel: React.FC = () => {
                 }`}
                 onClick={() => setCurrentIndex(idx)}
               >
-                {/* Visual Progress Line */}
                 {isActive && (
                   <div className="absolute bottom-0 left-8 right-8 h-1 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden mb-[-1px]">
                     <div 
-                      className="h-full bg-indigo-600 dark:bg-indigo-500 rounded-full"
+                      className="h-full bg-indigo-600 dark:bg-indigo-50 rounded-full"
                       style={{ 
                         animation: `progress-line ${ROTATION_TIME}ms linear forwards`
                       }}
