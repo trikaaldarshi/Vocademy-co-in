@@ -73,8 +73,9 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleLocationChange = () => {
       const path = window.location.pathname.toLowerCase();
-      // Case-insensitive lookup
-      const targetView = PATH_MAP[path] || 'home';
+      // Ensure path map lookup works even if the path has a trailing slash
+      const lookupPath = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path;
+      const targetView = PATH_MAP[lookupPath] || 'home';
       setView(targetView);
       window.scrollTo(0, 0);
     };
@@ -128,14 +129,14 @@ const App: React.FC = () => {
                     <img src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
                   </div>
                 </div>
-                <span className="text-base sm:text-lg md:text-xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
+                <span className="block text-base sm:text-lg md:text-xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
               </button>
               
               <div className="hidden lg:flex items-center space-x-6 mx-4 flex-shrink-0">
-                <button onClick={() => navigateTo('about')} className={`text-xs font-bold transition-colors ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</button>
-                <button onClick={() => navigateTo('team')} className={`text-xs font-bold transition-colors ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Team</button>
-                <button onClick={() => navigateTo('methodology')} className={`text-xs font-bold transition-colors ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Methodology</button>
-                <button onClick={() => navigateTo('contact')} className={`text-xs font-bold transition-colors ${view === 'contact' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Contact</button>
+                <button onClick={() => navigateTo('about')} className={`text-[11px] font-bold transition-colors ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</button>
+                <button onClick={() => navigateTo('team')} className={`text-[11px] font-bold transition-colors ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Team</button>
+                <button onClick={() => navigateTo('methodology')} className={`text-[11px] font-bold transition-colors ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Methodology</button>
+                <button onClick={() => navigateTo('contact')} className={`text-[11px] font-bold transition-colors ${view === 'contact' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Contact</button>
               </div>
 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-1 justify-end min-w-0">
@@ -154,7 +155,6 @@ const App: React.FC = () => {
                   />
                 </div>
 
-                {/* SEARCH ICON FOR MOBILE */}
                 <button className="sm:hidden p-1.5 w-8 h-8 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-500 transition-all">
                   <div className="w-4 h-4">
                     <IconSearch />
@@ -181,23 +181,23 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Refined Size */}
       <div className={`fixed inset-0 z-[55] transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
         <div className="absolute inset-0 bg-indigo-950/20 dark:bg-black/60 backdrop-blur-xl" onClick={() => setIsMenuOpen(false)}></div>
-        <div className={`absolute top-20 right-4 left-4 max-w-md mx-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.2)] border border-white/40 dark:border-slate-800 p-5 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 scale-100' : 'translate-y-6 scale-95'}`}>
-          <div className="flex items-center justify-between mb-6 px-1">
+        <div className={`absolute top-20 right-6 left-6 max-w-sm mx-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.2)] border border-white/40 dark:border-slate-800 p-4 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 scale-100' : 'translate-y-6 scale-95'}`}>
+          <div className="flex items-center justify-between mb-5 px-1">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg overflow-hidden border border-indigo-100 dark:border-slate-800 shadow-sm">
+              <div className="w-7 h-7 rounded-lg overflow-hidden border border-indigo-100 dark:border-slate-800 shadow-sm">
                 <img src={LOGO_URL} alt="Logo" className="w-full h-full object-cover" />
               </div>
-              <span className="text-xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
+              <span className="text-lg font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
             </div>
-            <button onClick={() => setIsMenuOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-slate-800 text-gray-500 transition-all hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-90">
-              <i className="fas fa-times text-xs"></i>
+            <button onClick={() => setIsMenuOpen(false)} className="w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 dark:bg-slate-800 text-gray-500 transition-all hover:bg-gray-200 dark:hover:bg-slate-700 active:scale-90">
+              <i className="fas fa-times text-[10px]"></i>
             </button>
           </div>
 
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-0.5">
             <MenuLink onClick={() => navigateTo('home')} icon="fa-house" label="Home" color="indigo" />
             <MenuLink onClick={() => navigateTo('about')} icon="fa-circle-info" label="About Us" color="blue" />
             <MenuLink onClick={() => navigateTo('team')} icon="fa-users" label="Our Team" color="purple" />
@@ -206,15 +206,15 @@ const App: React.FC = () => {
             <MenuLink onClick={() => navigateTo('privacy')} icon="fa-shield-halved" label="Privacy & Terms" color="rose" />
           </div>
           
-          <div className="mt-6 pt-5 border-t border-gray-100 dark:border-slate-800/50">
+          <div className="mt-5 pt-4 border-t border-gray-100 dark:border-slate-800/50">
             <a 
               href="https://play.google.com/store/apps/details?id=com.lakshya.vocademy"
               target="_blank"
               rel="noreferrer"
-              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 dark:from-indigo-500 dark:to-indigo-400 text-white py-4 rounded-2xl font-black text-center flex items-center justify-center space-x-2 shadow-xl shadow-indigo-600/20 active:scale-95 transition-all group"
+              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 dark:from-indigo-500 dark:to-indigo-400 text-white py-3.5 rounded-2xl font-black text-center flex items-center justify-center space-x-2 shadow-xl shadow-indigo-600/20 active:scale-95 transition-all group"
             >
-              <i className="fab fa-google-play text-xl group-hover:animate-bounce-soft"></i>
-              <span className="text-base">Get Android App</span>
+              <i className="fab fa-google-play text-lg group-hover:animate-bounce-soft"></i>
+              <span className="text-sm">Get Android App</span>
             </a>
           </div>
         </div>
@@ -327,14 +327,14 @@ const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, col
   return (
     <button 
       onClick={onClick}
-      className="flex items-center w-full p-3 rounded-2xl hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 transition-all active:scale-[0.98] group"
+      className="flex items-center w-full p-2.5 rounded-xl hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 transition-all active:scale-[0.98] group"
     >
-      <div className={`w-10 h-10 rounded-xl ${colorMap[color]} flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-transparent dark:border-indigo-900/20`}>
-        <i className={`fas ${icon} text-lg group-hover:animate-bounce-soft`}></i>
+      <div className={`w-8 h-8 rounded-lg ${colorMap[color]} flex items-center justify-center mr-3.5 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-transparent dark:border-indigo-900/20`}>
+        <i className={`fas ${icon} text-base group-hover:animate-bounce-soft`}></i>
       </div>
-      <span className="text-base font-bold text-indigo-950 dark:text-gray-100 tracking-tight">{label}</span>
-      <div className="ml-auto w-6 h-6 rounded-full bg-gray-50 dark:bg-slate-800 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
-        <i className="fas fa-chevron-right text-[8px] text-indigo-400"></i>
+      <span className="text-sm font-bold text-indigo-950 dark:text-gray-100 tracking-tight">{label}</span>
+      <div className="ml-auto w-5 h-5 rounded-full bg-gray-50 dark:bg-slate-800 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+        <i className="fas fa-chevron-right text-[6px] text-indigo-400"></i>
       </div>
     </button>
   );
