@@ -32,8 +32,8 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
       <section className="pt-24 sm:pt-36 pb-12 sm:pb-20 px-4 bg-white dark:bg-slate-950 text-center relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-col items-center mb-6 sm:mb-10">
-            <div className="inline-flex items-center space-x-2 bg-indigo-50 dark:bg-indigo-900/20 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-indigo-100 dark:border-indigo-800 shadow-sm transition-all hover:bg-indigo-100 dark:hover:bg-indigo-900/40">
-              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+            <div className="inline-flex items-center space-x-2 bg-indigo-50 dark:bg-indigo-950/40 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-indigo-100 dark:border-indigo-900/50 shadow-sm transition-all hover:bg-indigo-100 dark:hover:bg-indigo-900/40">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-indigo-600 dark:bg-indigo-500 animate-pulse"></span>
               <span className="text-indigo-600 dark:text-indigo-400 text-[10px] sm:text-xs font-black uppercase tracking-[0.12em] sm:tracking-[0.15em]">Your No. 1 Vocabulary Partner</span>
             </div>
           </div>
@@ -54,14 +54,14 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
           <div className="flex flex-col items-center justify-center space-y-3 sm:space-y-4 max-w-[320px] sm:max-w-[340px] mx-auto px-4">
             <button 
               onClick={scrollToFeatures}
-              className="w-full py-4 sm:py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-lg sm:text-xl shadow-[0_10px_30px_-10px_rgba(79,70,229,0.5)] transition-all active:scale-[0.98]"
+              className="w-full py-4 sm:py-5 bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white rounded-2xl font-black text-lg sm:text-xl shadow-[0_10px_30px_-10px_rgba(79,70,229,0.5)] transition-all active:scale-[0.98]"
             >
               Learn More
             </button>
             
             <button 
               onClick={scrollToDemo}
-              className="w-full py-4 sm:py-5 bg-white dark:bg-slate-900 border-2 border-indigo-50 dark:border-slate-800 text-indigo-600 dark:text-indigo-400 rounded-2xl font-black text-lg sm:text-xl shadow-sm hover:border-indigo-200 transition-all active:scale-[0.98]"
+              className="w-full py-4 sm:py-5 bg-white dark:bg-slate-900 border-2 border-indigo-50 dark:border-slate-800 text-indigo-600 dark:text-indigo-400 rounded-2xl font-black text-lg sm:text-xl shadow-sm hover:border-indigo-200 dark:hover:border-indigo-500/30 transition-all active:scale-[0.98]"
             >
               Try AI Analyzer
             </button>
@@ -74,7 +74,7 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
       <section id="features" className="py-16 sm:py-32 px-4 bg-white dark:bg-slate-950 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-24 px-4">
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-[#1a1c3d] dark:text-white mb-4 sm:mb-6">Built for Serious Aspirants</h2>
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-[#1a1c3d] dark:text-white mb-4 sm:mb-6 tracking-tight">Built for Serious Aspirants</h2>
             <p className="text-base sm:text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto font-medium leading-relaxed">Master high-yield vocabulary that distinguishes top rankers in UPSC, SSC, and Banking exams.</p>
           </div>
 
@@ -83,19 +83,19 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
               icon={<IconNews />} 
               title="Editorial Context" 
               desc="Words scanned directly from daily editorials. Learn how complex vocabulary is used in professional journalism."
-              iconBg="bg-indigo-50 dark:bg-indigo-900/20"
+              iconBg="bg-indigo-50 dark:bg-indigo-900/30"
             />
             <FeatureCard 
               icon={<IconBrain />} 
               title="SRS Flashcards" 
               desc="Our Spaced Repetition System logic ensures you never forget a word once it's in your long-term memory." 
-              iconBg="bg-emerald-50 dark:bg-emerald-900/20"
+              iconBg="bg-emerald-50 dark:bg-emerald-900/30"
             />
             <FeatureCard 
               icon={<IconSwords />} 
               title="Multiplayer Duels" 
               desc="Challenge fellow aspirants in real-time battles to test your vocabulary speed and precision under pressure." 
-              iconBg="bg-orange-50 dark:bg-orange-900/20"
+              iconBg="bg-orange-50 dark:bg-orange-900/30"
             />
           </div>
         </div>
@@ -111,6 +111,33 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
           <p className="text-gray-500 dark:text-gray-400 mt-2 md:mt-4 text-sm md:text-base">Experience a clean, distraction-free environment optimized for deep learning.</p>
         </div>
         <ImageCarousel />
+      </section>
+
+      <section className="py-16 sm:py-32 px-4 bg-gray-50/30 dark:bg-slate-950 transition-colors">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 sm:mb-20 px-4">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#1a1c3d] dark:text-white mb-4">Loved by Future Leaders</h2>
+            <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base font-medium">Join thousands of aspirants who have upgraded their preparation strategy.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10">
+            <TestimonialCard 
+              name="Rahul Sharma"
+              role="UPSC Aspirant"
+              quote="Vocademy has completely changed how I read editorials. The contextual meanings and Indian Express integration are absolute lifesavers for Mains preparation."
+            />
+            <TestimonialCard 
+              name="Priya Patel"
+              role="SSC CGL Candidate"
+              quote="The Spaced Repetition logic is brilliant. I used to forget words in 3 days, but now they are locked in my long-term memory. Highly recommended for English Tier-II."
+            />
+            <TestimonialCard 
+              name="Anjali Verma"
+              role="Banking Aspirant"
+              quote="I love the multiplayer duels! It makes vocab learning addictive and competitive. It's the first thing I open every morning with my tea."
+            />
+          </div>
+        </div>
       </section>
 
       <section className="py-16 sm:py-32 px-4 bg-slate-50 dark:bg-[#020617] transition-colors relative overflow-hidden">
@@ -213,7 +240,7 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
 
 const FeatureCard: React.FC<{icon: React.ReactNode, title: string, desc: string, iconBg: string}> = ({icon, title, desc, iconBg}) => (
   <div className="bg-gray-50/50 dark:bg-slate-900/40 p-2 sm:p-3 rounded-[1.5rem] sm:rounded-[2rem] border border-gray-100 dark:border-slate-800 transition-all group">
-    <div className="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-[1.3rem] sm:rounded-[1.8rem] shadow-sm hover:shadow-xl transition-all flex flex-col items-start text-left border border-transparent hover:border-indigo-100 dark:hover:border-indigo-900/30 h-full">
+    <div className="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-[1.3rem] sm:rounded-[1.8rem] shadow-sm hover:shadow-xl transition-all flex flex-col items-start text-left border border-transparent hover:border-indigo-100 dark:hover:border-indigo-900/40 h-full">
       <div className={`w-12 h-12 sm:w-14 sm:h-14 ${iconBg} rounded-xl sm:rounded-2xl flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 transition-transform duration-500`}>
         <div className="w-6 h-6 sm:w-8 sm:h-8">
           {icon}
@@ -225,25 +252,46 @@ const FeatureCard: React.FC<{icon: React.ReactNode, title: string, desc: string,
   </div>
 );
 
+const TestimonialCard: React.FC<{ name: string; role: string; quote: string }> = ({ name, role, quote }) => (
+  <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border border-indigo-50 dark:border-slate-800 shadow-xl shadow-indigo-600/[0.03] transition-all hover:scale-[1.02] hover:shadow-2xl flex flex-col h-full relative group">
+    <div className="absolute top-8 right-8 opacity-10 group-hover:opacity-20 transition-opacity">
+      <i className="fas fa-quote-right text-4xl sm:text-5xl text-indigo-600 dark:text-indigo-500"></i>
+    </div>
+    <div className="flex items-center space-x-4 mb-8">
+      <div className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-black text-xl border border-indigo-200 dark:border-indigo-800 shadow-sm">
+        {name.charAt(0)}
+      </div>
+      <div>
+        <h4 className="font-black text-[#1a1c3d] dark:text-white tracking-tight">{name}</h4>
+        <p className="text-xs font-bold text-indigo-500 dark:text-indigo-400 uppercase tracking-widest">{role}</p>
+      </div>
+    </div>
+    <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base font-medium leading-relaxed italic mb-auto">"{quote}"</p>
+    <div className="mt-8 flex space-x-1 text-yellow-400 dark:text-yellow-500 text-xs">
+      {[1, 2, 3, 4, 5].map(s => <i key={s} className="fas fa-star"></i>)}
+    </div>
+  </div>
+);
+
 const LakshyaCard: React.FC<{icon: React.ReactNode; title: string; desc: string; accentColor: string;}> = ({ icon, title, desc, accentColor }) => {
   const colors: Record<string, string> = {
-    indigo: 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-800',
-    purple: 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-800',
-    orange: 'bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 border-orange-100 dark:border-orange-800',
-    emerald: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-800',
-    blue: 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-800',
-    rose: 'bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 border-rose-100 dark:border-rose-800',
+    indigo: 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 border-indigo-100 dark:border-indigo-900/50',
+    purple: 'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-900/50',
+    orange: 'bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 border-orange-100 dark:border-orange-900/50',
+    emerald: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/50',
+    blue: 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-900/50',
+    rose: 'bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 border-rose-100 dark:border-rose-900/50',
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900/40 p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2.5rem] border border-slate-200 dark:border-white/10 hover:border-indigo-500/30 dark:hover:border-white/30 transition-all group flex flex-col items-center text-center shadow-sm hover:shadow-xl dark:hover:shadow-indigo-500/10 active:scale-[0.98]">
-      <div className={`w-12 h-12 sm:w-16 sm:h-16 ${colors[accentColor]} rounded-xl sm:rounded-2xl flex items-center justify-center mb-6 sm:mb-8 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+    <div className="bg-white dark:bg-slate-900/60 p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2.5rem] border border-slate-200 dark:border-white/10 hover:border-indigo-500/30 dark:hover:border-indigo-500/50 transition-all group flex flex-col items-center text-center shadow-sm hover:shadow-xl dark:hover:shadow-indigo-500/10 active:scale-[0.98]">
+      <div className={`w-12 h-12 sm:w-16 sm:h-16 ${colors[accentColor]} rounded-xl sm:rounded-2xl flex items-center justify-center mb-6 sm:mb-8 shadow-sm group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 border border-transparent`}>
         <div className="w-6 h-6 sm:w-8 sm:h-8">
           {icon}
         </div>
       </div>
       <h3 className="text-lg sm:text-2xl font-black text-[#1a1c3d] dark:text-white mb-3 sm:mb-4 transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">{title}</h3>
-      <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{desc}</p>
+      <p className="text-sm sm:text-base text-slate-500 dark:text-gray-400 font-medium leading-relaxed">{desc}</p>
     </div>
   );
 };

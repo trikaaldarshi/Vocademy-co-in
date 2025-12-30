@@ -6,8 +6,10 @@ import { Terms } from './pages/Terms';
 import { Contact } from './pages/Contact';
 import { About } from './pages/About';
 import { Team } from './pages/Team';
+import { Welcome } from './pages/Welcome';
+import { IconSearch } from './components/AnimatedIcons';
 
-type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team';
+type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome';
 
 const LOGO_URL = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251224_183055_297.webp";
 
@@ -19,6 +21,7 @@ const PATH_MAP: Record<string, ViewState> = {
   '/contact': 'contact',
   '/about': 'about',
   '/team': 'team',
+  '/welcome': 'welcome',
 };
 
 const SLUG_MAP: Record<ViewState, string> = {
@@ -29,6 +32,7 @@ const SLUG_MAP: Record<ViewState, string> = {
   contact: '/contact',
   about: '/about',
   team: '/team',
+  welcome: '/welcome',
 };
 
 const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
@@ -37,11 +41,11 @@ const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = (
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div 
-        className="absolute inset-0 bg-indigo-950/20 dark:bg-black/40 backdrop-blur-xl animate-fade-in"
+        className="absolute inset-0 bg-indigo-950/20 dark:bg-black/60 backdrop-blur-xl animate-fade-in"
         onClick={onClose}
       ></div>
-      <div className="relative w-full max-w-md bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-white/40 dark:border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-2xl animate-modal-pop text-center">
-        <div className="w-20 h-20 bg-indigo-100 dark:bg-indigo-900/30 rounded-3xl flex items-center justify-center mx-auto mb-6 text-indigo-600 dark:text-indigo-400">
+      <div className="relative w-full max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-white/40 dark:border-slate-800 rounded-[2.5rem] p-8 md:p-10 shadow-2xl animate-modal-pop text-center">
+        <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-950/30 rounded-3xl flex items-center justify-center mx-auto mb-6 text-indigo-600 dark:text-indigo-400">
           <i className="fab fa-apple text-4xl"></i>
         </div>
         <h3 className="text-2xl md:text-3xl font-black text-indigo-950 dark:text-white mb-4 tracking-tight">iOS App Coming Soon</h3>
@@ -50,7 +54,7 @@ const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = (
         </p>
         <button 
           onClick={onClose}
-          className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-indigo-700 transition-all active:scale-95"
+          className="w-full bg-indigo-600 dark:bg-indigo-500 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-95"
         >
           Understood
         </button>
@@ -64,6 +68,7 @@ const App: React.FC = () => {
   const [isIOSModalOpen, setIsIOSModalOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
 
   useEffect(() => {
     const handleLocationChange = () => {
@@ -107,57 +112,79 @@ const App: React.FC = () => {
       
       <IOSComingSoonModal isOpen={isIOSModalOpen} onClose={() => setIsIOSModalOpen(false)} />
 
-      <div className="fixed top-4 w-full px-4 z-[60]">
-        <nav className="max-w-6xl mx-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]">
-          <div className="px-4 sm:px-8 h-16 flex items-center justify-between">
-            <button 
-              onClick={() => navigateTo('home')}
-              className="flex items-center space-x-3 group active:scale-95 transition-transform"
-            >
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[2px] animate-spin-slow opacity-70 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative w-9 h-9 sm:w-10 sm:h-10 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-800">
-                  <img src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
-                </div>
-              </div>
-              <span className="text-lg sm:text-xl font-extrabold text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
-            </button>
-            
-            <div className="hidden lg:flex items-center space-x-6 mx-4">
-              <button onClick={() => navigateTo('about')} className={`text-sm font-bold transition-colors ${view === 'about' ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</button>
-              <button onClick={() => navigateTo('team')} className={`text-sm font-bold transition-colors ${view === 'team' ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Team</button>
-              <button onClick={() => navigateTo('methodology')} className={`text-sm font-bold transition-colors ${view === 'methodology' ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Methodology</button>
-              <button onClick={() => navigateTo('contact')} className={`text-sm font-bold transition-colors ${view === 'contact' ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Contact</button>
-            </div>
-
-            <div className="flex items-center space-x-1 sm:space-x-2">
+      {/* Navigation - Only show if not in welcome view to maintain focused verification flow */}
+      {view !== 'welcome' && (
+        <div className="fixed top-4 w-full px-4 z-[60]">
+          <nav className="max-w-6xl mx-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)]">
+            <div className="px-4 sm:px-8 h-16 flex items-center justify-between">
               <button 
-                onClick={toggleDarkMode}
-                className="p-2 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all"
+                onClick={() => navigateTo('home')}
+                className="flex items-center space-x-3 group active:scale-95 transition-transform flex-shrink-0"
               >
-                {darkMode ? <i className="fas fa-sun text-lg text-yellow-500"></i> : <i className="fas fa-moon text-lg"></i>}
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[2px] animate-spin-slow opacity-70 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="relative w-9 h-9 sm:w-10 sm:h-10 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-800">
+                    <img src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+                <span className="hidden xs:block text-lg sm:text-xl font-extrabold text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
               </button>
               
-              <button 
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="w-9 h-9 sm:w-10 sm:h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-all active:scale-90"
-                aria-label="Menu"
-              >
-                <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars-staggered'} text-lg`}></i>
-              </button>
-            </div>
-          </div>
-        </nav>
-      </div>
+              <div className="hidden lg:flex items-center space-x-6 mx-4">
+                <button onClick={() => navigateTo('about')} className={`text-sm font-bold transition-colors ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</button>
+                <button onClick={() => navigateTo('team')} className={`text-sm font-bold transition-colors ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Team</button>
+                <button onClick={() => navigateTo('methodology')} className={`text-sm font-bold transition-colors ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Methodology</button>
+                <button onClick={() => navigateTo('contact')} className={`text-sm font-bold transition-colors ${view === 'contact' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Contact</button>
+              </div>
 
-      {/* MOBILE MENU - WIDER BACKGROUND SHAPE AS REQUESTED */}
+              <div className="flex items-center space-x-1 sm:space-x-3 flex-1 justify-end">
+                <div className={`relative hidden sm:flex items-center transition-all duration-500 h-10 ${searchFocused ? 'flex-1 max-w-[300px]' : 'w-10 sm:w-48'} group`}>
+                  <div className={`absolute inset-0 bg-gray-100 dark:bg-slate-800/50 rounded-full border border-gray-200 dark:border-slate-700 transition-all duration-300 ${searchFocused ? 'ring-2 ring-indigo-500/20 border-indigo-500/50 shadow-lg' : 'group-hover:bg-gray-200 dark:group-hover:bg-slate-800'}`}></div>
+                  <div className="absolute left-3 w-5 h-5 flex items-center justify-center pointer-events-none">
+                    <IconSearch />
+                  </div>
+                  <input 
+                    type="text" 
+                    placeholder="Quick search..." 
+                    onFocus={() => setSearchFocused(true)}
+                    onBlur={() => setSearchFocused(false)}
+                    className="bg-transparent border-none outline-none w-full h-full pl-10 pr-4 text-sm font-semibold text-indigo-950 dark:text-gray-200 placeholder-gray-400 dark:placeholder-slate-600 relative z-10"
+                  />
+                </div>
+
+                <button className="sm:hidden p-2 w-9 h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-500 transition-all">
+                  <div className="w-5 h-5">
+                    <IconSearch />
+                  </div>
+                </button>
+
+                <button 
+                  onClick={toggleDarkMode}
+                  className="p-2 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all"
+                >
+                  {darkMode ? <i className="fas fa-sun text-lg text-yellow-500"></i> : <i className="fas fa-moon text-lg"></i>}
+                </button>
+                
+                <button 
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="w-9 h-9 sm:w-10 sm:h-10 bg-indigo-600 dark:bg-indigo-500 text-white rounded-xl flex items-center justify-center shadow-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-90"
+                  aria-label="Menu"
+                >
+                  <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars-staggered'} text-lg`}></i>
+                </button>
+              </div>
+            </div>
+          </nav>
+        </div>
+      )}
+
+      {/* Mobile Menu */}
       <div className={`fixed inset-0 z-[55] transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-indigo-950/20 dark:bg-black/60 backdrop-blur-2xl" onClick={() => setIsMenuOpen(false)}></div>
-        {/* Adjusted: mx-2 and max-w-2xl for wider appearance on mobile devices */}
+        <div className="absolute inset-0 bg-indigo-950/20 dark:bg-black/70 backdrop-blur-2xl" onClick={() => setIsMenuOpen(false)}></div>
         <div className={`absolute top-24 right-2 left-2 sm:right-6 sm:left-6 max-w-2xl mx-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/40 dark:border-slate-800 p-6 sm:p-8 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 scale-100' : 'translate-y-10 scale-95'}`}>
           <div className="flex items-center justify-between mb-8 px-2">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl overflow-hidden border border-indigo-100 shadow-sm">
+              <div className="w-10 h-10 rounded-xl overflow-hidden border border-indigo-100 dark:border-slate-800 shadow-sm">
                 <img src={LOGO_URL} alt="Logo" className="w-full h-full object-cover" />
               </div>
               <span className="text-2xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
@@ -181,7 +208,7 @@ const App: React.FC = () => {
               href="https://play.google.com/store/apps/details?id=com.lakshya.vocademy"
               target="_blank"
               rel="noreferrer"
-              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 text-white py-5 rounded-[2rem] font-black text-center flex items-center justify-center space-x-3 shadow-2xl shadow-indigo-600/25 active:scale-95 transition-all group"
+              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 dark:from-indigo-500 dark:to-indigo-400 text-white py-5 rounded-[2rem] font-black text-center flex items-center justify-center space-x-3 shadow-2xl shadow-indigo-600/25 active:scale-95 transition-all group"
             >
               <i className="fab fa-google-play text-2xl group-hover:animate-bounce-soft"></i>
               <span className="text-lg">Get Android App</span>
@@ -190,7 +217,7 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      <main className="pt-8">
+      <main className={view === 'welcome' ? '' : 'pt-8'}>
         {view === 'home' && (
           <Home 
             handleApply={() => setIsIOSModalOpen(true)}
@@ -202,63 +229,67 @@ const App: React.FC = () => {
         {view === 'contact' && <Contact navigateTo={navigateTo} />}
         {view === 'about' && <About navigateTo={navigateTo} />}
         {view === 'team' && <Team navigateTo={navigateTo} />}
+        {view === 'welcome' && <Welcome navigateTo={navigateTo} />}
       </main>
 
-      <footer className="bg-white dark:bg-slate-950 pt-24 pb-12 px-4 border-t border-gray-100 dark:border-slate-900 transition-colors">
-        <div className="max-w-7xl mx-auto text-center md:text-left">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center justify-center md:justify-start space-x-3 mb-6">
-                <div className="relative">
-                  <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[1px] animate-spin-slow opacity-60"></div>
-                  <div className="relative w-10 h-10 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-900">
-                    <img src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
+      {/* Footer - Only show if not in welcome view */}
+      {view !== 'welcome' && (
+        <footer className="bg-white dark:bg-slate-950 pt-24 pb-12 px-4 border-t border-gray-100 dark:border-slate-900 transition-colors">
+          <div className="max-w-7xl mx-auto text-center md:text-left">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+              <div className="col-span-1 md:col-span-2">
+                <div className="flex items-center justify-center md:justify-start space-x-3 mb-6">
+                  <div className="relative">
+                    <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[1px] animate-spin-slow opacity-60"></div>
+                    <div className="relative w-10 h-10 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-900">
+                      <img src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
+                    </div>
                   </div>
+                  <span className="text-2xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
                 </div>
-                <span className="text-2xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
+                <p className="text-gray-500 dark:text-gray-400 text-lg max-w-sm mx-auto md:mx-0 leading-relaxed mb-8 font-medium">
+                  The most advanced AI-powered vocabulary platform designed specifically for the Indian competitive exam ecosystem.
+                </p>
+                <div className="flex justify-center md:justify-start space-x-4">
+                  <a href="https://telegram.dog/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
+                    <i className="fab fa-telegram-plane text-xl"></i>
+                  </a>
+                  <a href="https://X.com/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
+                    <i className="fab fa-twitter text-xl"></i>
+                  </a>
+                  <a href="https://instagram.com/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
+                    <i className="fab fa-instagram text-xl"></i>
+                  </a>
+                </div>
               </div>
-              <p className="text-gray-500 dark:text-gray-400 text-lg max-w-sm mx-auto md:mx-0 leading-relaxed mb-8 font-medium">
-                The most advanced AI-powered vocabulary platform designed specifically for the Indian competitive exam ecosystem.
-              </p>
-              <div className="flex justify-center md:justify-start space-x-4">
-                <a href="https://telegram.dog/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
-                  <i className="fab fa-telegram-plane text-xl"></i>
-                </a>
-                <a href="https://X.com/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
-                  <i className="fab fa-twitter text-xl"></i>
-                </a>
-                <a href="https://instagram.com/VocademyApp" target="_blank" rel="noreferrer" className="w-12 h-12 bg-gray-100 dark:bg-slate-900 rounded-full flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all hover:scale-110 shadow-sm">
-                  <i className="fab fa-instagram text-xl"></i>
-                </a>
+
+              <div>
+                <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-sm mb-6">Explore</h4>
+                <ul className="space-y-4">
+                  <li><button onClick={() => navigateTo('about')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>About Us</button></li>
+                  <li><button onClick={() => navigateTo('team')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Meet the Builder</button></li>
+                  <li><button onClick={() => navigateTo('methodology')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Methodology</button></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-sm mb-6">Legal</h4>
+                <ul className="space-y-4">
+                  <li><button onClick={() => navigateTo('privacy')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'privacy' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Privacy Policy</button></li>
+                  <li><button onClick={() => navigateTo('terms')} className={`hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'terms' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Terms of Service</button></li>
+                </ul>
               </div>
             </div>
 
-            <div>
-              <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-sm mb-6">Explore</h4>
-              <ul className="space-y-4">
-                <li><button onClick={() => navigateTo('about')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'about' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>About Us</button></li>
-                <li><button onClick={() => navigateTo('team')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'team' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>Meet the Builder</button></li>
-                <li><button onClick={() => navigateTo('methodology')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'methodology' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>Methodology</button></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-sm mb-6">Legal</h4>
-              <ul className="space-y-4">
-                <li><button onClick={() => navigateTo('privacy')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'privacy' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>Privacy Policy</button></li>
-                <li><button onClick={() => navigateTo('terms')} className={`hover:text-indigo-600 transition-colors font-bold ${view === 'terms' ? 'text-indigo-600' : 'text-gray-500 dark:text-gray-400'}`}>Terms of Service</button></li>
-              </ul>
+            <div className="pt-12 border-t border-gray-100 dark:border-slate-900 flex flex-col md:flex-row justify-between items-center font-bold text-sm">
+              <div className="mb-4 md:mb-0 text-blue-900 dark:text-blue-400">© {new Date().getFullYear()} Vocademy App. Crafted with ❤️ for Aspirants.</div>
+              <div className="flex space-x-6 text-gray-400 dark:text-gray-600">
+                <span>SSC • UPSC • Banking</span>
+              </div>
             </div>
           </div>
-
-          <div className="pt-12 border-t border-gray-100 dark:border-slate-900 flex flex-col md:flex-row justify-between items-center font-bold text-sm">
-            <div className="mb-4 md:mb-0 text-blue-900 dark:text-blue-400">© {new Date().getFullYear()} Vocademy App. Crafted with ❤️ for Aspirants.</div>
-            <div className="flex space-x-6 text-gray-400 dark:text-gray-600">
-              <span>SSC • UPSC • Banking</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      )}
 
       <style>{`
         @keyframes modal-pop {
@@ -275,6 +306,14 @@ const App: React.FC = () => {
         .animate-spin-slow {
           animation: spin-slow 6s linear infinite;
         }
+        .xs\\:block {
+          display: none;
+        }
+        @media (min-width: 400px) {
+          .xs\\:block {
+            display: block;
+          }
+        }
       `}</style>
     </div>
   );
@@ -282,12 +321,12 @@ const App: React.FC = () => {
 
 const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, color: string }> = ({ onClick, icon, label, color }) => {
   const colorMap: Record<string, string> = {
-    indigo: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400',
-    blue: 'bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
-    purple: 'bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400',
-    emerald: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
-    orange: 'bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400',
-    rose: 'bg-rose-50 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400',
+    indigo: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400',
+    blue: 'bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400',
+    purple: 'bg-purple-50 text-purple-600 dark:bg-purple-950/50 dark:text-purple-400',
+    emerald: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400',
+    orange: 'bg-orange-50 text-orange-600 dark:bg-orange-950/50 dark:text-orange-400',
+    rose: 'bg-rose-50 text-rose-600 dark:bg-rose-950/50 dark:text-rose-400',
   };
 
   return (
@@ -295,7 +334,7 @@ const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, col
       onClick={onClick}
       className="flex items-center w-full p-4 rounded-2xl hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 transition-all active:scale-[0.98] group"
     >
-      <div className={`w-12 h-12 rounded-2xl ${colorMap[color]} flex items-center justify-center mr-5 group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
+      <div className={`w-12 h-12 rounded-2xl ${colorMap[color]} flex items-center justify-center mr-5 group-hover:scale-110 transition-transform duration-300 shadow-sm border border-transparent dark:border-indigo-900/30`}>
         <i className={`fas ${icon} text-xl group-hover:animate-bounce-soft`}></i>
       </div>
       <span className="text-lg font-bold text-indigo-950 dark:text-gray-100 tracking-tight">{label}</span>

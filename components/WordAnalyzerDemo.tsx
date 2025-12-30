@@ -63,7 +63,7 @@ export const WordAnalyzerDemo: React.FC = () => {
           onChange={(e) => setInput(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleAnalyze()}
           placeholder="Enter word (e.g., Hubris...)"
-          className="flex-1 px-4 sm:px-8 py-3.5 sm:py-5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-slate-800 border-2 border-transparent focus:border-indigo-600 dark:focus:border-indigo-500 outline-none text-base sm:text-xl font-bold transition-all text-indigo-950 dark:text-white shadow-inner"
+          className="flex-1 px-4 sm:px-8 py-3.5 sm:py-5 rounded-xl md:rounded-2xl bg-gray-50 dark:bg-slate-800 border-2 border-transparent focus:border-indigo-600 dark:focus:border-indigo-500 outline-none text-base sm:text-xl font-bold transition-all text-indigo-950 dark:text-white shadow-inner dark:placeholder-slate-500"
         />
         <button
           onClick={handleAnalyze}
@@ -75,7 +75,7 @@ export const WordAnalyzerDemo: React.FC = () => {
       </div>
 
       {analysis && (
-        <div className="animate-fade-in space-y-4 sm:space-y-8 bg-gray-50/50 dark:bg-slate-950/40 p-4 sm:p-8 rounded-[1.5rem] sm:rounded-3xl border border-gray-100 dark:border-slate-800">
+        <div className="animate-fade-in space-y-4 sm:space-y-8 bg-gray-50/50 dark:bg-slate-950/60 p-4 sm:p-8 rounded-[1.5rem] sm:rounded-3xl border border-gray-100 dark:border-slate-800 shadow-sm">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-gray-200 dark:border-slate-800 pb-4 md:pb-6">
             <div className="flex items-center space-x-3 sm:space-x-6">
               <div>
@@ -100,15 +100,15 @@ export const WordAnalyzerDemo: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             <div className="bg-white dark:bg-slate-900 p-4 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 group h-full">
               <span className="text-[9px] sm:text-xs font-black uppercase text-indigo-400 dark:text-indigo-500 tracking-widest">Meaning (EN)</span>
-              <p className="text-indigo-950 dark:text-white mt-2 sm:mt-4 text-sm sm:text-base md:text-xl font-medium leading-relaxed">{analysis.meaningEnglish}</p>
+              <p className="text-indigo-950 dark:text-gray-100 mt-2 sm:mt-4 text-sm sm:text-base md:text-xl font-medium leading-relaxed">{analysis.meaningEnglish}</p>
             </div>
             <div className="bg-white dark:bg-slate-900 p-4 sm:p-8 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 group h-full">
               <span className="text-[9px] sm:text-xs font-black uppercase text-emerald-500 dark:text-emerald-400 tracking-widest">अर्थ (हिन्दी)</span>
-              <p className="text-indigo-950 dark:text-white mt-2 sm:mt-4 text-xl sm:text-2xl md:text-3xl font-bold font-hindi">{analysis.meaningHindi}</p>
+              <p className="text-indigo-950 dark:text-gray-100 mt-2 sm:mt-4 text-xl sm:text-2xl md:text-3xl font-bold font-hindi">{analysis.meaningHindi}</p>
             </div>
           </div>
 
-          <div className="bg-indigo-900 dark:bg-indigo-950 text-white p-5 sm:p-10 rounded-xl sm:rounded-2xl shadow-2xl relative overflow-hidden group">
+          <div className="bg-indigo-900 dark:bg-indigo-950 text-white p-5 sm:p-10 rounded-xl sm:rounded-2xl shadow-2xl relative overflow-hidden group border border-white/5">
             <div className="absolute top-0 right-0 p-4 sm:p-8 opacity-5 text-4xl sm:text-9xl transform rotate-12 pointer-events-none">
               <i className="fas fa-quote-right"></i>
             </div>
@@ -123,7 +123,7 @@ export const WordAnalyzerDemo: React.FC = () => {
                 <span className="text-[9px] sm:text-xs font-black uppercase tracking-widest">Synonyms</span>
               </div>
               <div className="flex flex-wrap gap-2">
-                {analysis.synonyms.map(s => <span key={s} className="bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 px-3 sm:px-5 py-1 sm:py-2.5 rounded-lg sm:rounded-xl text-[10px] sm:text-base font-bold shadow-sm border border-emerald-100 dark:border-emerald-900">{s}</span>)}
+                {analysis.synonyms.map(s => <span key={s} className="bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 px-3 sm:px-5 py-1 sm:py-2.5 rounded-lg sm:rounded-xl text-[10px] sm:text-base font-bold shadow-sm border border-emerald-100 dark:border-emerald-900/50">{s}</span>)}
               </div>
             </div>
             <div className="space-y-2 sm:space-y-4">
@@ -132,7 +132,7 @@ export const WordAnalyzerDemo: React.FC = () => {
                 <span className="text-[9px] sm:text-xs font-black uppercase tracking-widest">Antonyms</span>
               </div>
               <div className="flex flex-wrap gap-2">
-                {analysis.antonyms.map(a => <span key={a} className="bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-400 px-3 sm:px-5 py-1 sm:py-2.5 rounded-lg sm:rounded-xl text-[10px] sm:text-base font-bold shadow-sm border border-red-100 dark:border-red-900">{a}</span>)}
+                {analysis.antonyms.map(a => <span key={a} className="bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-400 px-3 sm:px-5 py-1 sm:py-2.5 rounded-lg sm:rounded-xl text-[10px] sm:text-base font-bold shadow-sm border border-red-100 dark:border-red-900/50">{a}</span>)}
               </div>
             </div>
           </div>
