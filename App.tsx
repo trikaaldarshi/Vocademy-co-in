@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Home } from './pages/Home';
 import { Methodology } from './pages/Methodology';
@@ -10,12 +9,8 @@ import { Team } from './pages/Team';
 import { Welcome } from './pages/Welcome';
 import { ArticleDetail } from './pages/ArticleDetail';
 import { Articles } from './pages/Articles';
-import { AdminLogin } from './pages/AdminLogin';
-import { AdminDashboard } from './pages/AdminDashboard';
-import { auth, onAuthStateChanged, checkAdminClaim } from './services/auth';
-import { User } from "https://esm.sh/firebase@10.7.1/auth";
 
-type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail' | 'articles' | 'admin-login' | 'admin-dashboard';
+type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail' | 'articles';
 
 const LOGO_URL = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251224_183055_297.webp";
 
@@ -29,7 +24,6 @@ const PATH_MAP: Record<string, ViewState> = {
   '/team': 'team',
   '/welcome': 'welcome',
   '/articles': 'articles',
-  '/csc-login': 'admin-login',
 };
 
 const SLUG_MAP: Record<ViewState, string> = {
@@ -43,8 +37,6 @@ const SLUG_MAP: Record<ViewState, string> = {
   welcome: '/welcome',
   articles: '/articles',
   'article-detail': '/article',
-  'admin-login': '/csc-login',
-  'admin-dashboard': '/admin-dashboard',
 };
 
 const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
@@ -74,25 +66,6 @@ const App: React.FC = () => {
   const [isIOSModalOpen, setIsIOSModalOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-  // Auth state
-  const [user, setUser] = useState<User | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [authLoading, setAuthLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      if (currentUser) {
-        const adminStatus = await checkAdminClaim(currentUser);
-        setIsAdmin(adminStatus);
-      } else {
-        setIsAdmin(false);
-      }
-      setAuthLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     const handleLocationChange = () => {
@@ -142,7 +115,7 @@ const App: React.FC = () => {
     setIsMenuOpen(false);
   };
 
-  const isNavVisible = !['welcome', 'admin-login', 'admin-dashboard'].includes(view);
+  const isNavVisible = !['welcome'].includes(view);
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-900/40 transition-colors duration-300">
@@ -173,11 +146,6 @@ const App: React.FC = () => {
               </div>
 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-1 justify-end min-w-0">
-                {isAdmin && (
-                  <button onClick={() => navigateTo('admin-dashboard')} className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 shadow-sm mr-2">
-                    <i className="fas fa-hammer text-xs"></i>
-                  </button>
-                )}
                 <button onClick={() => setDarkMode(!darkMode)} className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all">
                   {darkMode ? <i className="fas fa-sun text-base text-yellow-500"></i> : <i className="fas fa-moon text-base"></i>}
                 </button>
@@ -202,30 +170,22 @@ const App: React.FC = () => {
             <MenuLink onClick={() => navigateTo('methodology')} icon="fa-book-open" label="Methodology" color="emerald" />
             <MenuLink onClick={() => navigateTo('contact')} icon="fa-paper-plane" label="Contact Support" color="orange" />
             <MenuLink onClick={() => navigateTo('privacy')} icon="fa-shield-halved" label="Privacy & Terms" color="rose" />
-            {isAdmin && <MenuLink onClick={() => navigateTo('admin-dashboard')} icon="fa-hammer" label="Admin Dashboard" color="indigo" />}
+            <MenuLink onClick={() => window.open('https://play.google.com/store/apps/details?id=com.lakshya.vocademy', '_blank')} icon="fa-download" label="Download App" color="indigo" />
           </div>
         </div>
       </div>
 
       <main>
-        {authLoading ? (
-           <div className="min-h-screen flex items-center justify-center"><i className="fas fa-spinner animate-spin text-3xl text-indigo-600"></i></div>
-        ) : (
-          <>
-            {view === 'home' && <Home handleApply={() => setIsIOSModalOpen(true)} navigateToArticle={(slug) => navigateTo('article-detail', slug)} />}
-            {view === 'articles' && <Articles navigateToArticle={(slug) => navigateTo('article-detail', slug)} />}
-            {view === 'article-detail' && <ArticleDetail slug={currentArticleSlug} navigateTo={navigateTo} />}
-            {view === 'methodology' && <Methodology navigateTo={navigateTo} />}
-            {view === 'privacy' && <Privacy />}
-            {view === 'terms' && <Terms />}
-            {view === 'contact' && <Contact navigateTo={navigateTo} />}
-            {view === 'about' && <About navigateTo={navigateTo} />}
-            {view === 'team' && <Team navigateTo={navigateTo} />}
-            {view === 'welcome' && <Welcome navigateTo={navigateTo} />}
-            {view === 'admin-login' && <AdminLogin navigateTo={navigateTo} />}
-            {view === 'admin-dashboard' && <AdminDashboard navigateTo={navigateTo} isAdmin={isAdmin} />}
-          </>
-        )}
+        {view === 'home' && <Home handleApply={() => setIsIOSModalOpen(true)} navigateToArticle={(slug) => navigateTo('article-detail', slug)} />}
+        {view === 'articles' && <Articles navigateToArticle={(slug) => navigateTo('article-detail', slug)} />}
+        {view === 'article-detail' && <ArticleDetail slug={currentArticleSlug} navigateTo={navigateTo} />}
+        {view === 'methodology' && <Methodology navigateTo={navigateTo} />}
+        {view === 'privacy' && <Privacy />}
+        {view === 'terms' && <Terms />}
+        {view === 'contact' && <Contact navigateTo={navigateTo} />}
+        {view === 'about' && <About navigateTo={navigateTo} />}
+        {view === 'team' && <Team navigateTo={navigateTo} />}
+        {view === 'welcome' && <Welcome navigateTo={navigateTo} />}
       </main>
 
       {isNavVisible && (
@@ -246,6 +206,7 @@ const App: React.FC = () => {
                   <li><button onClick={() => navigateTo('home')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Home</button></li>
                   <li><button onClick={() => navigateTo('articles')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Articles</button></li>
                   <li><button onClick={() => navigateTo('about')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">About Us</button></li>
+                  <li><button onClick={() => navigateTo('team')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Our Team</button></li>
                 </ul>
               </div>
               <div>
