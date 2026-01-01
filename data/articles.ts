@@ -8,7 +8,7 @@ export interface Article {
   content: string[];
 }
 
-export const ARTICLES: Article[] = [
+const DEFAULT_ARTICLES: Article[] = [
   {
     slug: 'how-to-read-the-hindu-for-upsc',
     title: 'How to Read The Hindu Effectively for UPSC 2025',
@@ -52,3 +52,21 @@ export const ARTICLES: Article[] = [
     ]
   }
 ];
+
+export const getArticles = (): Article[] => {
+  const local = localStorage.getItem('vocademy_articles');
+  if (local) {
+    try {
+      return JSON.parse(local);
+    } catch (e) {
+      return DEFAULT_ARTICLES;
+    }
+  }
+  return DEFAULT_ARTICLES;
+};
+
+export const saveArticles = (articles: Article[]) => {
+  localStorage.setItem('vocademy_articles', JSON.stringify(articles));
+};
+
+export const ARTICLES = getArticles();
