@@ -170,7 +170,7 @@ const App: React.FC = () => {
             <MenuLink onClick={() => navigateTo('methodology')} icon="fa-book-open" label="Methodology" color="emerald" />
             <MenuLink onClick={() => navigateTo('contact')} icon="fa-paper-plane" label="Contact Support" color="orange" />
             <MenuLink onClick={() => navigateTo('privacy')} icon="fa-shield-halved" label="Privacy & Terms" color="rose" />
-            <MenuLink onClick={() => window.open('https://play.google.com/store/apps/details?id=com.lakshya.vocademy', '_blank')} icon="fa-download" label="Download App" color="indigo" />
+            <MenuLink onClick={() => window.open('https://play.google.com/store/apps/details?id=com.lakshya.vocademy', '_blank')} icon="fa-download" label="Download App" color="indigo" noBg />
           </div>
         </div>
       </div>
@@ -224,18 +224,28 @@ const App: React.FC = () => {
   );
 };
 
-const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, color: string }> = ({ onClick, icon, label, color }) => {
+const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, color: string, noBg?: boolean }> = ({ onClick, icon, label, color, noBg }) => {
   const colorMap: Record<string, string> = {
-    indigo: 'bg-indigo-50 text-indigo-600',
-    blue: 'bg-blue-50 text-blue-600',
-    purple: 'bg-purple-50 text-purple-600',
-    emerald: 'bg-emerald-50 text-emerald-600',
-    orange: 'bg-orange-50 text-orange-600',
-    rose: 'bg-rose-50 text-rose-600',
+    indigo: 'text-indigo-600',
+    blue: 'text-blue-600',
+    purple: 'text-purple-600',
+    emerald: 'text-emerald-600',
+    orange: 'text-orange-600',
+    rose: 'text-rose-600',
   };
+
+  const bgMap: Record<string, string> = {
+    indigo: 'bg-indigo-50',
+    blue: 'bg-blue-50',
+    purple: 'bg-purple-50',
+    emerald: 'bg-emerald-50',
+    orange: 'bg-orange-50',
+    rose: 'bg-rose-50',
+  };
+
   return (
     <button onClick={onClick} className="flex items-center w-full p-2.5 rounded-xl hover:bg-indigo-50/50 transition-all active:scale-[0.98] group">
-      <div className={`w-8 h-8 rounded-lg ${colorMap[color]} flex items-center justify-center mr-3.5 group-hover:scale-110 transition-transform`}>
+      <div className={`w-8 h-8 rounded-lg ${!noBg ? bgMap[color] : ''} ${colorMap[color]} flex items-center justify-center mr-3.5 group-hover:scale-110 transition-transform`}>
         <i className={`fas ${icon} text-base`}></i>
       </div>
       <span className="text-sm font-bold text-indigo-950 dark:text-gray-100 tracking-tight">{label}</span>

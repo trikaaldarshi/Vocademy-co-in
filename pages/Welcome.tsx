@@ -28,8 +28,6 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
         setFirebaseFunctions({ initializeApp: initApp, getAuth, applyActionCode });
       } catch (err) {
         console.error("Failed to load Firebase modules:", err);
-        setStatus('error');
-        setErrorMsg('Security framework failed to initialize.');
       }
     };
 
@@ -68,10 +66,10 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
             .catch((err: any) => {
               console.error("❌ Firebase verification commit failed:", err);
               setStatus('error');
-              setErrorMsg(err.message || 'Verification link is invalid or expired.');
+              setErrorMsg(err.message || "Link is invalid or expired.");
             });
         } else {
-          // Fallback if no code is present, allowing normal entry
+          // Allow normal entry if no code is present
           setTimeout(() => setStatus('success'), 1200);
         }
       }
