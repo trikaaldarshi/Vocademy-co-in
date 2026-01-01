@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 interface WelcomeProps {
@@ -21,8 +22,9 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
   useEffect(() => {
     const loadFirebase = async () => {
       try {
-        const { initializeApp: initApp } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js" as any);
-        const { getAuth, applyActionCode } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js" as any);
+        // Using esm.sh for better compatibility in this environment
+        const { initializeApp: initApp } = await import("https://esm.sh/firebase@10.7.1/app");
+        const { getAuth, applyActionCode } = await import("https://esm.sh/firebase@10.7.1/auth");
         setFirebaseFunctions({ initializeApp: initApp, getAuth, applyActionCode });
       } catch (err) {
         console.error("Failed to load Firebase modules:", err);
@@ -38,7 +40,6 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
     if (firebaseFunctions.initializeApp && firebaseFunctions.getAuth && firebaseFunctions.applyActionCode) {
       const { initializeApp, getAuth, applyActionCode } = firebaseFunctions;
 
-      // Use process.env placeholders for Vercel/Environment configuration
       const firebaseConfig = {
         apiKey: process.env.FIREBASE_API_KEY || "Your_api_key",
         authDomain: process.env.FIREBASE_AUTH_DOMAIN || "your_domain",
@@ -61,16 +62,15 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
         if (oobCode) {
           applyActionCode(auth, oobCode)
             .then(() => {
-              console.log("✅ Email verified and committed to Firebase");
+              console.log("✅ Email verified");
               setStatus('success');
             })
             .catch((err: any) => {
-              console.error("❌ Firebase verification commit failed:", err);
+              console.error("❌ Verification failed:", err);
               setStatus('error');
               setErrorMsg(err.message || 'Verification failed. The link might be expired.');
             });
         } else {
-            // No code found, show error or redirect
             setStatus('error');
             setErrorMsg('No verification code provided in the link.');
         }
@@ -80,7 +80,6 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-6 relative overflow-hidden">
-      {/* Abstract Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 dark:opacity-40">
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-indigo-500/20 blur-[120px] rounded-full animate-float"></div>
         <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-500/20 blur-[120px] rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
