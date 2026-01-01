@@ -43,7 +43,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ slug, navigateTo }
       {/* Progress Bar */}
       <div className="fixed top-0 left-0 w-full h-1 z-[70] bg-gray-100 dark:bg-slate-900">
         <div 
-          className="h-full bg-indigo-600 transition-all duration-100" 
+          className="h-full bg-amber-600 transition-all duration-100" 
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -59,7 +59,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ slug, navigateTo }
           </button>
           
           <div className="space-y-6">
-            <span className="px-4 py-1.5 bg-indigo-50 dark:bg-indigo-900/40 rounded-full text-xs font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800">
+            <span className="px-4 py-1.5 bg-amber-50 dark:bg-amber-900/40 rounded-full text-xs font-black uppercase tracking-widest text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-amber-800">
               {article.category}
             </span>
             <h1 className="text-4xl md:text-6xl font-black text-[#1a1c3d] dark:text-white leading-[1.1] tracking-tight">

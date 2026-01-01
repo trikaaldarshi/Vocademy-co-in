@@ -128,7 +128,19 @@ const App: React.FC = () => {
     setIsMenuOpen(false);
   };
 
-  const isHomeActive = view === 'home' || view === 'article-detail';
+  const handleSearchAction = () => {
+    navigateTo('home');
+    setTimeout(() => {
+      const articlesSection = document.getElementById('articles');
+      if (articlesSection) {
+        articlesSection.scrollIntoView({ behavior: 'smooth' });
+        const searchInput = document.getElementById('article-search-input');
+        if (searchInput) {
+          searchInput.focus();
+        }
+      }
+    }, 100);
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-900/40 transition-colors duration-300">
@@ -166,21 +178,21 @@ const App: React.FC = () => {
               </div>
 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-1 justify-end min-w-0">
-                <div className={`relative hidden sm:flex items-center transition-all duration-500 h-9 ${searchFocused ? 'flex-1 max-w-[200px]' : 'w-32 md:w-40'} group`}>
-                  <div className={`absolute inset-0 bg-gray-100 dark:bg-slate-800/50 rounded-full border border-gray-200 dark:border-slate-700 transition-all duration-300 ${searchFocused ? 'ring-2 ring-indigo-500/20 border-indigo-500/50 shadow-md' : 'group-hover:bg-gray-200 dark:group-hover:bg-slate-800'}`}></div>
+                <button 
+                  onClick={handleSearchAction}
+                  className={`relative hidden sm:flex items-center transition-all duration-500 h-9 w-32 md:w-40 group overflow-hidden`}
+                >
+                  <div className={`absolute inset-0 bg-gray-100 dark:bg-slate-800/50 rounded-full border border-gray-200 dark:border-slate-700 transition-all duration-300 group-hover:bg-gray-200 dark:group-hover:bg-slate-800`}></div>
                   <div className="absolute left-2.5 w-4 h-4 flex items-center justify-center pointer-events-none">
                     <IconSearch />
                   </div>
-                  <input 
-                    type="text" 
-                    placeholder="Search..." 
-                    onFocus={() => setSearchFocused(true)}
-                    onBlur={() => setSearchFocused(false)}
-                    className="bg-transparent border-none outline-none w-full h-full pl-9 pr-3 text-xs font-semibold text-indigo-950 dark:text-gray-200 placeholder-gray-400 dark:placeholder-slate-600 relative z-10"
-                  />
-                </div>
+                  <span className="pl-9 text-xs font-semibold text-gray-400 dark:text-slate-600 truncate">Search articles...</span>
+                </button>
 
-                <button className="sm:hidden p-1.5 w-8 h-8 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-500 transition-all">
+                <button 
+                  onClick={handleSearchAction}
+                  className="sm:hidden p-1.5 w-8 h-8 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-500 transition-all"
+                >
                   <div className="w-4 h-4">
                     <IconSearch />
                   </div>
