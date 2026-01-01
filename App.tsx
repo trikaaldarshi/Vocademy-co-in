@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Home } from './pages/Home';
 import { Methodology } from './pages/Methodology';
@@ -11,7 +12,8 @@ import { ArticleDetail } from './pages/ArticleDetail';
 import { Articles } from './pages/Articles';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
-import { IconSearch } from './components/AnimatedIcons';
+import { auth, onAuthStateChanged, checkAdminClaim } from './services/auth';
+import { User } from "https://esm.sh/firebase@10.7.1/auth";
 
 type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail' | 'articles' | 'admin-login' | 'admin-dashboard';
 
@@ -47,13 +49,9 @@ const SLUG_MAP: Record<ViewState, string> = {
 
 const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div 
-        className="absolute inset-0 bg-indigo-950/20 dark:bg-black/60 backdrop-blur-xl animate-fade-in"
-        onClick={onClose}
-      ></div>
+      <div className="absolute inset-0 bg-indigo-950/20 dark:bg-black/60 backdrop-blur-xl animate-fade-in" onClick={onClose}></div>
       <div className="relative w-full max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border border-white/40 dark:border-slate-800 rounded-[2.5rem] p-8 md:p-10 shadow-2xl animate-modal-pop text-center">
         <div className="w-20 h-20 bg-indigo-50 dark:bg-indigo-950/30 rounded-3xl flex items-center justify-center mx-auto mb-6 text-indigo-600 dark:text-indigo-400">
           <i className="fab fa-apple text-4xl"></i>
@@ -62,10 +60,7 @@ const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = (
         <p className="text-gray-600 dark:text-gray-400 font-medium leading-relaxed mb-8">
           We are currently focusing on perfecting the Android experience. The iOS version of Vocademy is under development and will be available on the App Store soon!
         </p>
-        <button 
-          onClick={onClose}
-          className="w-full bg-indigo-600 dark:bg-indigo-500 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-95"
-        >
+        <button onClick={onClose} className="w-full bg-indigo-600 dark:bg-indigo-500 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-95">
           Understood
         </button>
       </div>
@@ -79,11 +74,29 @@ const App: React.FC = () => {
   const [isIOSModalOpen, setIsIOSModalOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // Auth state
+  const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        const adminStatus = await checkAdminClaim(currentUser);
+        setIsAdmin(adminStatus);
+      } else {
+        setIsAdmin(false);
+      }
+      setAuthLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const handleLocationChange = () => {
       const path = window.location.pathname.toLowerCase();
-      
       if (path.startsWith('/article/')) {
         const slug = path.replace('/article/', '');
         setCurrentArticleSlug(slug);
@@ -91,13 +104,11 @@ const App: React.FC = () => {
         window.scrollTo(0, 0);
         return;
       }
-
       const lookupPath = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path;
       const targetView = PATH_MAP[lookupPath] || 'home';
       setView(targetView);
       window.scrollTo(0, 0);
     };
-
     handleLocationChange();
     window.addEventListener('popstate', handleLocationChange);
     return () => window.removeEventListener('popstate', handleLocationChange);
@@ -115,14 +126,11 @@ const App: React.FC = () => {
     }
   }, [darkMode]);
 
-  const toggleDarkMode = () => setDarkMode(!darkMode);
-  
   const navigateTo = (newView: ViewState, slug?: string) => {
     let path = SLUG_MAP[newView];
     if (newView === 'article-detail' && slug) {
       path = `/article/${slug}`;
     }
-
     if (window.location.pathname.toLowerCase() !== path.toLowerCase()) {
       window.history.pushState(null, '', path);
       if (newView === 'article-detail' && slug) {
@@ -134,8 +142,6 @@ const App: React.FC = () => {
     setIsMenuOpen(false);
   };
 
-  const isHomeView = view === 'home';
-  const isArticlesView = view === 'articles';
   const isNavVisible = !['welcome', 'admin-login', 'admin-dashboard'].includes(view);
 
   return (
@@ -143,15 +149,11 @@ const App: React.FC = () => {
       
       <IOSComingSoonModal isOpen={isIOSModalOpen} onClose={() => setIsIOSModalOpen(false)} />
 
-      {/* Navigation */}
       {isNavVisible && (
         <div className="fixed top-4 w-full px-4 z-[60]">
           <nav className="max-w-6xl mx-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] overflow-hidden">
             <div className="px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
-              <button 
-                onClick={() => navigateTo('home')}
-                className="flex items-center space-x-2 group active:scale-95 transition-transform flex-shrink-0"
-              >
+              <button onClick={() => navigateTo('home')} className="flex items-center space-x-2 group active:scale-95 transition-transform flex-shrink-0">
                 <div className="relative flex-shrink-0">
                   <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[1px] animate-spin-slow opacity-70 group-hover:opacity-100 transition-opacity"></div>
                   <div className="relative w-8 h-8 sm:w-10 sm:h-10 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-800">
@@ -171,18 +173,15 @@ const App: React.FC = () => {
               </div>
 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-1 justify-end min-w-0">
-                <button 
-                  onClick={toggleDarkMode}
-                  className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all"
-                >
+                {isAdmin && (
+                  <button onClick={() => navigateTo('admin-dashboard')} className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 shadow-sm mr-2">
+                    <i className="fas fa-hammer text-xs"></i>
+                  </button>
+                )}
+                <button onClick={() => setDarkMode(!darkMode)} className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all">
                   {darkMode ? <i className="fas fa-sun text-base text-yellow-500"></i> : <i className="fas fa-moon text-base"></i>}
                 </button>
-                
-                <button 
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="w-8 h-8 sm:w-9 sm:h-9 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg flex items-center justify-center shadow-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-90 flex-shrink-0"
-                  aria-label="Menu"
-                >
+                <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="w-8 h-8 sm:w-9 sm:h-9 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg flex items-center justify-center shadow-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-90 flex-shrink-0">
                   <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars-staggered'} text-sm`}></i>
                 </button>
               </div>
@@ -203,23 +202,30 @@ const App: React.FC = () => {
             <MenuLink onClick={() => navigateTo('methodology')} icon="fa-book-open" label="Methodology" color="emerald" />
             <MenuLink onClick={() => navigateTo('contact')} icon="fa-paper-plane" label="Contact Support" color="orange" />
             <MenuLink onClick={() => navigateTo('privacy')} icon="fa-shield-halved" label="Privacy & Terms" color="rose" />
+            {isAdmin && <MenuLink onClick={() => navigateTo('admin-dashboard')} icon="fa-hammer" label="Admin Dashboard" color="indigo" />}
           </div>
         </div>
       </div>
 
       <main>
-        {view === 'home' && <Home handleApply={() => setIsIOSModalOpen(true)} navigateToArticle={(slug) => navigateTo('article-detail', slug)} />}
-        {view === 'articles' && <Articles navigateToArticle={(slug) => navigateTo('article-detail', slug)} />}
-        {view === 'article-detail' && <ArticleDetail slug={currentArticleSlug} navigateTo={navigateTo} />}
-        {view === 'methodology' && <Methodology navigateTo={navigateTo} />}
-        {view === 'privacy' && <Privacy />}
-        {view === 'terms' && <Terms />}
-        {view === 'contact' && <Contact navigateTo={navigateTo} />}
-        {view === 'about' && <About navigateTo={navigateTo} />}
-        {view === 'team' && <Team navigateTo={navigateTo} />}
-        {view === 'welcome' && <Welcome navigateTo={navigateTo} />}
-        {view === 'admin-login' && <AdminLogin onLogin={() => setView('admin-dashboard')} navigateTo={navigateTo} />}
-        {view === 'admin-dashboard' && <AdminDashboard navigateTo={navigateTo} />}
+        {authLoading ? (
+           <div className="min-h-screen flex items-center justify-center"><i className="fas fa-spinner animate-spin text-3xl text-indigo-600"></i></div>
+        ) : (
+          <>
+            {view === 'home' && <Home handleApply={() => setIsIOSModalOpen(true)} navigateToArticle={(slug) => navigateTo('article-detail', slug)} />}
+            {view === 'articles' && <Articles navigateToArticle={(slug) => navigateTo('article-detail', slug)} />}
+            {view === 'article-detail' && <ArticleDetail slug={currentArticleSlug} navigateTo={navigateTo} />}
+            {view === 'methodology' && <Methodology navigateTo={navigateTo} />}
+            {view === 'privacy' && <Privacy />}
+            {view === 'terms' && <Terms />}
+            {view === 'contact' && <Contact navigateTo={navigateTo} />}
+            {view === 'about' && <About navigateTo={navigateTo} />}
+            {view === 'team' && <Team navigateTo={navigateTo} />}
+            {view === 'welcome' && <Welcome navigateTo={navigateTo} />}
+            {view === 'admin-login' && <AdminLogin navigateTo={navigateTo} />}
+            {view === 'admin-dashboard' && <AdminDashboard navigateTo={navigateTo} isAdmin={isAdmin} />}
+          </>
+        )}
       </main>
 
       {isNavVisible && (
@@ -266,7 +272,6 @@ const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, col
     orange: 'bg-orange-50 text-orange-600',
     rose: 'bg-rose-50 text-rose-600',
   };
-
   return (
     <button onClick={onClick} className="flex items-center w-full p-2.5 rounded-xl hover:bg-indigo-50/50 transition-all active:scale-[0.98] group">
       <div className={`w-8 h-8 rounded-lg ${colorMap[color]} flex items-center justify-center mr-3.5 group-hover:scale-110 transition-transform`}>
