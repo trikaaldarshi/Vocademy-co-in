@@ -105,6 +105,30 @@
       .animate-wiggle {
         animation: wiggle 3s ease-in-out infinite;
       }
+
+      @keyframes morph {
+        0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+      }
+      .animate-morph {
+        animation: morph 8s ease-in-out infinite;
+      }
+
+      @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .animate-spin-slow {
+        animation: spin-slow 12s linear infinite;
+      }
+      
+      .animate-modal-pop {
+        animation: modal-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      }
+      @keyframes modal-pop {
+        from { opacity: 0; transform: scale(0.9) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
     </style>
     <script type="importmap">
 {
