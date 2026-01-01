@@ -72,29 +72,38 @@ export const IconMessage = () => (
 export const IconSearch = () => (
   <svg className="w-full h-full text-indigo-500 animate-wiggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="11" cy="11" r="8" />
-    {/* Fixed typo: changed cy1 to y1 for SVG line element */}
     <line x1="21" y1="21" x2="16.65" y2="16.65" />
   </svg>
 );
 
-export const IconScroll = () => (
-  <svg className="w-full h-full animate-float" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M19 17h2c.6 0 1-.4 1-1V4c0-.6-.4-1-1-1H3c-.6 0-1 .4-1 1v12c0 .6.4 1 1 1h2" />
-    <path d="M19 17v1a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-1" />
-    <path d="M15 17H9" />
-    <path d="M12 7v6" />
-    <path d="m9 10 3 3 3-3" />
-  </svg>
+export const IconBook = () => (
+  <div className="relative w-full h-full flex items-center justify-center">
+    <svg className="w-full h-full animate-float" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+      <path d="M8 6h10" />
+      <path d="M8 10h10" />
+      <path d="M8 14h10" />
+    </svg>
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-yellow-400/10 rounded-full animate-ping"></div>
+  </div>
 );
 
 export const IconCoach = () => (
-  <div className="relative w-full h-full">
+  <div className="relative w-full h-full flex items-center justify-center">
     <svg className="w-full h-full animate-pulse-soft" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-      <path d="M12 8v4" />
-      <path d="M12 16h.01" />
+      <path d="M12 8a5 5 0 1 0 10 0 5 5 0 1 0-10 0" />
+      <path d="M2 21a8 8 0 0 1 13.29-6" />
+      <circle cx="17" cy="8" r="1" fill="currentColor" className="animate-pulse" />
+      <path d="M19 8h.01" />
+      <path d="M11 2h2" />
+      <path d="M12 2v2" />
+      <path d="m4.93 4.93 1.41 1.41" />
+      <path d="M2 12h2" />
     </svg>
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-purple-500/20 rounded-full animate-ping"></div>
+    <div className="absolute top-0 right-0 w-3 h-3 text-indigo-500 animate-wiggle">
+      <i className="fas fa-sparkles"></i>
+    </div>
   </div>
 );
 

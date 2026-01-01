@@ -7,9 +7,10 @@ import { Contact } from './pages/Contact';
 import { About } from './pages/About';
 import { Team } from './pages/Team';
 import { Welcome } from './pages/Welcome';
+import { ArticleDetail } from './pages/ArticleDetail';
 import { IconSearch } from './components/AnimatedIcons';
 
-type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome';
+type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail';
 
 const LOGO_URL = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251224_183055_297.webp";
 
@@ -33,6 +34,7 @@ const SLUG_MAP: Record<ViewState, string> = {
   about: '/about',
   team: '/team',
   welcome: '/welcome',
+  'article-detail': '/article', // Prefix
 };
 
 const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
@@ -65,6 +67,7 @@ const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = (
 
 const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('home');
+  const [currentArticleSlug, setCurrentArticleSlug] = useState<string>('');
   const [isIOSModalOpen, setIsIOSModalOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -73,7 +76,16 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleLocationChange = () => {
       const path = window.location.pathname.toLowerCase();
-      // Ensure path map lookup works even if the path has a trailing slash
+      
+      // Dynamic Article Routing
+      if (path.startsWith('/article/')) {
+        const slug = path.replace('/article/', '');
+        setCurrentArticleSlug(slug);
+        setView('article-detail');
+        window.scrollTo(0, 0);
+        return;
+      }
+
       const lookupPath = path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path;
       const targetView = PATH_MAP[lookupPath] || 'home';
       setView(targetView);
@@ -99,15 +111,24 @@ const App: React.FC = () => {
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
   
-  const navigateTo = (newView: ViewState) => {
-    const slug = SLUG_MAP[newView];
-    if (window.location.pathname.toLowerCase() !== slug.toLowerCase()) {
-      window.history.pushState(null, '', slug);
+  const navigateTo = (newView: ViewState, slug?: string) => {
+    let path = SLUG_MAP[newView];
+    if (newView === 'article-detail' && slug) {
+      path = `/article/${slug}`;
+    }
+
+    if (window.location.pathname.toLowerCase() !== path.toLowerCase()) {
+      window.history.pushState(null, '', path);
+      if (newView === 'article-detail' && slug) {
+        setCurrentArticleSlug(slug);
+      }
       setView(newView);
       window.scrollTo(0, 0);
     }
     setIsMenuOpen(false);
   };
+
+  const isHomeActive = view === 'home' || view === 'article-detail';
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-900/40 transition-colors duration-300">
@@ -133,6 +154,11 @@ const App: React.FC = () => {
               </button>
               
               <div className="hidden lg:flex items-center space-x-6 mx-4 flex-shrink-0">
+                <button onClick={() => navigateTo('home')} className={`text-[11px] font-bold transition-colors ${view === 'home' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Home</button>
+                <button onClick={() => {
+                  navigateTo('home');
+                  setTimeout(() => document.getElementById('articles')?.scrollIntoView({behavior: 'smooth'}), 100);
+                }} className={`text-[11px] font-bold transition-colors ${view === 'article-detail' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Articles</button>
                 <button onClick={() => navigateTo('about')} className={`text-[11px] font-bold transition-colors ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>About</button>
                 <button onClick={() => navigateTo('team')} className={`text-[11px] font-bold transition-colors ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Team</button>
                 <button onClick={() => navigateTo('methodology')} className={`text-[11px] font-bold transition-colors ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400'}`}>Methodology</button>
@@ -140,7 +166,6 @@ const App: React.FC = () => {
               </div>
 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-1 justify-end min-w-0">
-                {/* ANIMATED SEARCH BAR */}
                 <div className={`relative hidden sm:flex items-center transition-all duration-500 h-9 ${searchFocused ? 'flex-1 max-w-[200px]' : 'w-32 md:w-40'} group`}>
                   <div className={`absolute inset-0 bg-gray-100 dark:bg-slate-800/50 rounded-full border border-gray-200 dark:border-slate-700 transition-all duration-300 ${searchFocused ? 'ring-2 ring-indigo-500/20 border-indigo-500/50 shadow-md' : 'group-hover:bg-gray-200 dark:group-hover:bg-slate-800'}`}></div>
                   <div className="absolute left-2.5 w-4 h-4 flex items-center justify-center pointer-events-none">
@@ -181,7 +206,7 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* Mobile Menu - Refined Size */}
+      {/* Mobile Menu */}
       <div className={`fixed inset-0 z-[55] transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
         <div className="absolute inset-0 bg-indigo-950/20 dark:bg-black/60 backdrop-blur-xl" onClick={() => setIsMenuOpen(false)}></div>
         <div className={`absolute top-20 right-6 left-6 max-w-sm mx-auto bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.2)] border border-white/40 dark:border-slate-800 p-4 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 scale-100' : 'translate-y-6 scale-95'}`}>
@@ -199,6 +224,10 @@ const App: React.FC = () => {
 
           <div className="flex flex-col space-y-0.5">
             <MenuLink onClick={() => navigateTo('home')} icon="fa-house" label="Home" color="indigo" />
+            <MenuLink onClick={() => {
+              navigateTo('home');
+              setTimeout(() => document.getElementById('articles')?.scrollIntoView({behavior: 'smooth'}), 100);
+            }} icon="fa-newspaper" label="Articles" color="emerald" />
             <MenuLink onClick={() => navigateTo('about')} icon="fa-circle-info" label="About Us" color="blue" />
             <MenuLink onClick={() => navigateTo('team')} icon="fa-users" label="Our Team" color="purple" />
             <MenuLink onClick={() => navigateTo('methodology')} icon="fa-book-open" label="Methodology" color="emerald" />
@@ -224,8 +253,10 @@ const App: React.FC = () => {
         {view === 'home' && (
           <Home 
             handleApply={() => setIsIOSModalOpen(true)}
+            navigateToArticle={(slug) => navigateTo('article-detail', slug)}
           />
         )}
+        {view === 'article-detail' && <ArticleDetail slug={currentArticleSlug} navigateTo={navigateTo} />}
         {view === 'methodology' && <Methodology navigateTo={navigateTo} />}
         {view === 'privacy' && <Privacy />}
         {view === 'terms' && <Terms />}
@@ -269,6 +300,7 @@ const App: React.FC = () => {
               <div>
                 <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Explore</h4>
                 <ul className="space-y-3">
+                  <li><button onClick={() => navigateTo('home')} className={`text-sm hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'home' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Home</button></li>
                   <li><button onClick={() => navigateTo('about')} className={`text-sm hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'about' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>About Us</button></li>
                   <li><button onClick={() => navigateTo('team')} className={`text-sm hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'team' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>The Builder</button></li>
                   <li><button onClick={() => navigateTo('methodology')} className={`text-sm hover:text-indigo-600 dark:text-indigo-400 transition-colors font-bold ${view === 'methodology' ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'}`}>Methodology</button></li>

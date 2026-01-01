@@ -2,11 +2,12 @@ import React from 'react';
 import { WordAnalyzerDemo } from '../components/WordAnalyzerDemo';
 import { AutoSlider } from '../components/AutoSlider';
 import { ImageCarousel } from '../components/ImageCarousel';
+import { ARTICLES } from '../data/articles';
 import { 
   IconNews, 
   IconBrain, 
   IconSwords, 
-  IconScroll,
+  IconBook,
   IconCoach,
   IconGame,
   IconPlant,
@@ -16,9 +17,10 @@ import {
 
 interface HomeProps {
   handleApply: () => void;
+  navigateToArticle: (slug: string) => void;
 }
 
-export const Home: React.FC<HomeProps> = ({ handleApply }) => {
+export const Home: React.FC<HomeProps> = ({ handleApply, navigateToArticle }) => {
   const scrollToDemo = () => {
     document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -113,6 +115,66 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
         <ImageCarousel />
       </section>
 
+      {/* ARTICLES SECTION - Positioned before Testimonials */}
+      <section id="articles" className="py-16 sm:py-32 px-4 bg-white dark:bg-slate-950 transition-colors scroll-mt-24">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 sm:mb-20 px-4 gap-6">
+            <div className="max-w-2xl text-left">
+              <div className="inline-flex items-center space-x-2 bg-emerald-50 dark:bg-emerald-900/30 px-4 py-2 rounded-full mb-6 border border-emerald-100 dark:border-emerald-800 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Educational Resources</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1c3d] dark:text-white mb-4 tracking-tight">Master English with <span className="text-emerald-600">Smart Reads</span></h2>
+              <p className="text-base sm:text-xl text-gray-500 dark:text-gray-400 font-medium">Deep dives into exam strategies, vocabulary analysis, and study science.</p>
+            </div>
+            <button className="hidden md:flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 font-black hover:underline underline-offset-8 group">
+              <span>View all articles</span>
+              <i className="fas fa-chevron-right text-xs transition-transform group-hover:translate-x-1"></i>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 px-4">
+            {ARTICLES.map((article) => (
+              <div 
+                key={article.slug}
+                onClick={() => navigateToArticle(article.slug)}
+                className="group cursor-pointer"
+              >
+                <div className="relative aspect-[16/10] rounded-[2rem] overflow-hidden mb-6 shadow-xl border border-gray-100 dark:border-slate-800 transition-transform group-hover:scale-[1.03] bg-gray-100">
+                  <img 
+                    src={article.image} 
+                    alt={article.title} 
+                    className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="px-4 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/30">
+                      {article.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="space-y-3 px-2">
+                  <div className="flex items-center space-x-3 text-xs font-bold text-gray-400 dark:text-gray-500">
+                    <span>{article.readTime}</span>
+                    <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                    <span>Updated {article.updatedAt}</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-[#1a1c3d] dark:text-white leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    {article.title}
+                  </h3>
+                  <div className="pt-2">
+                    <span className="inline-flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 font-black text-sm uppercase tracking-widest group-hover:translate-x-1 transition-transform">
+                      <span>Read Story</span>
+                      <i className="fas fa-arrow-right text-[10px]"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS SECTION - Positioned after Articles */}
       <section className="py-16 sm:py-32 px-4 bg-gray-50/30 dark:bg-slate-950 transition-colors">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-20 px-4">
@@ -140,6 +202,7 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
         </div>
       </section>
 
+      {/* LAKSHYA AI SECTION - Roadmap positioning */}
       <section className="py-16 sm:py-32 px-4 bg-slate-50 dark:bg-[#020617] transition-colors relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
           <div className="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-500/10 dark:bg-indigo-600/10 blur-[80px] sm:blur-[120px] rounded-full"></div>
@@ -162,7 +225,7 @@ export const Home: React.FC<HomeProps> = ({ handleApply }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20 px-4">
             <LakshyaCard 
-              icon={<IconScroll />} 
+              icon={<IconBook />} 
               title="Wisdom from Gita" 
               desc="Receive daily practical wisdom from the Bhagavad Gita to inspire focus and discipline in your preparation."
               accentColor="indigo"
