@@ -1,8 +1,16 @@
-import { GoogleGenAI, Type, Modality } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import { WordAnalysis } from "../types";
 
+const getAIClient = () => {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    console.warn("Gemini API Key is missing. AI features will be disabled.");
+  }
+  return new GoogleGenAI({ apiKey: apiKey || "" });
+};
+
 export const analyzeWord = async (word: string): Promise<WordAnalysis> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
     contents: `Analyze the English word "${word}" for a serious competitive exam aspirant (UPSC/SSC). Focus on The Hindu/Indian Express editorial usage. Include Hindi meaning and a high-level usage example.`,
@@ -31,12 +39,12 @@ export const analyzeWord = async (word: string): Promise<WordAnalysis> => {
 };
 
 export const generatePronunciation = async (word: string): Promise<string | undefined> => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAIClient();
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash-preview-tts",
     contents: [{ parts: [{ text: `Say clearly and with correct emphasis: ${word}` }] }],
     config: {
-      responseModalities: [Modality.AUDIO],
+      responseModalities: ['AUDIO'],
       speechConfig: {
         voiceConfig: {
           prebuiltVoiceConfig: { voiceName: 'Kore' },
@@ -49,12 +57,17 @@ export const generatePronunciation = async (word: string): Promise<string | unde
 };
 
 export function decodeBase64(base64: string) {
-  const binaryString = atob(base64);
-  const bytes = new Uint8Array(binaryString.length);
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i);
+  try {
+    const binaryString = atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+  } catch (e) {
+    console.error("Failed to decode base64 audio data", e);
+    return new Uint8Array(0);
   }
-  return bytes;
 }
 
 export async function decodeAudioData(

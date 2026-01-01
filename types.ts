@@ -8,12 +8,3 @@ export interface WordAnalysis {
   antonyms: string[];
   examRelevance: 'High' | 'Medium' | 'Low';
 }
-
-export interface TesterApplication {
-  name: string;
-  email: string;
-  exam: string;
-  whatsapp: string;
-  reason: string;
-  submittedAt?: string;
-}
