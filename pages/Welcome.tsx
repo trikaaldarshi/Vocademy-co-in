@@ -8,8 +8,6 @@ interface WelcomeProps {
 export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [errorMsg, setErrorMsg] = useState('');
-
-  // Use a ref to track if we've already tried to initialize to prevent double-initialization bugs
   const [firebaseFunctions, setFirebaseFunctions] = useState<{
     initializeApp: ((options: any, name?: string) => any) | null;
     getAuth: ((app?: any) => any) | null;
@@ -32,7 +30,6 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
         setFirebaseFunctions({ initializeApp: initApp, getAuth, applyActionCode });
       } catch (err) {
         console.error("Failed to load Firebase modules:", err);
-        // Only error out if we actually needed Firebase for an oobCode
         if (oobCode) {
           setStatus('error');
           setErrorMsg("Could not connect to security services.");
@@ -40,8 +37,8 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
       }
     };
 
-    // If there's no code, we don't necessarily need to wait for Firebase to show success
     if (!oobCode) {
+      // If no verification code, just show success after a polish delay
       const timer = setTimeout(() => setStatus('success'), 2000);
       return () => clearTimeout(timer);
     } else {
@@ -55,20 +52,18 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
       const { initializeApp, getAuth, applyActionCode } = firebaseFunctions;
 
       const firebaseConfig = {
-        apiKey: "YOUR_API_KEY_HERE",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: process.env.FIREBASE_API_KEY || "",
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN || "",
+        projectId: process.env.FIREBASE_PROJECT_ID || "",
+        appId: process.env.FIREBASE_APP_ID || ""
       };
 
       const params = new URLSearchParams(window.location.search);
       const oobCode = params.get("oobCode");
 
       if (oobCode) {
-        let app: any;
         try {
-          // Attempt to initialize or get existing app
-          app = initializeApp(firebaseConfig);
+          const app = initializeApp(firebaseConfig);
           const auth = getAuth(app);
           
           applyActionCode(auth, oobCode)
@@ -83,9 +78,8 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
             });
         } catch (e) {
           console.warn("Firebase initialization warning:", e);
-          // If init fails but we have a code, we can't verify
           setStatus('error');
-          setErrorMsg("Configuration error. Please contact support.");
+          setErrorMsg("System initialization error. Please try again later.");
         }
       }
     }
@@ -106,13 +100,10 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
             <div className="relative w-24 h-24 mx-auto">
               <div className="absolute inset-0 border-4 border-indigo-100 dark:border-indigo-900/30 rounded-full"></div>
               <div className="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <i className="fas fa-shield-halved text-indigo-600/20 text-2xl"></i>
-              </div>
             </div>
             <div className="space-y-3">
-              <h2 className="text-3xl font-black text-indigo-950 dark:text-white tracking-tight">Verifying Access</h2>
-              <p className="text-gray-500 dark:text-gray-400 font-medium animate-pulse">Establishing secure connection...</p>
+              <h2 className="text-3xl font-black text-indigo-950 dark:text-white tracking-tight">Securing Your Access</h2>
+              <p className="text-gray-500 dark:text-gray-400 font-medium">Verifying your email with our secure servers...</p>
             </div>
           </div>
         )}
@@ -125,7 +116,7 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
             <div className="space-y-4">
               <h2 className="text-4xl font-black text-indigo-950 dark:text-white tracking-tight leading-tight">Welcome to the <span className="text-indigo-600">Elite Circle</span></h2>
               <p className="text-gray-600 dark:text-gray-400 font-medium text-lg leading-relaxed">
-                Your credentials have been confirmed. You are now cleared to access Vocademy's premium features.
+                Your email has been successfully verified. You're now ready to transform your vocabulary preparation.
               </p>
             </div>
             <div className="pt-6 space-y-4">
@@ -133,20 +124,17 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
                 onClick={() => navigateTo('home')}
                 className="w-full bg-indigo-600 text-white py-5 rounded-3xl font-black text-xl shadow-2xl shadow-indigo-600/20 hover:bg-indigo-700 transition-all active:scale-95 group"
               >
-                Enter Dashboard
+                Launch Dashboard
                 <i className="fas fa-rocket ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
               </button>
-              <div className="relative py-4">
-                <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-100 dark:border-slate-800"></div></div>
-                <div className="relative flex justify-center text-xs uppercase"><span className="bg-white dark:bg-slate-900 px-4 text-gray-400 font-black tracking-widest">Mobile Access</span></div>
-              </div>
+              <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">or</p>
               <a 
                 href="https://play.google.com/store/apps/details?id=com.lakshya.vocademy"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center space-x-3 text-indigo-600 dark:text-indigo-400 font-black hover:underline underline-offset-8 group"
+                className="flex items-center justify-center space-x-3 text-indigo-600 dark:text-indigo-400 font-black hover:underline underline-offset-8"
               >
-                <i className="fab fa-google-play group-hover:scale-110 transition-transform"></i>
+                <i className="fab fa-google-play"></i>
                 <span>Get the Android App</span>
               </a>
             </div>
@@ -160,13 +148,11 @@ export const Welcome: React.FC<WelcomeProps> = ({ navigateTo }) => {
             </div>
             <div className="space-y-4">
               <h2 className="text-4xl font-black text-indigo-950 dark:text-white tracking-tight leading-tight">Verification Failed</h2>
-              <div className="p-4 bg-rose-50 dark:bg-rose-950/30 rounded-2xl border border-rose-100 dark:border-rose-900/50">
-                <p className="text-rose-600 dark:text-rose-400 font-bold">
-                  {errorMsg}
-                </p>
-              </div>
+              <p className="text-rose-600 dark:text-rose-400 font-bold bg-rose-50 dark:bg-rose-950/30 py-3 px-4 rounded-2xl border border-rose-100 dark:border-rose-900/50">
+                {errorMsg}
+              </p>
               <p className="text-gray-600 dark:text-gray-400 font-medium">
-                The link may be expired or already used. Please try requesting a new verification email from the app.
+                Try requesting a new verification link from the app or contact our support team if the issue persists.
               </p>
             </div>
             <div className="pt-6">
