@@ -5,36 +5,26 @@ interface TeamProps {
 }
 
 const TeamMember = ({ name, role, image, accent, children }: { name: string, role: string, image: string, accent: string, children?: React.ReactNode }) => (
-  <div className="bg-white dark:bg-slate-900/50 p-8 md:p-12 rounded-[3.5rem] md:rounded-[5rem] border border-gray-100 dark:border-slate-800 shadow-[0_40px_100px_-20px_rgba(79,70,229,0.12)] transition-all group animate-float">
+  <div className="bg-white dark:bg-slate-900/50 p-8 md:p-12 rounded-[3.5rem] md:rounded-[5rem] border border-gray-100 dark:border-slate-800 shadow-[0_40px_100px_-20px_rgba(79,70,229,0.12)] transition-all group">
     <div className="text-center">
-      <div className="relative mb-14 mx-auto w-52 h-52 sm:w-64 sm:h-64">
+      <div className="relative mb-14 mx-auto w-52 h-52 sm:w-64 sm:h-64 flex items-center justify-center">
         
-        {/* Layer 1: High-Frequency Breathing Pulse */}
-        <div className={`absolute -inset-10 bg-gradient-to-tr ${accent === 'indigo' ? 'from-indigo-600/20 to-blue-400/20' : 'from-purple-600/20 to-pink-400/20'} blur-[60px] animate-pulse-aura opacity-30 group-hover:opacity-60 transition-opacity duration-1000`}></div>
+        {/* Organic Morphing Background Blob */}
+        <div className={`absolute inset-0 bg-gradient-to-tr ${accent === 'indigo' ? 'from-indigo-600/20 to-blue-400/20' : 'from-purple-600/20 to-pink-400/20'} animate-morph blur-2xl group-hover:scale-110 transition-transform duration-1000`}></div>
         
-        {/* Layer 2: Secondary Offset Aura */}
-        <div className={`absolute -inset-4 bg-gradient-to-bl ${accent === 'indigo' ? 'from-blue-600/10 to-indigo-400/10' : 'from-pink-600/10 to-purple-400/10'} blur-[40px] animate-pulse-aura opacity-20 group-hover:opacity-40 transition-opacity duration-1000`} style={{ animationDelay: '2s' }}></div>
+        {/* Secondary Morphing Layer */}
+        <div className={`absolute inset-4 bg-gradient-to-bl ${accent === 'indigo' ? 'from-blue-600/10 to-indigo-400/10' : 'from-pink-600/10 to-purple-400/10'} animate-morph opacity-60`} style={{ animationDirection: 'reverse', animationDuration: '6s' }}></div>
 
-        {/* Layer 3: Neon Orbital Ring */}
-        <div className={`absolute -inset-3 bg-gradient-to-r ${accent === 'indigo' ? 'from-indigo-600 via-blue-500 to-indigo-600' : 'from-purple-600 via-pink-500 to-purple-600'} rounded-full animate-spin-slow p-[2px] opacity-40 group-hover:opacity-100 group-hover:animate-[spin_4s_linear_infinite] transition-all duration-700`}>
-          <div className="w-full h-full bg-white dark:bg-slate-950 rounded-full"></div>
-        </div>
-        
-        {/* Layer 4: Main Photo Container */}
-        <div className="relative w-full h-full p-3 bg-white dark:bg-slate-950 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-700 group-hover:scale-[1.05] group-hover:-translate-y-2">
-          <div className="w-full h-full rounded-full overflow-hidden border-[6px] border-white dark:border-slate-900 relative">
-             <img src={image} alt={name} className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-115 group-hover:brightness-110" />
-             <div className="absolute inset-0 bg-gradient-to-t from-indigo-950/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        {/* Main Floating Image Container */}
+        <div className="relative w-full h-full p-2 animate-float">
+          <div className="w-full h-full overflow-hidden animate-morph shadow-2xl border-4 border-white dark:border-slate-800">
+             <img src={image} alt={name} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
           </div>
         </div>
 
-        {/* Floating Interactive Elements */}
-        <div className={`absolute -top-6 -right-6 w-14 h-14 ${accent === 'indigo' ? 'bg-indigo-600' : 'bg-purple-600'} text-white rounded-[1.25rem] flex items-center justify-center shadow-2xl animate-bounce-soft opacity-0 group-hover:opacity-100 group-hover:translate-x-2 group-hover:-translate-y-2 transition-all duration-500`}>
-          <i className="fas fa-microchip text-xl"></i>
-        </div>
-        
-        <div className={`absolute -bottom-4 -left-4 w-10 h-10 ${accent === 'indigo' ? 'bg-blue-500' : 'bg-pink-500'} text-white rounded-xl flex items-center justify-center shadow-xl animate-float opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 group-hover:translate-y-2 transition-all duration-700 delay-150`}>
-          <i className="fas fa-brain text-sm"></i>
+        {/* Floating Accent Icons */}
+        <div className={`absolute -top-2 -right-2 w-12 h-12 ${accent === 'indigo' ? 'bg-indigo-600' : 'bg-purple-600'} text-white rounded-2xl flex items-center justify-center shadow-lg animate-bounce-soft opacity-0 group-hover:opacity-100 transition-all duration-500`}>
+          <i className="fas fa-brain text-lg"></i>
         </div>
       </div>
       
@@ -68,9 +58,9 @@ const TeamMember = ({ name, role, image, accent, children }: { name: string, rol
 export const Team: React.FC<TeamProps> = ({ navigateTo }) => {
   return (
     <div className="pt-28 pb-32 px-4 max-w-6xl mx-auto animate-fade-in transition-colors relative">
-      {/* Dynamic Background Effects */}
-      <div className="absolute top-40 left-0 w-80 h-80 bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none animate-pulse-aura"></div>
-      <div className="absolute bottom-40 right-0 w-80 h-80 bg-purple-500/5 blur-[120px] rounded-full pointer-events-none animate-pulse-aura" style={{ animationDelay: '2s' }}></div>
+      {/* Background Gradients */}
+      <div className="absolute top-40 left-0 w-80 h-80 bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-40 right-0 w-80 h-80 bg-purple-500/5 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="text-center mb-20 md:mb-32">
         <div className="inline-flex items-center space-x-3 bg-indigo-50 dark:bg-indigo-950/30 px-5 py-2.5 rounded-full mb-8 border border-indigo-100 dark:border-indigo-900/40 shadow-sm">
