@@ -70,7 +70,7 @@ export const IconMessage = () => (
 );
 
 export const IconSearch = () => (
-  <svg className="w-full h-full text-indigo-500 animate-wiggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg className="w-full h-full animate-wiggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="11" cy="11" r="8" />
     <line x1="21" y1="21" x2="16.65" y2="16.65" />
   </svg>

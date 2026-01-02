@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Home } from './pages/Home';
 import { Methodology } from './pages/Methodology';
@@ -9,6 +10,7 @@ import { Team } from './pages/Team';
 import { Welcome } from './pages/Welcome';
 import { ArticleDetail } from './pages/ArticleDetail';
 import { Articles } from './pages/Articles';
+import { IconSearch } from './components/AnimatedIcons';
 
 type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail' | 'articles';
 
@@ -146,6 +148,11 @@ const App: React.FC = () => {
               </div>
 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-1 justify-end min-w-0">
+                {/* Dedicated Animated Search Icon */}
+                <button onClick={() => navigateTo('articles')} className="p-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 transition-all active:scale-90">
+                  <IconSearch />
+                </button>
+                
                 <button onClick={() => setDarkMode(!darkMode)} className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all">
                   {darkMode ? <i className="fas fa-sun text-base text-yellow-500"></i> : <i className="fas fa-moon text-base"></i>}
                 </button>
@@ -224,7 +231,7 @@ const App: React.FC = () => {
   );
 };
 
-const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, color: string, noBg?: boolean }> = ({ onClick, icon, label, color, noBg }) => {
+const MenuLink: React.FC<{ onClick: () => void, icon?: string, customIcon?: React.ReactNode, label: string, color: string, noBg?: boolean }> = ({ onClick, icon, customIcon, label, color, noBg }) => {
   const colorMap: Record<string, string> = {
     indigo: 'text-indigo-600',
     blue: 'text-blue-600',
@@ -245,8 +252,14 @@ const MenuLink: React.FC<{ onClick: () => void, icon: string, label: string, col
 
   return (
     <button onClick={onClick} className="flex items-center w-full p-2.5 rounded-xl hover:bg-indigo-50/50 transition-all active:scale-[0.98] group">
-      <div className={`w-8 h-8 rounded-lg ${!noBg ? bgMap[color] : ''} ${colorMap[color]} flex items-center justify-center mr-3.5 group-hover:scale-110 transition-transform`}>
-        <i className={`fas ${icon} text-base`}></i>
+      <div className={`w-8 h-8 rounded-lg ${!noBg ? bgMap[color] : ''} ${colorMap[color]} flex items-center justify-center mr-3.5 group-hover:scale-110 transition-transform p-1.5`}>
+        {customIcon ? (
+          <div className="w-full h-full flex items-center justify-center">
+            {customIcon}
+          </div>
+        ) : (
+          <i className={`fas ${icon} text-base`}></i>
+        )}
       </div>
       <span className="text-sm font-bold text-indigo-950 dark:text-gray-100 tracking-tight">{label}</span>
     </button>
