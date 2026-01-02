@@ -7,29 +7,28 @@ interface TeamProps {
 const TeamMember = ({ name, role, image, accent, children }: { name: string, role: string, image: string, accent: string, children?: React.ReactNode }) => (
   <div className="bg-white dark:bg-slate-900/50 p-8 md:p-12 rounded-[3.5rem] md:rounded-[5rem] border border-gray-100 dark:border-slate-800 shadow-[0_40px_100px_-20px_rgba(79,70,229,0.12)] transition-all group">
     <div className="text-center">
-      <div className="relative mb-14 mx-auto w-52 h-52 sm:w-64 sm:h-64 flex items-center justify-center">
+      <div className="relative mb-14 mx-auto w-52 h-52 sm:w-64 sm:h-64">
         
-        {/* Organic Morphing Background Blob */}
-        <div className={`absolute inset-0 bg-gradient-to-tr ${accent === 'indigo' ? 'from-indigo-600/20 to-blue-400/20' : 'from-purple-600/20 to-pink-400/20'} animate-morph blur-2xl group-hover:scale-110 transition-transform duration-1000`}></div>
+        {/* Glow Aura Animation from Repository Snippet */}
+        <div className={`absolute -inset-2 bg-gradient-to-tr ${accent === 'indigo' ? 'from-indigo-600 to-blue-500' : 'from-purple-600 to-pink-500'} rounded-full blur opacity-20 group-hover:opacity-100 transition duration-500`}></div>
         
-        {/* Secondary Morphing Layer */}
-        <div className={`absolute inset-4 bg-gradient-to-bl ${accent === 'indigo' ? 'from-blue-600/10 to-indigo-400/10' : 'from-pink-600/10 to-purple-400/10'} animate-morph opacity-60`} style={{ animationDirection: 'reverse', animationDuration: '6s' }}></div>
-
-        {/* Main Floating Image Container */}
-        <div className="relative w-full h-full p-2 animate-float">
-          <div className="w-full h-full overflow-hidden animate-morph shadow-2xl border-4 border-white dark:border-slate-800">
-             <img src={image} alt={name} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
-          </div>
+        {/* Circular Image Container from Repository Snippet */}
+        <div className="relative w-full h-full bg-white dark:bg-slate-800 rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl">
+          <img 
+            src={image} 
+            alt={name} 
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+          />
         </div>
 
-        {/* Floating Accent Icons */}
-        <div className={`absolute -top-2 -right-2 w-12 h-12 ${accent === 'indigo' ? 'bg-indigo-600' : 'bg-purple-600'} text-white rounded-2xl flex items-center justify-center shadow-lg animate-bounce-soft opacity-0 group-hover:opacity-100 transition-all duration-500`}>
+        {/* Floating Accent Icons (Keeping these for flavor but removing complex animations) */}
+        <div className={`absolute -top-2 -right-2 w-12 h-12 ${accent === 'indigo' ? 'bg-indigo-600' : 'bg-purple-600'} text-white rounded-2xl flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 scale-75 group-hover:scale-100`}>
           <i className="fas fa-brain text-lg"></i>
         </div>
       </div>
       
       <div className="relative inline-block mb-4">
-        <h3 className="text-3xl md:text-5xl font-black text-indigo-950 dark:text-white tracking-tight leading-tight transition-all duration-300 group-hover:text-indigo-600 group-hover:scale-105">
+        <h3 className="text-3xl md:text-5xl font-black text-indigo-950 dark:text-white tracking-tight leading-tight transition-all duration-300 group-hover:text-indigo-600">
           {name}
         </h3>
         <div className="absolute -bottom-2 left-0 right-0 h-1.5 bg-indigo-600 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-center duration-500"></div>
