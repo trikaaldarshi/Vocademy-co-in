@@ -20,11 +20,6 @@ const TeamMember = ({ name, role, image, accent, children }: { name: string, rol
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
           />
         </div>
-
-        {/* Floating Accent Icons (Keeping these for flavor but removing complex animations) */}
-        <div className={`absolute -top-2 -right-2 w-12 h-12 ${accent === 'indigo' ? 'bg-indigo-600' : 'bg-purple-600'} text-white rounded-2xl flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 scale-75 group-hover:scale-100`}>
-          <i className="fas fa-brain text-lg"></i>
-        </div>
       </div>
       
       <div className="relative inline-block mb-4">
