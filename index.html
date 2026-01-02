@@ -63,6 +63,14 @@
         animation: pulse-soft 3s ease-in-out infinite;
       }
 
+      @keyframes pulse-aura {
+        0%, 100% { transform: scale(1); opacity: 0.3; }
+        50% { transform: scale(1.15); opacity: 0.5; }
+      }
+      .animate-pulse-aura {
+        animation: pulse-aura 4s ease-in-out infinite;
+      }
+
       @keyframes clash {
         0%, 100% { transform: rotate(0deg); }
         25% { transform: rotate(5deg) scale(1.1); }
