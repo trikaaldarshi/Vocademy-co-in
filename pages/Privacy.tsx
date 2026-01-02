@@ -138,7 +138,7 @@ export const Privacy: React.FC = () => {
           />
         </div>
 
-        {/* User Rights Section - Updated Colors */}
+        {/* User Rights Section */}
         <section className="bg-white dark:bg-slate-900 text-indigo-950 dark:text-white rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-xl border border-gray-100 dark:border-slate-800">
           <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 rounded-full blur-[80px] -mr-32 -mt-32"></div>
           <div className="relative z-10">
@@ -186,7 +186,7 @@ export const Privacy: React.FC = () => {
                   If you have any questions, concerns, or requests regarding this Privacy Policy, please reach out to our secure support channels.
                 </p>
               </div>
-              <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2rem] border border-white/20 w-full md:max-w-md space-y-4">
+              <div className="bg-white/10 backdrop-blur-xl p-6 sm:p-8 rounded-[2rem] border border-white/20 w-full md:max-w-md space-y-4">
                 <ContactLink icon="fa-globe" label="Official Website" value="vocademy.co.in" href="https://vocademy.co.in" />
                 <ContactLink icon="fa-link" label="Alternative Web" value="VocademyApp.com" href="https://VocademyApp.com" />
                 <ContactLink icon="fa-envelope" label="Primary Support" value="support@vocademy.co.in" href="mailto:support@vocademy.co.in" />
@@ -197,7 +197,7 @@ export const Privacy: React.FC = () => {
           </div>
         </section>
 
-        {/* Commitment Footer - Updated with strong brand color */}
+        {/* Commitment Footer */}
         <div className="text-center py-10">
           <p className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-[0.2em] mb-4">Our Commitment to You</p>
           <div className="bg-indigo-50 dark:bg-indigo-950/30 p-8 rounded-[2rem] border border-indigo-100 dark:border-indigo-900/40">
@@ -268,14 +268,16 @@ const ContactLink = ({ icon, label, value, href }: any) => (
     href={href} 
     target="_blank" 
     rel="noopener noreferrer"
-    className="flex items-center space-x-4 group p-1.5 rounded-xl hover:bg-white/5 transition-all"
+    className="flex items-center space-x-4 group p-2 rounded-xl hover:bg-white/5 transition-all"
   >
-    <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center text-indigo-300 group-hover:scale-110 transition-transform">
-      <i className={`fas ${icon} text-sm`}></i>
+    <div className="w-9 h-9 sm:w-8 sm:h-8 bg-white/10 rounded-lg flex items-center justify-center text-indigo-300 group-hover:scale-110 transition-transform flex-shrink-0">
+      <i className={`fas ${icon} text-base sm:text-sm`}></i>
     </div>
-    <div className="min-w-0">
-      <p className="text-[8px] uppercase font-black tracking-widest text-indigo-200/60">{label}</p>
-      <p className="text-sm font-black tracking-tight group-hover:text-indigo-300 transition-colors truncate">{value}</p>
+    <div className="min-w-0 flex-1">
+      <p className="text-[8px] sm:text-[8px] uppercase font-black tracking-widest text-indigo-200/60 leading-none mb-1">{label}</p>
+      <p className="text-[13px] sm:text-sm font-black tracking-tight group-hover:text-indigo-300 transition-colors break-words">
+        {value}
+      </p>
     </div>
   </a>
 );
