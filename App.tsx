@@ -259,17 +259,7 @@ const App: React.FC = () => {
             </div>
             
             <div className="pt-10 border-t border-gray-100 dark:border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="text-xs font-bold text-gray-400">© 2025 Vocademy. All rights reserved.</p>
-              <div className="flex items-center space-x-2 text-gray-400">
-                <span className="text-[10px] font-black uppercase tracking-widest">Designed for India</span>
-                <div className="flex h-3 w-5 overflow-hidden rounded-sm shadow-sm border border-gray-100 dark:border-slate-800">
-                   <div className="h-full w-1/3 bg-[#FF9933]"></div>
-                   <div className="h-full w-1/3 bg-white flex items-center justify-center">
-                     <div className="h-1.5 w-1.5 rounded-full bg-[#000080]"></div>
-                   </div>
-                   <div className="h-full w-1/3 bg-[#138808]"></div>
-                </div>
-              </div>
+              <p className="text-xs font-black text-black dark:text-white tracking-widest">© 2026 Vocademy. All rights reserved.</p>
             </div>
           </div>
         </footer>
