@@ -226,6 +226,7 @@ const App: React.FC = () => {
                   Advanced AI-powered vocabulary platform designed for the Indian competitive exam ecosystem.
                 </p>
               </div>
+              
               <div>
                 <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Explore</h4>
                 <ul className="space-y-3">
@@ -235,13 +236,7 @@ const App: React.FC = () => {
                   <li><button onClick={() => navigateTo('team')} aria-label="Meet our team" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Our Team</button></li>
                 </ul>
               </div>
-              <div>
-                <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Legal</h4>
-                <ul className="space-y-3">
-                  <li><button onClick={() => navigateTo('privacy')} aria-label="Read our privacy policy" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Privacy Policy</button></li>
-                  <li><button onClick={() => navigateTo('terms')} aria-label="Read our terms of service" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Terms of Service</button></li>
-                </ul>
-              </div>
+
               <div>
                 <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Connect</h4>
                 <div className="flex flex-wrap justify-center md:justify-start gap-4">
@@ -253,7 +248,16 @@ const App: React.FC = () => {
                   <SocialIcon href="https://linkedin.com/company/VocademyApp" icon="fa-linkedin" label="LinkedIn" />
                 </div>
               </div>
+
+              <div>
+                <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Legal</h4>
+                <ul className="space-y-3">
+                  <li><button onClick={() => navigateTo('privacy')} aria-label="Read our privacy policy" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Privacy Policy</button></li>
+                  <li><button onClick={() => navigateTo('terms')} aria-label="Read our terms of service" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Terms of Service</button></li>
+                </ul>
+              </div>
             </div>
+            
             <div className="pt-10 border-t border-gray-100 dark:border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4">
               <p className="text-xs font-bold text-gray-400">© 2025 Vocademy. All rights reserved.</p>
               <div className="flex items-center space-x-2 text-gray-400">
