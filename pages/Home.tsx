@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { WordAnalyzerDemo } from '../components/WordAnalyzerDemo';
 import { AutoSlider } from '../components/AutoSlider';
@@ -18,6 +19,34 @@ interface HomeProps {
   handleApply: () => void;
   navigateToArticle: (slug: string) => void;
 }
+
+const TESTIMONIALS = [
+  {
+    name: "Rahul Sharma",
+    role: "UPSC Aspirant",
+    quote: "Vocademy has completely changed how I read editorials. The contextual meanings and Indian Express integration are absolute lifesavers for Mains preparation."
+  },
+  {
+    name: "Priya Patel",
+    role: "SSC CGL Candidate",
+    quote: "The Spaced Repetition logic is brilliant. I used to forget words in 3 days, but now they are locked in my long-term memory. Highly recommended for English Tier-II."
+  },
+  {
+    name: "Anjali Verma",
+    role: "Banking Aspirant",
+    quote: "I love the multiplayer duels! It makes vocab learning addictive and competitive. It's the first thing I open every morning with my tea."
+  },
+  {
+    name: "Sameer Khan",
+    role: "UPSC Aspirant",
+    quote: "The precision of vocabulary scanning is unmatched. It saves me at least an hour of dictionary browsing every single morning."
+  },
+  {
+    name: "Ishita Gupta",
+    role: "RBI Grade B Aspirant",
+    quote: "Finally an app that understands the nuance of financial and administrative English. The context usage examples are top-notch."
+  }
+];
 
 export const Home: React.FC<HomeProps> = ({ handleApply, navigateToArticle }) => {
   const scrollToDemo = () => {
@@ -114,31 +143,39 @@ export const Home: React.FC<HomeProps> = ({ handleApply, navigateToArticle }) =>
         <ImageCarousel />
       </section>
 
-      <section className="py-16 sm:py-32 px-4 bg-gray-50/30 dark:bg-slate-950 transition-colors">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 sm:mb-20 px-4">
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#1a1c3d] dark:text-white mb-4">Loved by Future Leaders</h2>
-            <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base font-medium">Join thousands of aspirants who have upgraded their preparation strategy.</p>
-          </div>
+      <section className="py-16 sm:py-32 px-0 bg-gray-50/30 dark:bg-slate-950 transition-colors overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 text-center mb-12 sm:mb-20">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#1a1c3d] dark:text-white mb-4">Loved by Future Leaders</h2>
+          <p className="text-gray-500 dark:text-gray-400 text-sm sm:text-base font-medium">Join thousands of aspirants who have upgraded their preparation strategy.</p>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10">
-            <TestimonialCard 
-              name="Rahul Sharma"
-              role="UPSC Aspirant"
-              quote="Vocademy has completely changed how I read editorials. The contextual meanings and Indian Express integration are absolute lifesavers for Mains preparation."
-            />
-            <TestimonialCard 
-              name="Priya Patel"
-              role="SSC CGL Candidate"
-              quote="The Spaced Repetition logic is brilliant. I used to forget words in 3 days, but now they are locked in my long-term memory. Highly recommended for English Tier-II."
-            />
-            <TestimonialCard 
-              name="Anjali Verma"
-              role="Banking Aspirant"
-              quote="I love the multiplayer duels! It makes vocab learning addictive and competitive. It's the first thing I open every morning with my tea."
-            />
+        <div className="relative w-full overflow-hidden pb-10">
+          <div className="flex animate-marquee-slow hover:pause-marquee whitespace-nowrap">
+            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, idx) => (
+              <div key={idx} className="inline-block w-[320px] sm:w-[480px] mx-4 whitespace-normal align-top">
+                <TestimonialCard 
+                  name={t.name}
+                  role={t.role}
+                  quote={t.quote}
+                />
+              </div>
+            ))}
           </div>
         </div>
+
+        <style>{`
+          @keyframes marquee-slow {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-marquee-slow {
+            display: inline-flex;
+            animation: marquee-slow 40s linear infinite;
+          }
+          .hover\\:pause-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
       </section>
 
       <section className="py-16 sm:py-32 px-4 bg-slate-50 dark:bg-[#020617] transition-colors relative overflow-hidden">
@@ -254,7 +291,7 @@ const FeatureCard: React.FC<{icon: React.ReactNode, title: string, desc: string,
 );
 
 const TestimonialCard: React.FC<{ name: string; role: string; quote: string }> = ({ name, role, quote }) => (
-  <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border border-indigo-50 dark:border-slate-800 shadow-xl shadow-indigo-600/[0.03] transition-all hover:scale-[1.02] hover:shadow-2xl flex flex-col h-full relative group">
+  <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border border-indigo-50 dark:border-slate-800 shadow-xl shadow-indigo-600/[0.03] transition-all hover:scale-[1.02] hover:shadow-2xl flex flex-col h-full relative group min-h-[300px]">
     <div className="absolute top-8 right-8 opacity-10 group-hover:opacity-20 transition-opacity">
       <i className="fas fa-quote-right text-4xl sm:text-5xl text-indigo-600 dark:text-indigo-500"></i>
     </div>
