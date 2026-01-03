@@ -56,7 +56,7 @@ const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = (
         <p className="text-gray-600 dark:text-gray-400 font-medium leading-relaxed mb-8">
           We are currently focusing on perfecting the Android experience. The iOS version of Vocademy is under development and will be available on the App Store soon!
         </p>
-        <button onClick={onClose} className="w-full bg-indigo-600 dark:bg-indigo-500 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-95">
+        <button onClick={onClose} aria-label="Close modal" className="w-full bg-indigo-600 dark:bg-indigo-500 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-95">
           Understood
         </button>
       </div>
@@ -130,7 +130,11 @@ const App: React.FC = () => {
         <div className="fixed top-4 w-full px-4 z-[60]">
           <nav className="max-w-6xl mx-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-800 rounded-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.15)] overflow-hidden">
             <div className="px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
-              <button onClick={() => navigateTo('home')} className="flex items-center space-x-2 group active:scale-95 transition-transform flex-shrink-0">
+              <button 
+                onClick={() => navigateTo('home')} 
+                className="flex items-center space-x-2 group active:scale-95 transition-transform flex-shrink-0"
+                aria-label="Vocademy Home"
+              >
                 <div className="relative flex-shrink-0">
                   <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[1px] animate-spin-slow opacity-70 group-hover:opacity-100 transition-opacity"></div>
                   <div className="relative w-8 h-8 sm:w-10 sm:h-10 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-800">
@@ -151,14 +155,26 @@ const App: React.FC = () => {
 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-1 justify-end min-w-0">
                 {/* Dedicated Animated Search Icon */}
-                <button onClick={() => navigateTo('articles')} className="p-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 transition-all active:scale-90">
+                <button 
+                  onClick={() => navigateTo('articles')} 
+                  className="p-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 transition-all active:scale-90"
+                  aria-label="Search articles"
+                >
                   <IconSearch />
                 </button>
                 
-                <button onClick={() => setDarkMode(!darkMode)} className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all">
+                <button 
+                  onClick={() => setDarkMode(!darkMode)} 
+                  className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-gray-500 dark:text-gray-400 transition-all"
+                  aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+                >
                   {darkMode ? <i className="fas fa-sun text-base text-yellow-500"></i> : <i className="fas fa-moon text-base"></i>}
                 </button>
-                <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="w-8 h-8 sm:w-9 sm:h-9 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg flex items-center justify-center shadow-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-90 flex-shrink-0">
+                <button 
+                  onClick={() => setIsMenuOpen(!isMenuOpen)} 
+                  className="w-8 h-8 sm:w-9 sm:h-9 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg flex items-center justify-center shadow-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all active:scale-90 flex-shrink-0"
+                  aria-label={isMenuOpen ? "Close menu" : "Open navigation menu"}
+                >
                   <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars-staggered'} text-sm`}></i>
                 </button>
               </div>
@@ -201,30 +217,54 @@ const App: React.FC = () => {
         <footer className="bg-white dark:bg-slate-950 pt-20 pb-10 px-4 border-t border-gray-100 dark:border-slate-900 transition-colors">
           <div className="max-w-7xl mx-auto text-center md:text-left">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-              <div className="col-span-1 md:col-span-2">
+              <div className="col-span-1 md:col-span-1">
                 <div className="flex items-center justify-center md:justify-start mb-6">
-                  <img src={FOOTER_LOGO_LIGHT} alt="Vocademy" className="h-12 md:h-16 w-auto dark:hidden" />
-                  <img src={FOOTER_LOGO_DARK} alt="Vocademy" className="h-12 md:h-16 w-auto hidden dark:block" />
+                  <img src={FOOTER_LOGO_LIGHT} alt="Vocademy Logo" className="h-12 md:h-16 w-auto dark:hidden" />
+                  <img src={FOOTER_LOGO_DARK} alt="Vocademy Logo" className="h-12 md:h-16 w-auto hidden dark:block" />
                 </div>
-                <p className="text-gray-500 dark:text-gray-400 text-base max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 font-medium">
+                <p className="text-gray-500 dark:text-gray-400 text-sm max-w-sm mx-auto md:mx-0 leading-relaxed font-medium">
                   Advanced AI-powered vocabulary platform designed for the Indian competitive exam ecosystem.
                 </p>
               </div>
               <div>
                 <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Explore</h4>
                 <ul className="space-y-3">
-                  <li><button onClick={() => navigateTo('home')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Home</button></li>
-                  <li><button onClick={() => navigateTo('articles')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Articles</button></li>
-                  <li><button onClick={() => navigateTo('about')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">About Us</button></li>
-                  <li><button onClick={() => navigateTo('team')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Our Team</button></li>
+                  <li><button onClick={() => navigateTo('home')} aria-label="Go to Home" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Home</button></li>
+                  <li><button onClick={() => navigateTo('articles')} aria-label="Go to Articles" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Articles</button></li>
+                  <li><button onClick={() => navigateTo('about')} aria-label="Learn about Vocademy" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">About Us</button></li>
+                  <li><button onClick={() => navigateTo('team')} aria-label="Meet our team" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Our Team</button></li>
                 </ul>
               </div>
               <div>
                 <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Legal</h4>
                 <ul className="space-y-3">
-                  <li><button onClick={() => navigateTo('privacy')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Privacy Policy</button></li>
-                  <li><button onClick={() => navigateTo('terms')} className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Terms of Service</button></li>
+                  <li><button onClick={() => navigateTo('privacy')} aria-label="Read our privacy policy" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Privacy Policy</button></li>
+                  <li><button onClick={() => navigateTo('terms')} aria-label="Read our terms of service" className="text-sm text-gray-500 hover:text-indigo-600 font-bold">Terms of Service</button></li>
                 </ul>
+              </div>
+              <div>
+                <h4 className="text-indigo-950 dark:text-white font-black uppercase tracking-widest text-xs mb-5">Connect</h4>
+                <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                  <SocialIcon href="https://whatsapp.com/channel/0029VaAOzlw7IUYWzbucO51w" icon="fa-whatsapp" label="WhatsApp Channel" />
+                  <SocialIcon href="https://t.me/VocademyApp" icon="fa-telegram" label="Telegram" />
+                  <SocialIcon href="https://instagram.com/VocademyApp" icon="fa-instagram" label="Instagram" />
+                  <SocialIcon href="https://x.com/VocademyApp" icon="fa-x-twitter" label="X" />
+                  <SocialIcon href="https://reddit.com/user/VocademyApp" icon="fa-reddit" label="Reddit" />
+                  <SocialIcon href="https://linkedin.com/company/VocademyApp" icon="fa-linkedin" label="LinkedIn" />
+                </div>
+              </div>
+            </div>
+            <div className="pt-10 border-t border-gray-100 dark:border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4">
+              <p className="text-xs font-bold text-gray-400">© 2025 Vocademy. All rights reserved.</p>
+              <div className="flex items-center space-x-2 text-gray-400">
+                <span className="text-[10px] font-black uppercase tracking-widest">Designed for India</span>
+                <div className="flex h-3 w-5 overflow-hidden rounded-sm shadow-sm border border-gray-100 dark:border-slate-800">
+                   <div className="h-full w-1/3 bg-[#FF9933]"></div>
+                   <div className="h-full w-1/3 bg-white flex items-center justify-center">
+                     <div className="h-1.5 w-1.5 rounded-full bg-[#000080]"></div>
+                   </div>
+                   <div className="h-full w-1/3 bg-[#138808]"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -233,6 +273,18 @@ const App: React.FC = () => {
     </div>
   );
 };
+
+const SocialIcon: React.FC<{ href: string; icon: string; label: string }> = ({ href, icon, label }) => (
+  <a 
+    href={href} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    aria-label={label}
+    className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-slate-900 border border-gray-100 dark:border-slate-800 flex items-center justify-center text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-100 dark:hover:border-indigo-900 transition-all hover:scale-110 shadow-sm"
+  >
+    <i className={`fab ${icon} text-lg`}></i>
+  </a>
+);
 
 const MenuLink: React.FC<{ onClick: () => void, icon?: string, customIcon?: React.ReactNode, label: string, color: string, noBg?: boolean }> = ({ onClick, icon, customIcon, label, color, noBg }) => {
   const colorMap: Record<string, string> = {
@@ -254,7 +306,7 @@ const MenuLink: React.FC<{ onClick: () => void, icon?: string, customIcon?: Reac
   };
 
   return (
-    <button onClick={onClick} className="flex items-center w-full p-2.5 rounded-xl hover:bg-indigo-50/50 transition-all active:scale-[0.98] group">
+    <button onClick={onClick} aria-label={label} className="flex items-center w-full p-2.5 rounded-xl hover:bg-indigo-50/50 transition-all active:scale-[0.98] group">
       <div className={`w-8 h-8 rounded-lg ${!noBg ? bgMap[color] : ''} ${colorMap[color]} flex items-center justify-center mr-3.5 group-hover:scale-110 transition-transform p-1.5`}>
         {customIcon ? (
           <div className="w-full h-full flex items-center justify-center">

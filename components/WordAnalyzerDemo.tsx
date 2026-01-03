@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { analyzeWord, generatePronunciation, decodeBase64, decodeAudioData } from '../services/gemini';
 import { WordAnalysis } from '../types';
@@ -85,6 +86,7 @@ export const WordAnalyzerDemo: React.FC = () => {
               <button 
                 onClick={() => playPronunciation(analysis.word)}
                 disabled={audioLoading}
+                aria-label="Play pronunciation"
                 className="w-9 h-9 sm:w-14 sm:h-14 bg-white dark:bg-slate-800 border-2 border-indigo-100 dark:border-slate-700 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white transition-all shadow-md group active:scale-90 disabled:opacity-50"
               >
                 {audioLoading ? <i className="fas fa-circle-notch animate-spin text-xs"></i> : <i className="fas fa-volume-up text-sm sm:text-xl group-hover:scale-110"></i>}
