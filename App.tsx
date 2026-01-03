@@ -15,6 +15,8 @@ import { IconSearch } from './components/AnimatedIcons';
 type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail' | 'articles';
 
 const LOGO_URL = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251224_183055_297.webp";
+const FOOTER_LOGO_LIGHT = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/Vocademy-logo-for-light-theme1.png";
+const FOOTER_LOGO_DARK = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/Vocademy-logo-for-dark-theme.png";
 
 const PATH_MAP: Record<string, ViewState> = {
   '/': 'home',
@@ -200,8 +202,9 @@ const App: React.FC = () => {
           <div className="max-w-7xl mx-auto text-center md:text-left">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
               <div className="col-span-1 md:col-span-2">
-                <div className="flex items-center justify-center md:justify-start space-x-3 mb-4">
-                  <span className="text-xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
+                <div className="flex items-center justify-center md:justify-start mb-6">
+                  <img src={FOOTER_LOGO_LIGHT} alt="Vocademy" className="h-12 md:h-16 w-auto dark:hidden" />
+                  <img src={FOOTER_LOGO_DARK} alt="Vocademy" className="h-12 md:h-16 w-auto hidden dark:block" />
                 </div>
                 <p className="text-gray-500 dark:text-gray-400 text-base max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 font-medium">
                   Advanced AI-powered vocabulary platform designed for the Indian competitive exam ecosystem.
