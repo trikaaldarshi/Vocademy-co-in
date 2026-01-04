@@ -5,7 +5,7 @@ const APP_SCREENS = [
   {
     title: "Daily Editorial Word",
     desc: "Master high-yield words like 'Diligent' with deep context, Hindi meanings, and exam-focused usage examples.",
-    img: "./assets/screenshots/daily-word.png",
+    img: "./assets/screenshots/daily-word.webp",
     accent: "bg-indigo-600",
     color: "indigo",
     icon: "fa-calendar-day"
@@ -13,7 +13,7 @@ const APP_SCREENS = [
   {
     title: "Tests & Challenges",
     desc: "A full suite of assessments: Daily Drills, Weekly Wrap-ups, and Monthly Mastery tests to track your progress.",
-    img: "./assets/screenshots/tests-challenges.png",
+    img: "./assets/screenshots/tests-challenges.webp",
     accent: "bg-emerald-600",
     color: "emerald",
     icon: "fa-list-check"
@@ -21,7 +21,7 @@ const APP_SCREENS = [
   {
     title: "Syno-Anto Sprint",
     desc: "Fast-paced practice for synonyms and antonyms. Choose between 'Self Test' or 'Multiplayer Duel'.",
-    img: "./assets/screenshots/syno-anto-sprint.png",
+    img: "./assets/screenshots/syno-anto-sprint.webp",
     accent: "bg-orange-600",
     color: "orange",
     icon: "fa-bolt"
@@ -29,7 +29,7 @@ const APP_SCREENS = [
   {
     title: "Mastery Achievements",
     desc: "Earn prestigious badges like 'Lexis Monarch' and 'Vocabulary Beast' as you climb to Level 100.",
-    img: "./assets/screenshots/mastery-achievements.png",
+    img: "./assets/screenshots/mastery-achievements.webp",
     accent: "bg-purple-600",
     color: "purple",
     icon: "fa-trophy"
@@ -37,7 +37,7 @@ const APP_SCREENS = [
   {
     title: "Victory & XP Rewards",
     desc: "Battle real-time with fellow aspirants and gain XP for every outstanding performance.",
-    img: "./assets/screenshots/victory-xp.png",
+    img: "./assets/screenshots/victory-xp.webp",
     accent: "bg-blue-600",
     color: "blue",
     icon: "fa-medal"
