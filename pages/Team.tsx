@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface TeamProps {
@@ -74,7 +75,7 @@ export const Team: React.FC<TeamProps> = ({ navigateTo }) => {
           <TeamMember 
             name="Anmol Gupta"
             role="Founder & Chief Product Architect"
-            image="https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251225_000405_575.jpg"
+            image="./assets/team/anmol-gupta.jpg"
             accent="indigo"
           >
             <p>

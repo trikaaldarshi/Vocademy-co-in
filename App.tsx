@@ -14,9 +14,9 @@ import { IconSearch } from './components/AnimatedIcons';
 
 type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail' | 'articles';
 
-const LOGO_URL = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/IMG_20251224_183055_297.webp";
-const FOOTER_LOGO_LIGHT = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/Vocademy-logo-for-light-theme1.png";
-const FOOTER_LOGO_DARK = "https://raw.githubusercontent.com/trikaaldarshi/Assets/refs/heads/main/Vocademy-logo-for-dark-theme.png";
+const LOGO_URL = "./assets/branding/logo.webp";
+const FOOTER_LOGO_LIGHT = "./assets/branding/footer-light.png";
+const FOOTER_LOGO_DARK = "./assets/branding/footer-dark.png";
 
 const PATH_MAP: Record<string, ViewState> = {
   '/': 'home',

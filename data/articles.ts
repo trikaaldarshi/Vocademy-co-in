@@ -1,3 +1,4 @@
+
 export interface Article {
   slug: string;
   title: string;
@@ -13,7 +14,7 @@ export const ARTICLES: Article[] = [
     slug: 'how-to-read-the-hindu-for-upsc',
     title: 'How to Read The Hindu Effectively for UPSC 2025',
     category: 'UPSC Strategy',
-    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1200',
+    image: './assets/articles/upsc-strategy.jpg',
     readTime: '8 min read',
     updatedAt: 'Dec 2025',
     content: [
@@ -27,7 +28,7 @@ export const ARTICLES: Article[] = [
     slug: 'top-50-ssc-cgl-vocabulary',
     title: 'Top 50 High-Frequency Vocabulary Words for SSC CGL Tier-II',
     category: 'SSC English',
-    image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=1200',
+    image: './assets/articles/ssc-english.jpg',
     readTime: '12 min read',
     updatedAt: 'Dec 2025',
     content: [
@@ -41,7 +42,7 @@ export const ARTICLES: Article[] = [
     slug: 'science-of-spaced-repetition',
     title: 'The Science of Spaced Repetition: Why Rote Learning Fails',
     category: 'Study Hacks',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=1200',
+    image: './assets/articles/study-hacks.jpg',
     readTime: '6 min read',
     updatedAt: 'Dec 2025',
     content: [
