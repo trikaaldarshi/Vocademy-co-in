@@ -14,9 +14,9 @@ import { IconSearch } from './components/AnimatedIcons';
 
 type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail' | 'articles';
 
-const LOGO_URL = "./assets/branding/logo.webp";
-const FOOTER_LOGO_LIGHT = "./assets/branding/footer-light.webp";
-const FOOTER_LOGO_DARK = "./assets/branding/footer-dark.webp";
+const LOGO_URL = "/assets/branding/logo.webp";
+const FOOTER_LOGO_LIGHT = "/assets/branding/footer-light.webp";
+const FOOTER_LOGO_DARK = "/assets/branding/footer-dark.webp";
 
 const PATH_MAP: Record<string, ViewState> = {
   '/': 'home',

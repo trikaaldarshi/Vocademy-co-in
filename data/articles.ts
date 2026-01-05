@@ -14,7 +14,7 @@ export const ARTICLES: Article[] = [
     slug: 'how-to-read-the-hindu-for-upsc',
     title: 'How to Read The Hindu Effectively for UPSC 2025',
     category: 'UPSC Strategy',
-    image: './assets/articles/upsc-strategy.webp',
+    image: '/assets/articles/upsc-strategy.webp',
     readTime: '8 min read',
     updatedAt: 'Dec 2025',
     content: [
@@ -28,7 +28,7 @@ export const ARTICLES: Article[] = [
     slug: 'top-50-ssc-cgl-vocabulary',
     title: 'Top 50 High-Frequency Vocabulary Words for SSC CGL Tier-II',
     category: 'SSC English',
-    image: './assets/articles/ssc-english.webp',
+    image: '/assets/articles/ssc-english.webp',
     readTime: '12 min read',
     updatedAt: 'Dec 2025',
     content: [
@@ -42,7 +42,7 @@ export const ARTICLES: Article[] = [
     slug: 'science-of-spaced-repetition',
     title: 'The Science of Spaced Repetition: Why Rote Learning Fails',
     category: 'Study Hacks',
-    image: './assets/articles/study-hacks.webp',
+    image: '/assets/articles/study-hacks.webp',
     readTime: '6 min read',
     updatedAt: 'Dec 2025',
     content: [

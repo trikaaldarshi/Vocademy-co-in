@@ -75,7 +75,7 @@ export const Team: React.FC<TeamProps> = ({ navigateTo }) => {
           <TeamMember 
             name="Anmol Gupta"
             role="Founder & Chief Product Architect"
-            image="./assets/team/anmol-gupta.webp"
+            image="/assets/team/anmol-gupta.webp"
             accent="indigo"
           >
             <p>
