@@ -1,6 +1,8 @@
+
 import React, { useState, useMemo } from 'react';
 import { getArticles } from '../data/articles';
 import { IconSearch } from '../components/AnimatedIcons';
+import { ImageWithFallback } from '../App';
 
 interface ArticlesProps {
   navigateToArticle: (slug: string) => void;
@@ -48,7 +50,7 @@ export const Articles: React.FC<ArticlesProps> = ({ navigateToArticle }) => {
               className="group cursor-pointer bg-white dark:bg-slate-900/50 rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-slate-800 shadow-xl transition-all hover:scale-[1.02] hover:shadow-2xl"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
-                <img 
+                <ImageWithFallback 
                   src={article.image} 
                   alt={article.title} 
                   className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700"

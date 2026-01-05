@@ -1,5 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
 import { ARTICLES } from '../data/articles';
+import { ImageWithFallback } from '../App';
 
 interface ArticleDetailProps {
   slug: string;
@@ -79,7 +81,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({ slug, navigateTo }
 
       <div className="max-w-4xl mx-auto px-4 mb-20">
         <div className="rounded-[3rem] overflow-hidden shadow-2xl mb-16 aspect-[16/9] border border-gray-100 dark:border-slate-800 bg-gray-100">
-          <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+          <ImageWithFallback src={article.image} alt={article.title} className="w-full h-full object-cover" />
         </div>
 
         <div className="prose prose-indigo prose-xl dark:prose-invert max-w-none space-y-8">

@@ -14,7 +14,7 @@ import { IconSearch } from './components/AnimatedIcons';
 
 type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail' | 'articles';
 
-// Absolute paths starting with / are the safest for single page apps with routing
+// Standardized root-relative paths
 const LOGO_URL = "/assets/branding/logo.webp";
 const FOOTER_LOGO_LIGHT = "/assets/branding/footer-light.webp";
 const FOOTER_LOGO_DARK = "/assets/branding/footer-dark.webp";
@@ -44,15 +44,28 @@ const SLUG_MAP: Record<ViewState, string> = {
   'article-detail': '/article',
 };
 
-const ImageWithFallback: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = (props) => {
+/**
+ * Robust image component that provides placeholders and debug info on failure.
+ */
+export const ImageWithFallback: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({ src, alt, className, ...props }) => {
+  const [error, setError] = useState(false);
+
   return (
     <img 
-      {...props} 
+      {...props}
+      src={error ? `https://placehold.co/800x600/6366f1/ffffff?text=Missing:+${src?.split('/').pop()}` : src}
+      alt={alt}
+      className={`${className} ${error ? 'opacity-40 grayscale blur-[1px]' : ''}`}
       onError={(e) => {
-        const target = e.target as HTMLImageElement;
-        console.error(`[Vocademy Debug] Failed to load image: ${target.src}`);
-        // Optional: set a placeholder if needed
-        // target.src = "https://via.placeholder.com/400x400?text=Image+Not+Found";
+        if (!error) {
+          const target = e.target as HTMLImageElement;
+          console.group('🖼️ Vocademy Image Load Failure');
+          console.error(`Path: ${src}`);
+          console.error(`Full URL: ${target.src}`);
+          console.info('Check: Is folder name lowercase? Is file in /assets/?');
+          console.groupEnd();
+          setError(true);
+        }
       }}
     />
   );

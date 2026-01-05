@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { ImageWithFallback } from '../App';
 
 interface TeamProps {
   navigateTo: (view: any) => void;
@@ -10,12 +11,12 @@ const TeamMember = ({ name, role, image, accent, children }: { name: string, rol
     <div className="text-center">
       <div className="relative mb-14 mx-auto w-52 h-52 sm:w-64 sm:h-64">
         
-        {/* Glow Aura Animation from Repository Snippet */}
+        {/* Glow Aura Animation */}
         <div className={`absolute -inset-2 bg-gradient-to-tr ${accent === 'indigo' ? 'from-indigo-600 to-blue-500' : 'from-purple-600 to-pink-500'} rounded-full blur opacity-20 group-hover:opacity-100 transition duration-500`}></div>
         
-        {/* Circular Image Container from Repository Snippet */}
+        {/* Circular Image Container */}
         <div className="relative w-full h-full bg-white dark:bg-slate-800 rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl">
-          <img 
+          <ImageWithFallback 
             src={image} 
             alt={name} 
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
@@ -53,7 +54,6 @@ const TeamMember = ({ name, role, image, accent, children }: { name: string, rol
 export const Team: React.FC<TeamProps> = ({ navigateTo }) => {
   return (
     <div className="pt-28 pb-32 px-4 max-w-6xl mx-auto animate-fade-in transition-colors relative">
-      {/* Background Gradients */}
       <div className="absolute top-40 left-0 w-80 h-80 bg-indigo-500/5 blur-[120px] rounded-full pointer-events-none"></div>
       <div className="absolute bottom-40 right-0 w-80 h-80 bg-purple-500/5 blur-[120px] rounded-full pointer-events-none"></div>
 
