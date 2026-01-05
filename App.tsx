@@ -14,6 +14,7 @@ import { IconSearch } from './components/AnimatedIcons';
 
 type ViewState = 'home' | 'methodology' | 'privacy' | 'terms' | 'contact' | 'about' | 'team' | 'welcome' | 'article-detail' | 'articles';
 
+// Absolute paths starting with / are the safest for single page apps with routing
 const LOGO_URL = "/assets/branding/logo.webp";
 const FOOTER_LOGO_LIGHT = "/assets/branding/footer-light.webp";
 const FOOTER_LOGO_DARK = "/assets/branding/footer-dark.webp";
@@ -41,6 +42,20 @@ const SLUG_MAP: Record<ViewState, string> = {
   welcome: '/welcome',
   articles: '/articles',
   'article-detail': '/article',
+};
+
+const ImageWithFallback: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = (props) => {
+  return (
+    <img 
+      {...props} 
+      onError={(e) => {
+        const target = e.target as HTMLImageElement;
+        console.error(`[Vocademy Debug] Failed to load image: ${target.src}`);
+        // Optional: set a placeholder if needed
+        // target.src = "https://via.placeholder.com/400x400?text=Image+Not+Found";
+      }}
+    />
+  );
 };
 
 const IOSComingSoonModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
@@ -138,7 +153,7 @@ const App: React.FC = () => {
                 <div className="relative flex-shrink-0">
                   <div className="absolute -inset-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur-[1px] animate-spin-slow opacity-70 group-hover:opacity-100 transition-opacity"></div>
                   <div className="relative w-8 h-8 sm:w-10 sm:h-10 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-lg overflow-hidden border-2 border-white dark:border-slate-800">
-                    <img src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
+                    <ImageWithFallback src={LOGO_URL} alt="Vocademy Logo" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 <span className="block text-base sm:text-lg md:text-xl font-black text-indigo-950 dark:text-white tracking-tight">Vocademy</span>
@@ -154,10 +169,9 @@ const App: React.FC = () => {
               </div>
 
               <div className="flex items-center space-x-1 sm:space-x-2 flex-1 justify-end min-w-0">
-                {/* Dedicated Animated Search Icon */}
                 <button 
                   onClick={() => navigateTo('articles')} 
-                  className="p-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 transition-all active:scale-90"
+                  className="p-1.5 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 transition-all active:scale-90"
                   aria-label="Search articles"
                 >
                   <IconSearch />
@@ -219,8 +233,8 @@ const App: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
               <div className="col-span-1 md:col-span-1">
                 <div className="flex items-center justify-center md:justify-start mb-6">
-                  <img src={FOOTER_LOGO_LIGHT} alt="Vocademy Logo" className="h-12 md:h-16 w-auto dark:hidden" />
-                  <img src={FOOTER_LOGO_DARK} alt="Vocademy Logo" className="h-12 md:h-16 w-auto hidden dark:block" />
+                  <ImageWithFallback src={FOOTER_LOGO_LIGHT} alt="Vocademy Logo" className="h-12 md:h-16 w-auto dark:hidden" />
+                  <ImageWithFallback src={FOOTER_LOGO_DARK} alt="Vocademy Logo" className="h-12 md:h-16 w-auto hidden dark:block" />
                 </div>
                 <p className="text-gray-500 dark:text-gray-400 text-sm max-w-sm mx-auto md:mx-0 leading-relaxed font-medium">
                   Advanced AI-powered vocabulary platform designed for the Indian competitive exam ecosystem.

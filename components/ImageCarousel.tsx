@@ -115,6 +115,9 @@ export const ImageCarousel: React.FC = () => {
                       className={`w-full h-full object-cover transition-transform duration-[8000ms] ease-out ${isActive ? 'scale-105 sm:scale-110' : 'scale-120 sm:scale-125'}`} 
                       alt={screen.title} 
                       loading="lazy"
+                      onError={(e) => {
+                        console.error(`[Vocademy Debug] Failed to load carousel image: ${screen.img}`);
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
                     
