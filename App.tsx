@@ -62,7 +62,7 @@ export const ImageWithFallback: React.FC<React.ImgHTMLAttributes<HTMLImageElemen
           console.group('🖼️ Vocademy Image Load Failure');
           console.error(`Path: ${src}`);
           console.error(`Full URL: ${target.src}`);
-          console.info('Check: Is folder name lowercase? Is file in /assets/?');
+          console.info('Check: Is folder name lowercase? Is file in /assets/? Is vercel.json updated?');
           console.groupEnd();
           setError(true);
         }
